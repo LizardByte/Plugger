@@ -107,7 +107,7 @@ def Start():
     Log.Debug('plug-in started.')
 
 
-@handler(prefix='/applications/plugger', name='Plugger', thumb='attribution.png')
+@handler(prefix='/applications/plugger', name='Plugger', thumb='icon-default.png')
 def main():
     """
     Create the main plug-in ``handler``.
