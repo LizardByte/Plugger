@@ -1,6 +1,7 @@
 # standard imports
 import logging
 import os
+from threading import Thread
 
 # plex debugging
 try:
@@ -14,8 +15,8 @@ else:  # the code is running outside of Plex
 
 # lib imports
 import flask
-from flask import Flask
-from flask import render_template, send_from_directory
+from flask import Flask, Response
+from flask import render_template, request, send_from_directory
 from flask_babel import Babel
 
 # local imports
@@ -60,18 +61,24 @@ app.logger.setLevel(plugin_logger.level)
 # test message
 app.logger.info('flask app logger test message')
 
-if Prefs['bool_log_werkzeug_messages']:
-    # get the werkzeug logger
-    werkzeug_logger = logging.getLogger('werkzeug')
+try:
+    Prefs['bool_log_werkzeug_messages']
+except KeyError:
+    # this fails when building docs
+    pass
+else:
+    if Prefs['bool_log_werkzeug_messages']:
+        # get the werkzeug logger
+        werkzeug_logger = logging.getLogger('werkzeug')
 
-    # replace the werkzeug logger handlers with the plugin logger handlers
-    werkzeug_logger.handlers = plugin_logger.handlers
+        # replace the werkzeug logger handlers with the plugin logger handlers
+        werkzeug_logger.handlers = plugin_logger.handlers
 
-    # use the same log level as the plugin logger
-    werkzeug_logger.setLevel(plugin_logger.level)
+        # use the same log level as the plugin logger
+        werkzeug_logger.setLevel(plugin_logger.level)
 
-    # test message
-    werkzeug_logger.info('werkzeug logger test message')
+        # test message
+        werkzeug_logger.info('werkzeug logger test message')
 
 
 @babel.localeselector
@@ -99,6 +106,28 @@ def get_locale():
     return Prefs['enum_locale']
 
 
+def start_server():
+    # use threading to start the flask app... or else web server seems to be killed after a couple of minutes
+    flask_thread = Thread(
+        target=app.run,
+        kwargs=dict(
+            host=Prefs['str_http_host'],
+            port=Prefs['int_http_port'],
+            debug=False,
+            use_reloader=False  # reloader doesn't work when running in a separate thread
+        )
+    )
+
+    # start flask application
+    flask_thread.start()
+
+
+def stop_server():
+    # stop flask server
+    # todo - this doesn't work
+    request.environ.get('werkzeug.server.shutdown')
+
+
 @app.route('/')
 @app.route('/home')
 def home():
@@ -117,8 +146,8 @@ def home():
     -----
     The following routes trigger this function.
 
-        `/`
-        `/home`
+        - `/`
+        - `/home`
 
     Examples
     --------
@@ -144,7 +173,7 @@ def favicon():
     -----
     The following routes trigger this function.
 
-        `/favicon.ico`
+        - `/favicon.ico`
 
     Examples
     --------
@@ -177,14 +206,46 @@ def logs(plugin):
     -----
     The following routes trigger this function.
 
-        `/logs/`
-        `/logs/<plugin name>`
+        - `/logs/`
+        - `/logs/<plugin name>`
 
     Examples
     --------
     >>> logs(plugin='dev.lizardbyte.plugger')
     """
+    return render_template('logs.html', title='Logs', plugin_identifier=plugin)
 
+
+@app.route('/log_stream/', defaults={'plugin': bundle_identifier})
+@app.route("/log_stream/<path:plugin>", methods=["GET"])
+def log_stream(plugin):
+    # type: (str) -> Response
+    """
+    Serve the plugin logs in plain text.
+
+    Collect and format the logs for the specified plugin.
+
+    Parameters
+    ----------
+    plugin : str
+        The reverse domain name of the plugin, e.g. `dev.lizardbyte.plugger`.
+
+    Returns
+    -------
+    Response
+        The text of the log files.
+
+    Notes
+    -----
+    The following routes trigger this function.
+
+        - `/log_stream/`
+        - `/log_stream/<plugin name>`
+
+    Examples
+    --------
+    >>> log_stream(plugin='dev.lizardbyte.plugger')
+    """
     base_log_file = '%s.log' % plugin
     combined_log = ''
 
@@ -202,7 +263,7 @@ def logs(plugin):
             combined_log += str(Core.storage.load(filename=log_file, binary=False))
         count += -1
 
-    return render_template('logs.html', title='Logs', logs=combined_log)
+    return Response(combined_log, mimetype="text/plain", content_type="text/event-stream")
 
 
 @app.route('/status')

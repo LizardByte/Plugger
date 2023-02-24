@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugger v0\n"
 "Report-Msgid-Bugs-To: github.com/plugger\n"
-"POT-Creation-Date: 2023-02-24 11:35-0500\n"
+"POT-Creation-Date: 2023-02-24 14:43-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,14 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
+
+#: Contents/Resources/web/templates/logs.html:8
+msgid "Auto refresh"
+msgstr ""
+
+#: Contents/Resources/web/templates/logs.html:10
+msgid "Plugin Logs:"
+msgstr ""
 
 #: Contents/Resources/web/templates/navbar.html:25
 msgid "Donate"
