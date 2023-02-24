@@ -1,0 +1,47 @@
+# Translations template for Plugger.
+# Copyright (C) 2023 Plugger
+# This file is distributed under the same license as the Plugger project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Plugger v0\n"
+"Report-Msgid-Bugs-To: github.com/plugger\n"
+"POT-Creation-Date: 2023-02-24 11:35-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: Contents/Resources/web/templates/navbar.html:25
+msgid "Donate"
+msgstr ""
+
+#: Contents/Resources/web/templates/navbar.html:30
+msgid "GitHub Sponsors"
+msgstr ""
+
+#: Contents/Resources/web/templates/navbar.html:46
+msgid "Support"
+msgstr ""
+
+#: Contents/Resources/web/templates/navbar.html:51
+msgid "Docs"
+msgstr ""
+
+#: Contents/Resources/web/templates/navbar.html:55
+msgid "Support Center"
+msgstr ""
+
+#: Contents/Resources/web/templates/navbar.html:61
+msgid "Home"
+msgstr ""
+
+#: Contents/Resources/web/templates/navbar.html:66
+msgid "Plugins"
+msgstr ""
+

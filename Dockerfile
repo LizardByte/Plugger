@@ -1,0 +1,77 @@
+# syntax=docker/dockerfile:1.4
+# artifacts: false
+# platforms: linux/amd64,linux/arm64/v8,linux/arm/v7
+FROM python:2.7.17-buster AS buildstage
+# in order to use ubuntu:22.04 or newer, we will need to install git from source
+
+# build args
+ARG BUILD_VERSION
+ARG COMMIT
+ARG GITHUB_SHA=$COMMIT
+# note: BUILD_VERSION may be blank, COMMIT is also available
+# note: build_plist.py uses BUILD_VERSION and GITHUB_SHA
+
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+# install dependencies
+RUN <<_DEPS
+#!/bin/bash
+set -e
+apt-get update -y
+apt-get install -y --no-install-recommends \
+  nodejs=10.24.0* \
+  npm=5.8.0*
+apt-get clean
+rm -rf /var/lib/apt/lists/*
+_DEPS
+
+# create build dir and copy GitHub repo there
+COPY --link . /build
+
+# set build dir
+WORKDIR /build
+
+# update pip
+RUN <<_PIP
+#!/bin/bash
+set -e
+python -m pip --no-python-version-warning --disable-pip-version-check install --no-cache-dir --upgrade \
+  pip setuptools requests
+# requests required to install python-plexapi
+# dev requirements not necessary for docker image, significantly speeds up build since lxml doesn't need to build
+_PIP
+
+# build plugin
+RUN <<_BUILD
+#!/bin/bash
+set -e
+python -m pip --no-python-version-warning --disable-pip-version-check install --no-cache-dir --upgrade \
+  --target=./Contents/Libraries/Shared -r requirements.txt --no-warn-script-location
+python ./scripts/build_plist.py
+_BUILD
+
+# setup npm and dependencies
+RUN <<_NPM
+#!/bin/bash
+set -e
+npm install
+mv ./node_modules ./Contents/Resources/web
+_NPM
+
+# clean
+RUN <<_CLEAN
+#!/bin/bash
+set -e
+rm -rf ./scripts/
+# list contents
+ls -a
+_CLEAN
+
+FROM scratch AS deploy
+
+# variables
+ARG PLUGIN_NAME="Plugger.bundle"
+ARG PLUGIN_DIR="/config/Library/Application Support/Plex Media Server/Plug-ins"
+
+# add files from buildstage
+# trailing slash on build directory copies the contents of the directory, instead of the directory itself
+COPY --link --from=buildstage /build/ $PLUGIN_DIR/$PLUGIN_NAME

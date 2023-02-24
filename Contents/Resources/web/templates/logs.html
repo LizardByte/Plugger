@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                  <h2>Logging will appear here:</h2>
+                    <div class="logging_window">
+                        <pre id="logs">{{ logs }}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

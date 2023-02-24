@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% if title %}
+            <title>Plugger - {{ title }}</title>
+        {% else %}
+            <title>Plugger</title>
+        {% endif %}
+
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='node_modules/bootstrap/dist/css/bootstrap.min.css') }}">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='node_modules/@fortawesome/fontawesome-free/css/all.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='node_modules/@fontsource/open-sans/index.css') }}">
+
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/custom.css') }}">
+
+        <!-- Bootstrap Optional JavaScript -->
+        <script type="text/javascript" src="{{ url_for('static', filename='node_modules/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+
+        <!-- JQuery Javascript -->
+        <script type="text/javascript" src="{{ url_for('static', filename='node_modules/jquery/dist/jquery.min.js') }}"></script>
+
+        <!-- JS -->
+        <script type="text/javascript" src="{{ url_for('static', filename='js/discord.js') }}"></script>
+
+    </head>
+
+    <body class="d-flex flex-column h-100 bg-dark-gray">
+        <main class="flex-shrink-0">
+            <!-- Include navbar -->
+            {% include 'navbar.html' %}
+
+            <section class="py-5 offset-anchor" id="top"></section>
+
+            <!-- The page template -->
+            {% block content %}{% endblock %}
+        </main>
+    </body>
+
+</html>
