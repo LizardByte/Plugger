@@ -1,11 +1,44 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <h1 class="text-center">Plugger</h1>
-                <p class="text-center">Something something.</p>
+            <div class="container px-auto my-5">
+                <div class="col-lg-12 mx-auto" id="themerr-container" style="min-width: 335px">
+
+                    <!-- Search section-->
+                    <section class="py-5 offset-anchor" id="Search">
+                        <div class="container mb-5">
+                            <form id="searchForm">
+                                <div class="form-group d-flex">
+                                    <div class="col-3 me-3">
+                                        <select class="form-select rounded-0" aria-label="{{ _('Search Categories') }}" id="search_type">
+                                        </select>
+                                    </div>
+                                    <div class="col-6 me-3">
+                                        <input type="text" class="form-control rounded-0" placeholder="Search" id="search_term">
+                                    </div>
+                                    <button type="button" class="btn btn-warning ml-3 rounded-0" onclick="run_search()">
+                                        <i class="fa-fw fas fa-search"></i>{{ _('Search') }}</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="search-container"></div>
+                    </section>
+
+                    <!-- Plugins section-->
+                    <section class="py-5 offset-anchor" id="Plugins">
+                        <div class="row gx-5 justify-content-center">
+                            <div class="col-lg-8 col-xl-6">
+                                <div class="text-center text-white">
+                                    <h2 class="fw-bolder">{{ _('Plugins') }}</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="plugins-container"></div>
+                    </section>
+
+                </div>
             </div>
-        </div>
-    </div>
 {% endblock content %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/item_loader.js') }}"></script>
+{% endblock scripts %}

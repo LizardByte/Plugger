@@ -28,16 +28,14 @@
         <script type="text/javascript" src="{{ url_for('static', filename='node_modules/jquery/dist/jquery.min.js') }}"></script>
 
         <!-- JS -->
-        <script type="text/javascript" src="{{ url_for('static', filename='js/discord.js') }}"></script>
+        <script type="text/javascript" src="https://app.lizardbyte.dev/js/discord.js"></script>
 
     </head>
 
     <body class="d-flex flex-column h-100 bg-dark-gray">
-        <main class="flex-shrink-0">
+        <main class="flex-shrink-0 overflow-hidden">
             <!-- Include navbar -->
             {% include 'navbar.html' %}
-
-            <section class="py-5 offset-anchor" id="top"></section>
 
             <!-- The page template -->
             {% block content %}{% endblock %}

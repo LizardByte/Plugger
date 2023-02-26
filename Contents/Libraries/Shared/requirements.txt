@@ -5,6 +5,7 @@ flask-babel==2.0.0;python_version<"3"
 future==0.18.3
 requests==2.27.1;python_version<"3"
 typing==3.10.0.0
+xmltodict==0.12.0;python_version<"3"
 
 # custom python-plexapi supporting python 2.7
 git+https://github.com/reenignearcher/python-plexapi.git@master-py2.7#egg=plexapi

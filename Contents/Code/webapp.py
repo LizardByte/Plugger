@@ -1,7 +1,9 @@
 # standard imports
+import json
 import logging
 import os
 from threading import Thread
+import xmltodict
 
 # plex debugging
 try:
@@ -11,6 +13,7 @@ except ImportError:
 else:  # the code is running outside of Plex
     from plexhints.core_kit import Core  # core kit
     from plexhints.log_kit import Log  # log kit
+    from plexhints.parse_kit import Plist  # parse kit
     from plexhints.prefs_kit import Prefs  # prefs kit
 
 # lib imports
@@ -18,9 +21,11 @@ import flask
 from flask import Flask, Response
 from flask import render_template, request, send_from_directory
 from flask_babel import Babel
+import requests
 
 # local imports
-from const import bundle_identifier, plugin_logs_directory
+from const import bundle_identifier, plex_base_url, plugin_directory, plugin_logs_directory, \
+    system_plugins_directory, PLEXTOKEN
 
 
 # setup flask app
@@ -81,6 +86,30 @@ else:
         werkzeug_logger.info('werkzeug logger test message')
 
 
+# default plex headers
+PLEX_HEADERS = {
+    'X-Plex-Token': PLEXTOKEN,
+}
+
+
+# global objects
+plugin_directories = [
+    plugin_directory,
+    system_plugins_directory,
+]
+plugins = dict()
+
+# mime type map
+mime_type_map = {
+    'gif': 'image/gif',
+    'ico': 'image/vnd.microsoft.icon',
+    'jpg': 'image/jpeg',
+    'jpeg': 'image/jpeg',
+    'png': 'image/png',
+    'svg': 'image/svg+xml',
+}
+
+
 @babel.localeselector
 def get_locale():
     # type: () -> str
@@ -128,8 +157,8 @@ def stop_server():
     request.environ.get('werkzeug.server.shutdown')
 
 
-@app.route('/')
-@app.route('/home')
+@app.route('/', methods=["GET"])
+@app.route('/home/', methods=["GET"])
 def home():
     # type: () -> render_template
     """
@@ -156,18 +185,16 @@ def home():
     return render_template('home.html', title='Home')
 
 
-@app.route('/favicon.ico')
-def favicon():
-    # type: () -> flask.send_from_directory
+@app.route("/<path:img>", methods=["GET"])
+def image(img):
+    # type: (str) -> flask.send_from_directory
     """
-    Serve the favicon.ico file.
-
-    .. todo:: This documentation needs to be improved.
+    Get image from static/images directory.
 
     Returns
     -------
     flask.send_from_directory
-        The ico file.
+        The image.
 
     Notes
     -----
@@ -177,15 +204,102 @@ def favicon():
 
     Examples
     --------
-    >>> favicon()
+    >>> image('favicon.ico')
     """
-    return send_from_directory(directory=os.path.join(app.static_folder, 'images'),
-                               filename='favicon.ico', mimetype='image/vnd.microsoft.icon')
+    directory = os.path.join(app.static_folder, 'images')
+    filename = img
+
+    if os.path.isfile(os.path.join(directory, filename)):
+        file_extension = filename.split('.')[-1]
+        return send_from_directory(directory=directory, filename=filename, mimetype=mime_type_map[file_extension])
+    else:
+        return Response(response='Image not found', status=404, mimetype='text/plain')
 
 
-@app.route('/logs/', defaults={'plugin': bundle_identifier})
-@app.route('/logs/<path:plugin>')
-def logs(plugin):
+# get list of installed plugins in json format
+@app.route('/installed_plugins/', methods=["GET"])
+def installed_plugins():
+    # type: () -> Response
+    """
+    Serve the list of installed plugins.
+    """
+    # plugins known to the server
+    plugin_list_xml = requests.get(url='%s/:/plugins' % plex_base_url, headers=PLEX_HEADERS).content
+    # convert the plugin_list xml data to json
+    known_plugin_list = xmltodict.parse(plugin_list_xml)['MediaContainer']['Plugin']
+
+    known_plugin_identifiers = [plugin['@identifier'] for plugin in known_plugin_list]
+
+    # walk plugin directory
+    for plugin_dir in plugin_directories:
+        for plugin in os.listdir(plugin_dir):
+            # set default plugin type and version
+            plugin_type = 'user'
+            version = None
+
+            # get the path of the plugin
+            plugin_path = os.path.join(plugin_dir, plugin)
+
+            # get the path to the plist file
+            plist_file_path = os.path.join(plugin_path, 'Contents', 'Info.plist')
+
+            # for system plugins, set the plugin type and get the version from the VERSION file
+            if plugin_dir == system_plugins_directory:
+                plugin_type = 'system'
+                version_file_path = os.path.join(plugin_path, 'Contents', 'VERSION')
+                if os.path.isfile(version_file_path):
+                    version = str(Core.storage.load(filename=version_file_path, binary=False))
+
+            # the plugger data file
+            plugger_data = None
+            if plugin_dir == plugin_directory:
+                plugger_data_file_path = os.path.join(plugin_path, 'plugger.json')
+
+                # load plugger json file
+                if os.path.isfile(plugger_data_file_path):
+                    plugger_data = json.loads(s=str(Core.storage.load(filename=plugger_data_file_path, binary=False)))
+
+                # set the version from the plugger data
+                if plugger_data:
+                    version = plugger_data.get('version', None)
+
+            # get the bundle identifier from the plist file
+            if os.path.isfile(plist_file_path):
+                plist_contents = Plist.ObjectFromString(str(Core.storage.load(filename=plist_file_path, binary=False)))
+                try:
+                    plugin_identifier = plist_contents['CFBundleIdentifier']
+                except KeyError:
+                    Log.Error('CFBundleIdentifier not found in plist file: %s' % plist_file_path)
+                else:
+                    try:
+                        plugin_description = plist_contents['PlexAgentAttributionText']
+                    except KeyError:
+                        plugin_description = None
+
+                    if plugin_identifier in known_plugin_identifiers:
+                        plugins[plugin_identifier] = dict(
+                            bundle=plugin,
+                            bundle_identifier=plugin_identifier,
+                            name=plugin.split('.bundle')[0],
+                            description=plugin_description,
+                            path=plugin_path,
+                            type=plugin_type,
+                            version=version,
+                            plugger_data=plugger_data,
+                        )
+                    else:
+                        Log.Error('Plugin not properly loaded in Plex Media Server: %s' % plugin_identifier)
+            else:
+                Log.Error('Info.plist not found in plugin directory: %s' % plugin_path)
+
+    return Response(response=json.dumps(plugins, sort_keys=True),
+                    status=200,
+                    mimetype='application/json')
+
+
+@app.route('/logs/', defaults={'plugin_identifier': bundle_identifier}, methods=["GET"])
+@app.route('/logs/<path:plugin_identifier>', methods=["GET"])
+def logs(plugin_identifier):
     # type: (str) -> render_template
     """
     Serve the plugin logs.
@@ -194,7 +308,7 @@ def logs(plugin):
 
     Parameters
     ----------
-    plugin : str
+    plugin_identifier : str
         The reverse domain name of the plugin, e.g. `dev.lizardbyte.plugger`.
 
     Returns
@@ -211,14 +325,14 @@ def logs(plugin):
 
     Examples
     --------
-    >>> logs(plugin='dev.lizardbyte.plugger')
+    >>> logs(plugin_identifier='dev.lizardbyte.plugger')
     """
-    return render_template('logs.html', title='Logs', plugin_identifier=plugin)
+    return render_template('logs.html', title='Logs', plugin_identifier=plugin_identifier)
 
 
-@app.route('/log_stream/', defaults={'plugin': bundle_identifier})
-@app.route("/log_stream/<path:plugin>", methods=["GET"])
-def log_stream(plugin):
+@app.route('/log_stream/', defaults={'plugin_identifier': bundle_identifier}, methods=["GET"])
+@app.route("/log_stream/<path:plugin_identifier>", methods=["GET"])
+def log_stream(plugin_identifier):
     # type: (str) -> Response
     """
     Serve the plugin logs in plain text.
@@ -227,7 +341,7 @@ def log_stream(plugin):
 
     Parameters
     ----------
-    plugin : str
+    plugin_identifier : str
         The reverse domain name of the plugin, e.g. `dev.lizardbyte.plugger`.
 
     Returns
@@ -244,9 +358,9 @@ def log_stream(plugin):
 
     Examples
     --------
-    >>> log_stream(plugin='dev.lizardbyte.plugger')
+    >>> log_stream(plugin_identifier='dev.lizardbyte.plugger')
     """
-    base_log_file = '%s.log' % plugin
+    base_log_file = '%s.log' % plugin_identifier
     combined_log = ''
 
     count = 5
@@ -266,7 +380,7 @@ def log_stream(plugin):
     return Response(combined_log, mimetype="text/plain", content_type="text/event-stream")
 
 
-@app.route('/status')
+@app.route('/status/', methods=["GET"])
 def status():
     # type: () -> dict
     """
@@ -285,3 +399,42 @@ def status():
     """
     web_status = {'result': 'success', 'message': 'Ok'}
     return web_status
+
+
+@app.route("/thumbnail/<path:plugin_identifier>", methods=["GET"])
+def thumbnail(plugin_identifier):
+    # see if plugin_identifier is in plugins
+    if plugin_identifier in plugins:
+        plugin_path = plugins[plugin_identifier]['path']
+    else:
+        return Response(response='Plugin not found', status=404, mimetype='text/plain')
+
+    # try to get the plugin thumbnail
+    plugin_thumbnail = None
+    image_priotity = [
+        'icon-default',
+        'attribution'
+    ]
+    image_extensions = [
+        'png',
+        'jpg',
+        'jpeg',
+    ]
+    for image in image_priotity:
+        if plugin_thumbnail:
+            break  # break first loop
+        for extension in image_extensions:
+            plugin_thumbnail_path = os.path.join(plugin_path, 'Contents', 'Resources', '%s.%s' % (
+                image, extension))
+            if os.path.isfile(plugin_thumbnail_path):
+                plugin_thumbnail = (os.path.dirname(plugin_thumbnail_path),
+                                    os.path.basename(plugin_thumbnail_path))
+                break  # break second loop
+    if not plugin_thumbnail:
+        plugin_thumbnail = (os.path.join(app.static_folder, 'images'), 'default-thumb.png')
+
+    # get file extension
+    image_extension = plugin_thumbnail[1].split('.')[-1]
+
+    return send_from_directory(directory=plugin_thumbnail[0], filename=plugin_thumbnail[1],
+                               mimetype=mime_type_map[image_extension])
