@@ -93,6 +93,8 @@ $(document).ready(function(){
 
 let populate_results = function (plugins_list) {
     for (let plugin in plugins_list) {
+        let plugin_name = plugins_list[plugin]['name']
+
         let item_container = document.createElement("div")
         item_container.className = "container mb-5 shadow border-0 bg-dark rounded-0 px-0"
         plugins_container.appendChild(item_container)
@@ -140,7 +142,7 @@ let populate_results = function (plugins_list) {
 
         let item_title = document.createElement("h4")
         item_title.className = "card-title mb-3 fw-bolder ms-0 mx-2"
-        item_title.textContent = plugins_list[plugin]['name']
+        item_title.textContent = plugin_name
         text_container.appendChild(item_title)
 
         let item_summary = document.createElement("p")
@@ -150,6 +152,54 @@ let populate_results = function (plugins_list) {
 
         // for PluggerDB plugins
         if (plugins_list[plugin]['html_url']) {
+            let urls_row = document.createElement("div")
+            urls_row.className = "row w-100 mt-auto pt-4"
+            data_column.appendChild(urls_row)
+
+            // GitHub url
+            let github_column = document.createElement("div")
+            github_column.className = "col-auto align-self-center me-1"
+            urls_row.appendChild(github_column)
+            let github_link = document.createElement("a")
+            github_link.className = "nav-link nav-link-sm text-white"
+            github_link.href = plugins_list[plugin]['html_url']
+            github_link.target = "_blank"
+            github_column.appendChild(github_link)
+            let github_icon = document.createElement("i")
+            github_icon.className = "fa-brands fa-github fa-xl align-middle"
+            github_link.appendChild(github_icon)
+
+            // add gh-pages url if it exists
+            if (plugins_list[plugin]['gh_pages_url']) {
+                let gh_pages_column = document.createElement("div")
+                gh_pages_column.className = "col-auto align-self-center me-1"
+                urls_row.appendChild(gh_pages_column)
+                let gh_pages_link = document.createElement("a")
+                gh_pages_link.className = "nav-link nav-link-sm text-white"
+                gh_pages_link.href = plugins_list[plugin]['gh_pages_url']
+                gh_pages_link.target = "_blank"
+                gh_pages_column.appendChild(gh_pages_link)
+                let gh_pages_icon = document.createElement("i")
+                gh_pages_icon.className = "fa-solid fa-globe fa-xl align-middle"
+                gh_pages_link.appendChild(gh_pages_icon)
+            }
+
+            // add license url if it exists
+            if (plugins_list[plugin]['license_url']) {
+                let license_column = document.createElement("div")
+                license_column.className = "col-auto align-self-center me-1"
+                urls_row.appendChild(license_column)
+                let license_link = document.createElement("a")
+                license_link.className = "nav-link nav-link-sm text-white"
+                license_link.href = plugins_list[plugin]['license_url']
+                license_link.target = "_blank"
+                license_column.appendChild(license_link)
+                let license_icon = document.createElement("i")
+                license_icon.className = "fa-solid fa-file-contract fa-xl align-middle"
+                license_link.appendChild(license_icon)
+            }
+
+            // add stats
             let stats_row = document.createElement("div")
             // move to bottom of data_column
             stats_row.className = "row w-100 mt-auto pt-4"
@@ -231,6 +281,8 @@ let populate_results = function (plugins_list) {
         data_column.appendChild(card_footer)
 
         if (plugins_list[plugin]['installed']) {
+            let plugin_identifier = plugins_list[plugin]['installed_data']['bundle_identifier']
+
             let installed_version = document.createElement("p")
             installed_version.className = "card-text ms-0 mx-2"
             installed_version.textContent = `Installed Version: ${plugins_list[plugin]['installed_data']['version']}`
@@ -241,15 +293,19 @@ let populate_results = function (plugins_list) {
             logs_column.className = "col-auto align-self-center me-1"
             card_footer.appendChild(logs_column)
 
-            let plugin_identifier = plugins_list[plugin]['installed_data']['bundle_identifier']
+
 
             let logs_icon = document.createElement("i")
             logs_icon.className = "fa-solid fa-file-lines fa-xl align-middle"
             logs_icon.style.cssText = "cursor:pointer;cursor:hand"
-            logs_icon.onclick = function () {
-                // open url
-                window.open(`/logs/${plugin_identifier}`, "_blank")
-            }
+            logs_icon.setAttribute("data-bs-toggle", "modal")
+            logs_icon.setAttribute("data-bs-target", "#logsModal")
+            logs_icon.setAttribute("data-bs-plugin_name", plugin_name)
+            logs_icon.setAttribute("data-bs-plugin_identifier", plugin_identifier)
+            // logs_icon.onclick = function () {
+            //     // open url
+            //     // window.open(`/logs/${plugin_identifier}`, "_blank")
+            // }
             logs_column.appendChild(logs_icon)
 
             if (plugins_list[plugin]['installed_data']['type'] === "system") {

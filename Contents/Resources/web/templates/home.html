@@ -1,4 +1,46 @@
 {% extends 'base.html' %}
+{% block modals %}
+    <div class="modal fade" id="logsModal" tabindex="-1" aria-labelledby="logsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-fullscreen-xxl-down">
+            <div class="modal-content bg-dark-gray text-white">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logsModalLabel">Logs</h5>
+                    {# Copy button #}
+                    <div class="d-flex align-items-center ms-auto">
+                        <button id="copy-btn-header" type="button" class="btn btn-outline-light ms-auto" data-clipboard-target="#logs">
+                            <i class="fa-solid fa-fw fa-copy"></i>
+                        </button>
+                    </div>
+                    {# Auto refresh toggle #}
+                    <div class="form-check form-switch ms-4">
+                        <input class="form-check-input" type="checkbox" role="switch" id="switch_auto_refresh" checked>
+                        <label class="form-check-label" for="switch_auto_refresh">{{ _('Auto refresh') }}</label>
+                    </div>
+                    {# Close button #}
+                    <div class="d-flex align-items-center">
+                        <button type="button" class="btn-close btn-close-white ms-4" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <pre id="logs"></pre>
+                </div>
+                <div class="modal-footer">
+                    {# Copy button #}
+                    <div class="d-flex align-items-center">
+                        <button id="copy-btn-footer" type="button" class="btn btn-outline-light" data-clipboard-target="#logs">
+                            <i class="fa-solid fa-fw fa-copy"></i>
+                        </button>
+                    </div>
+                    {# Close button #}
+                    <div class="d-flex align-items-center">
+                        <button type="button" class="btn-close btn-close-white ms-4" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock modals %}
+
 {% block content %}
             <div class="container px-auto my-5">
                 <div class="col-lg-12 mx-auto" id="themerr-container" style="min-width: 335px">
@@ -40,5 +82,72 @@
 {% endblock content %}
 
 {% block scripts %}
+    {# Load Plugin List #}
     <script src="{{ url_for('static', filename='js/item_loader.js') }}"></script>
+
+    {# Logs Modal #}
+    <script type="text/javascript" src="{{ url_for('static', filename='node_modules/clipboard/dist/clipboard.min.js') }}"></script>
+    <script>
+        new ClipboardJS('#copy-btn-header')
+        new ClipboardJS('#copy-btn-footer')
+    </script>
+    <script>
+        let logsModal = document.getElementById('logsModal')
+        logsModal.addEventListener('show.bs.modal', function (event) {
+            // Button that triggered the modal
+            let button = event.relatedTarget
+            // Extract info from data-bs-* attributes
+            let plugin_identifier = button.getAttribute('data-bs-plugin_identifier')
+            let plugin_name = button.getAttribute('data-bs-plugin_name')
+
+            // Update the modal's content.
+            let modalTitle = logsModal.querySelector('.modal-title')
+            modalTitle.textContent = `{{ _('Logs:') }} ${plugin_name}`
+
+            // this will run every 5 seconds to update the logs
+            let updateLogs = () => {
+                $.ajax({
+                    url: `/log_stream/${plugin_identifier}`,
+                    type: "GET",
+                    success: function (data) {
+                        let log_container = document.getElementById("logs")
+                        log_container.innerHTML = data
+                    }
+                })
+            }
+
+            // update the logs immediately
+            updateLogs()
+
+            // then setup update timer to update every 5 seconds
+            const updateIntervalPeriod = 5000
+            let updateInterval
+            // setInterval(updateLogs, updateIntervalPeriod)
+
+            // add event listeners to the auto-refresh toggle switch
+            const switchAutoRefresh = document.getElementById("switch_auto_refresh");
+            switchAutoRefresh.addEventListener("change", () => {
+                toggleAutoRefresh()
+            })
+
+            // function to toggle the auto-refresh switch
+            let toggleAutoRefresh = () => {
+                if (switchAutoRefresh.checked) {
+                    // turn on auto-refresh
+                    updateInterval = setInterval(updateLogs, updateIntervalPeriod)
+                } else {
+                    // turn off auto-refresh
+                    clearInterval(updateInterval);
+                }
+            }
+
+            // clear the interval when the modal is closed
+            logsModal.addEventListener('hide.bs.modal', function (event) {
+                clearInterval(updateInterval);
+            })
+
+            // run the toggle function to set the initial state
+            toggleAutoRefresh()
+        })
+    </script>
 {% endblock scripts %}

@@ -33,6 +33,7 @@
     </head>
 
     <body class="d-flex flex-column h-100 bg-dark-gray">
+        {% block modals %}{% endblock %}
         <main class="flex-shrink-0 overflow-hidden">
             <!-- Include navbar -->
             {% include 'navbar.html' %}
