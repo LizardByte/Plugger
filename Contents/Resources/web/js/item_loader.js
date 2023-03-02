@@ -50,18 +50,22 @@ $(document).ready(function(){
 
     // combine the two dictionaries
     for (let installed_plugin in installed_plugins) {
-        // try to find the plugin in PluggerDB
         let plugin_name = installed_plugins[installed_plugin]['name']
         let plugin_bundle = installed_plugins[installed_plugin]['bundle']
 
         let found = false
-        for (let plugger_plugin in plugger_plugins) {
-            if (plugger_plugins[plugger_plugin]['name'] === plugin_name || plugger_plugins[plugger_plugin]['name'] === plugin_bundle) {
-                // found it
-                found = true
-                plugger_plugins[plugger_plugin]['installed'] = true
-                plugger_plugins[plugger_plugin]['installed_data'] = installed_plugins[installed_plugin]
-                break
+
+        // if not system plugin
+        if (installed_plugins[installed_plugin]['type'] !== 'system') {
+            // try to find the plugin in PluggerDB
+            for (let plugger_plugin in plugger_plugins) {
+                if (plugger_plugins[plugger_plugin]['name'] === plugin_name || plugger_plugins[plugger_plugin]['name'] === plugin_bundle) {
+                    // found it
+                    found = true
+                    plugger_plugins[plugger_plugin]['installed'] = true
+                    plugger_plugins[plugger_plugin]['installed_data'] = installed_plugins[installed_plugin]
+                    break
+                }
             }
         }
 
@@ -80,11 +84,12 @@ $(document).ready(function(){
 
     // add plugger plugins to all plugins list
     for (let plugger_plugin in plugger_plugins) {
+        plugger_plugins[plugger_plugin]['name_lower'] = plugger_plugins[plugger_plugin]['name'].toLowerCase()
         all_plugins.push(plugger_plugins[plugger_plugin])
     }
 
     // sort the plugins by name
-    all_plugins = all_plugins.sort(rankingSorter('name', 'full_name')).reverse()
+    all_plugins = all_plugins.sort(rankingSorter('name_lower', 'full_name')).reverse()
 
     // populate the plugins container
     populate_results(all_plugins)
@@ -114,17 +119,18 @@ let populate_results = function (plugins_list) {
             thumb.src = `/thumbnail/${plugins_list[plugin]['installed_data']['bundle_identifier']}`
         }
         else {
-            if (plugins_list[plugin]['thumb_url']) {
-                thumb.src = plugins_list[plugin]['thumb_url']
+            if (plugins_list[plugin]['thumb_image_url']) {
+                thumb.src = plugins_list[plugin]['thumb_image_url']
             }
-            else if (plugins_list[plugin]['avatar_url']) {
-                thumb.src = plugins_list[plugin]['avatar_url']
+            else if (plugins_list[plugin]['attribution_image_url']) {
+                thumb.src = plugins_list[plugin]['attribution_image_url']
             }
             else {
                 thumb.src = "/default-thumb.png"
             }
         }
         thumb.alt = ""
+        thumb.style.minWidth = '200px';
         thumb.style.maxWidth = '200px';
         thumb.style.maxHeight = '200px';
         thumb.style.width = 'auto';
@@ -150,11 +156,26 @@ let populate_results = function (plugins_list) {
         item_summary.innerHTML = plugins_list[plugin]['description']
         text_container.appendChild(item_summary)
 
+        let categories_row = document.createElement("div")
+        categories_row.className = "row w-100 mt-auto pt-4"
+        data_column.appendChild(categories_row)
+
+        let urls_row = document.createElement("div")
+        urls_row.className = "row w-100 mt-auto pt-4"
+        data_column.appendChild(urls_row)
+
         // for PluggerDB plugins
         if (plugins_list[plugin]['html_url']) {
-            let urls_row = document.createElement("div")
-            urls_row.className = "row w-100 mt-auto pt-4"
-            data_column.appendChild(urls_row)
+            // create a badge for each category
+            for (let category in plugins_list[plugin]['categories']) {
+                let category_column = document.createElement("div")
+                category_column.className = "col-auto align-self-center"
+                categories_row.appendChild(category_column)
+                let category_badge = document.createElement("span")
+                category_badge.className = "badge bg-secondary"
+                category_badge.textContent = plugins_list[plugin]['categories'][category]
+                category_column.appendChild(category_badge)
+            }
 
             // GitHub url
             let github_column = document.createElement("div")
@@ -167,21 +188,45 @@ let populate_results = function (plugins_list) {
             github_column.appendChild(github_link)
             let github_icon = document.createElement("i")
             github_icon.className = "fa-brands fa-github fa-xl align-middle"
+            github_icon.setAttribute('title', 'GitHub')
             github_link.appendChild(github_icon)
+
+            // add homepage if it exists
+            if (plugins_list[plugin]['homepage']) {
+                if (!compare_urls(plugins_list[plugin]['homepage'], plugins_list[plugin]['html_url'])) {
+                    let homepage_column = document.createElement("div")
+                    homepage_column.className = "col-auto align-self-center me-1"
+                    urls_row.appendChild(homepage_column)
+                    let homepage_link = document.createElement("a")
+                    homepage_link.className = "nav-link nav-link-sm text-white"
+                    homepage_link.href = plugins_list[plugin]['homepage']
+                    homepage_link.target = "_blank"
+                    homepage_column.appendChild(homepage_link)
+                    let homepage_icon = document.createElement("i")
+                    homepage_icon.className = "fa-solid fa-globe fa-xl align-middle"
+                    homepage_icon.setAttribute('title', 'Homepage')
+                    homepage_link.appendChild(homepage_icon)
+                }
+            }
+
 
             // add gh-pages url if it exists
             if (plugins_list[plugin]['gh_pages_url']) {
-                let gh_pages_column = document.createElement("div")
-                gh_pages_column.className = "col-auto align-self-center me-1"
-                urls_row.appendChild(gh_pages_column)
-                let gh_pages_link = document.createElement("a")
-                gh_pages_link.className = "nav-link nav-link-sm text-white"
-                gh_pages_link.href = plugins_list[plugin]['gh_pages_url']
-                gh_pages_link.target = "_blank"
-                gh_pages_column.appendChild(gh_pages_link)
-                let gh_pages_icon = document.createElement("i")
-                gh_pages_icon.className = "fa-solid fa-globe fa-xl align-middle"
-                gh_pages_link.appendChild(gh_pages_icon)
+                if (!compare_urls(plugins_list[plugin]['gh_pages_url'], plugins_list[plugin]['html_url']) &&
+                        !compare_urls(plugins_list[plugin]['gh_pages_url'], plugins_list[plugin]['homepage'])) {
+                    let gh_pages_column = document.createElement("div")
+                    gh_pages_column.className = "col-auto align-self-center me-1"
+                    urls_row.appendChild(gh_pages_column)
+                    let gh_pages_link = document.createElement("a")
+                    gh_pages_link.className = "nav-link nav-link-sm text-white"
+                    gh_pages_link.href = plugins_list[plugin]['gh_pages_url']
+                    gh_pages_link.target = "_blank"
+                    gh_pages_column.appendChild(gh_pages_link)
+                    let gh_pages_icon = document.createElement("i")
+                    gh_pages_icon.className = "fa-solid fa-file-code fa-xl align-middle"
+                    gh_pages_icon.setAttribute('title', 'Website')
+                    gh_pages_link.appendChild(gh_pages_icon)
+                }
             }
 
             // add license url if it exists
@@ -196,7 +241,40 @@ let populate_results = function (plugins_list) {
                 license_column.appendChild(license_link)
                 let license_icon = document.createElement("i")
                 license_icon.className = "fa-solid fa-file-contract fa-xl align-middle"
+                license_icon.setAttribute('title', 'License')
                 license_link.appendChild(license_icon)
+            }
+
+            // add wiki
+            if (plugins_list[plugin]['has_wiki'] === true) {
+                let wiki_column = document.createElement("div")
+                wiki_column.className = "col-auto align-self-center me-1"
+                urls_row.appendChild(wiki_column)
+                let wiki_link = document.createElement("a")
+                wiki_link.className = "nav-link nav-link-sm text-white"
+                wiki_link.href = `${plugins_list[plugin]['html_url']}/wiki`
+                wiki_link.target = "_blank"
+                wiki_column.appendChild(wiki_link)
+                let wiki_icon = document.createElement("i")
+                wiki_icon.className = "fa-solid fa-book fa-xl align-middle"
+                wiki_icon.setAttribute('title', 'GitHub Wiki')
+                wiki_link.appendChild(wiki_icon)
+            }
+
+            // add discussions
+            if (plugins_list[plugin]['has_discussions']) {
+                let discussions_column = document.createElement("div")
+                discussions_column.className = "col-auto align-self-center me-1"
+                urls_row.appendChild(discussions_column)
+                let discussions_link = document.createElement("a")
+                discussions_link.className = "nav-link nav-link-sm text-white"
+                discussions_link.href = `${plugins_list[plugin]['html_url']}/discussions`
+                discussions_link.target = "_blank"
+                discussions_column.appendChild(discussions_link)
+                let discussions_icon = document.createElement("i")
+                discussions_icon.className = "fa-solid fa-comments fa-xl align-middle"
+                discussions_icon.setAttribute('title', 'GitHub Discussions')
+                discussions_link.appendChild(discussions_icon)
             }
 
             // add stats
@@ -213,6 +291,7 @@ let populate_results = function (plugins_list) {
             stars_link.className = "nav-link nav-link-sm text-white"
             stars_link.href = `${plugins_list[plugin]['html_url']}/stargazers`
             stars_link.target = "_blank"
+            stars_link.setAttribute('title', 'Stars')
             stars_column.appendChild(stars_link)
             let stars_icon = document.createElement("i")
             stars_icon.className = "fa-solid fa-star align-middle"
@@ -230,6 +309,7 @@ let populate_results = function (plugins_list) {
             forks_link.className = "nav-link nav-link-sm text-white"
             forks_link.href = `${plugins_list[plugin]['html_url']}/forks`
             forks_link.target = "_blank"
+            forks_link.setAttribute('title', 'Forks')
             forks_column.appendChild(forks_link)
             let forks_icon = document.createElement("i")
             forks_icon.className = "fa-solid fa-code-fork align-middle"
@@ -239,23 +319,6 @@ let populate_results = function (plugins_list) {
             forks_text.textContent = plugins_list[plugin]['forks_count']
             forks_link.appendChild(forks_text)
 
-            // add open issues count
-            let issues_column = document.createElement("div")
-            issues_column.className = "col-auto align-self-center me-1"
-            stats_row.appendChild(issues_column)
-            let issues_link = document.createElement("a")
-            issues_link.className = "nav-link nav-link-sm text-white"
-            issues_link.href = `${plugins_list[plugin]['html_url']}/issues`
-            issues_link.target = "_blank"
-            issues_column.appendChild(issues_link)
-            let issues_icon = document.createElement("i")
-            issues_icon.className = "fa-regular fa-circle-dot align-middle"
-            issues_link.appendChild(issues_icon)
-            let issues_text = document.createElement("p")
-            issues_text.className = "card-text ms-2 d-inline"
-            issues_text.textContent = plugins_list[plugin]['open_issues_count']
-            issues_link.appendChild(issues_text)
-
             // add open pull requests count
             let prs_column = document.createElement("div")
             prs_column.className = "col-auto align-self-center me-1"
@@ -264,6 +327,7 @@ let populate_results = function (plugins_list) {
             prs_link.className = "nav-link nav-link-sm text-white"
             prs_link.href = `${plugins_list[plugin]['html_url']}/pulls`
             prs_link.target = "_blank"
+            prs_link.setAttribute('title', 'Open Pull Requests')
             prs_column.appendChild(prs_link)
             let prs_icon = document.createElement("i")
             prs_icon.className = "fa-solid fa-code-pull-request align-middle"
@@ -273,6 +337,55 @@ let populate_results = function (plugins_list) {
             prs_text.textContent = plugins_list[plugin]['open_pull_requests_count']
             prs_link.appendChild(prs_text)
 
+            // add open issues count
+            if (plugins_list[plugin]['has_issues']) {
+                let issues_column = document.createElement("div")
+                issues_column.className = "col-auto align-self-center me-1"
+                stats_row.appendChild(issues_column)
+                let issues_link = document.createElement("a")
+                issues_link.className = "nav-link nav-link-sm text-white"
+                issues_link.href = `${plugins_list[plugin]['html_url']}/issues`
+                issues_link.target = "_blank"
+                issues_link.setAttribute('title', 'Open Issues')
+                issues_column.appendChild(issues_link)
+                let issues_icon = document.createElement("i")
+                issues_icon.className = "fa-regular fa-circle-dot align-middle"
+                issues_link.appendChild(issues_icon)
+                let issues_text = document.createElement("p")
+                issues_text.className = "card-text ms-2 d-inline"
+                issues_text.textContent = plugins_list[plugin]['open_issues_count']
+                issues_link.appendChild(issues_text)
+            }
+
+        }
+        else if (plugins_list[plugin]['installed_data']['type'] === "system") {
+            let category_column = document.createElement("div")
+            category_column.className = "col-auto align-self-center"
+            categories_row.appendChild(category_column)
+            let category_badge = document.createElement("span")
+            category_badge.className = "badge bg-warning text-dark"
+            category_badge.textContent = "System Plugin"
+            category_column.appendChild(category_badge)
+
+            // Plex icon
+            let system_plugin_column = document.createElement("div")
+            system_plugin_column.className = "col-auto align-self-center me-1"
+            urls_row.appendChild(system_plugin_column)
+            let system_plugin_link = document.createElement("a")
+            system_plugin_link.className = "nav-link nav-link-sm text-white"
+            system_plugin_link.href = "https://forums.plex.tv"
+            system_plugin_link.target = "_blank"
+            system_plugin_column.appendChild(system_plugin_link)
+            let system_plugin_icon = document.createElement("span")
+            system_plugin_icon.className = "fa-stack fa-xs"
+            system_plugin_icon.setAttribute('title', 'Plex Forum')
+            system_plugin_link.appendChild(system_plugin_icon)
+            let system_plugin_icon_outer = document.createElement("i")
+            system_plugin_icon_outer.className = "fa-regular fa-circle fa-stack-2x"
+            system_plugin_icon.appendChild(system_plugin_icon_outer)
+            let system_plugin_icon_inner = document.createElement("i")
+            system_plugin_icon_inner.className = "fa-solid fa-chevron-right fa-stack-1x"
+            system_plugin_icon.appendChild(system_plugin_icon_inner)
         }
 
         let card_footer = document.createElement("div")
@@ -298,6 +411,7 @@ let populate_results = function (plugins_list) {
             let logs_icon = document.createElement("i")
             logs_icon.className = "fa-solid fa-file-lines fa-xl align-middle"
             logs_icon.style.cssText = "cursor:pointer;cursor:hand"
+            logs_icon.setAttribute('title', 'Logs')
             logs_icon.setAttribute("data-bs-toggle", "modal")
             logs_icon.setAttribute("data-bs-target", "#logsModal")
             logs_icon.setAttribute("data-bs-plugin_name", plugin_name)
@@ -308,20 +422,8 @@ let populate_results = function (plugins_list) {
             // }
             logs_column.appendChild(logs_icon)
 
-            if (plugins_list[plugin]['installed_data']['type'] === "system") {
-                // we can't do anything with these so just show a special image
+            if (plugins_list[plugin]['installed_data']['type'] === "user") {
 
-                let system_column = document.createElement("div")
-                system_column.className = "col-auto align-self-center me-1"
-                card_footer.appendChild(system_column)
-
-                let system_plugin = document.createElement("img")
-                system_plugin.src = "/plex.ico"
-                system_plugin.alt = ""
-                system_plugin.width = 24
-                system_column.appendChild(system_plugin)
-            }
-            else {
                 // add icon to update
                 let update_column = document.createElement("div")
                 update_column.className = "col-auto align-self-center me-1"
@@ -330,6 +432,7 @@ let populate_results = function (plugins_list) {
                 let update_icon = document.createElement("i")
                 update_icon.className = "fa-solid fa-sync fa-xl align-middle"
                 update_icon.style.cssText = "cursor:pointer;cursor:hand"
+                update_icon.setAttribute('title', 'Force Update')
                 update_icon.onclick = function () {
                     // open url
                     window.open(`/update/${plugin_identifier}`, "_blank")
@@ -344,6 +447,7 @@ let populate_results = function (plugins_list) {
                 let uninstall_icon = document.createElement("i")
                 uninstall_icon.className = "fa-solid fa-trash fa-xl align-middle"
                 uninstall_icon.style.cssText = "cursor:pointer;cursor:hand"
+                uninstall_icon.setAttribute('title', 'Uninstall')
                 uninstall_icon.onclick = function () {
                     // open url
                     window.open(`/uninstall/${plugin_identifier}`, "_blank")
@@ -360,6 +464,7 @@ let populate_results = function (plugins_list) {
             let install_icon = document.createElement("i")
             install_icon.className = "fa-solid fa-download fa-xl align-middle"
             install_icon.style.cssText = "cursor:pointer;cursor:hand"
+            install_icon.setAttribute('title', 'Install')
             install_icon.onclick = function () {
                 // open url
                 window.open(`/install/${plugins_list[plugin]['identifier']}`, "_blank")
@@ -367,6 +472,22 @@ let populate_results = function (plugins_list) {
             install_column.appendChild(install_icon)
         }
     }
+}
+
+
+let compare_urls = function (a, b) {
+    // if a and b are not null
+    if (a && b) {
+        // remove trailing slash
+        if (a.slice(-1) === "/") {
+            a = a.slice(0, -1)
+        }
+        if (b.slice(-1) === "/") {
+            b = b.slice(0, -1)
+        }
+    }
+
+    return a === b;
 }
 
 
