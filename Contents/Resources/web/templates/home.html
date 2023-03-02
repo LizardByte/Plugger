@@ -51,8 +51,18 @@
                             <form id="searchForm">
                                 <div class="form-group d-flex">
                                     <div class="col-3 me-3">
-                                        <select class="form-select rounded-0" aria-label="{{ _('Search Categories') }}" id="search_type">
-                                        </select>
+                                        <div class="btn-group w-100">
+                                            <button type="button" class="btn btn-warning rounded-0 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Categories
+                                            </button>
+                                            <div id="search_type" class="dropdown-menu px-4 py-3 rounded-0 w-100 bg-dark border-white text-white"
+                                                 aria-label="{{ _('Search Categories') }}">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="category_system_plugin">
+                                                    <label class="form-check-label" for="category_system_plugin">{{ _('System Plugin') }}</label>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-6 me-3">
                                         <input type="text" class="form-control rounded-0" placeholder="Search" id="search_term">

@@ -16,6 +16,9 @@ let all_plugins = []
 
 let plugins_container = document.getElementById("plugins-container")
 
+// get search options, we will append each category to this list
+let search_options = document.getElementById("search_type")
+
 $(document).ready(function(){
     // get installed plugins
     // json data with key being the plugin_identifier
@@ -92,17 +95,17 @@ $(document).ready(function(){
     all_plugins = all_plugins.sort(rankingSorter('name_lower', 'full_name')).reverse()
 
     // populate the plugins container
-    populate_results(all_plugins)
+    populate_results(all_plugins, plugins_container)
 })
 
 
-let populate_results = function (plugins_list) {
+let populate_results = function (plugins_list, container) {
     for (let plugin in plugins_list) {
         let plugin_name = plugins_list[plugin]['name']
 
         let item_container = document.createElement("div")
         item_container.className = "container mb-5 shadow border-0 bg-dark rounded-0 px-0"
-        plugins_container.appendChild(item_container)
+        container.appendChild(item_container)
 
         let inner_container = document.createElement("div")
         inner_container.className = "container py-4 px-1"
@@ -168,6 +171,43 @@ let populate_results = function (plugins_list) {
         if (plugins_list[plugin]['html_url']) {
             // create a badge for each category
             for (let category in plugins_list[plugin]['categories']) {
+                // if category is not in search_type drop down, add it
+                let search_option = document.createElement("div")
+                search_option.className = "form-check"
+                let search_option_input = document.createElement("input")
+                search_option_input.className = "form-check-input"
+                search_option_input.type = "checkbox"
+                let category_id = `category_${plugins_list[plugin]['categories'][category].replace(" ", "_").toLowerCase()}`
+                search_option_input.id = category_id
+                search_option.appendChild(search_option_input)
+                let search_option_label = document.createElement("label")
+                search_option_label.className = "form-check-label"
+                search_option_label.setAttribute("for", category_id)
+                search_option_label.textContent = plugins_list[plugin]['categories'][category]
+                search_option.appendChild(search_option_label)
+
+                let add_category = true
+                for (let i = 0; i < search_options.children.length; i++) {
+                    if (search_options.children[i].textContent === search_option_label.textContent) {
+                        add_category = false
+                        break
+                    }
+                }
+                if (add_category) {
+                    search_options.appendChild(search_option)
+
+                    // sort options alphabetically
+                    for (let i = 0; i < search_options.children.length; i++) {
+                        for (let j = i + 1; j < search_options.children.length; j++) {
+                            if (search_options.children[i].textContent.trim() > search_options.children[j].textContent.trim()) {
+                                let temp = search_options.children[i].innerHTML
+                                search_options.children[i].innerHTML = search_options.children[j].innerHTML
+                                search_options.children[j].innerHTML = temp
+                            }
+                        }
+                    }
+                }
+
                 let category_column = document.createElement("div")
                 category_column.className = "col-auto align-self-center"
                 categories_row.appendChild(category_column)
@@ -176,6 +216,21 @@ let populate_results = function (plugins_list) {
                 category_badge.textContent = plugins_list[plugin]['categories'][category]
                 category_column.appendChild(category_badge)
             }
+            // add a categories edit button using fontawesome icon
+            // todo - pass categories to the issue form
+            let edit_link = `https://github.com/LizardByte/PluggerDB/issues/new?assignees=&labels=request-plugin&template=plugin.yml&title=${encodeURIComponent('[PLUGIN]: ')}${encodeURIComponent(plugins_list[plugin]['html_url'].replace('https://github.com/', ''))}&github_url=${encodeURIComponent(plugins_list[plugin]['html_url'])}`
+            let category_column = document.createElement("div")
+            category_column.className = "col-auto align-self-center"
+            categories_row.appendChild(category_column)
+            let category_edit_button = document.createElement("a")
+            category_edit_button.className = "nav-link nav-link-sm text-white"
+            category_edit_button.href = edit_link
+            category_edit_button.target = "_blank"
+            category_column.appendChild(category_edit_button)
+            let category_edit_icon = document.createElement("i")
+            category_edit_icon.className = "fa-solid fa-edit fa-1x align-middle"
+            category_edit_icon.setAttribute('title', 'Edit Categories')
+            category_edit_button.appendChild(category_edit_icon)
 
             // GitHub url
             let github_column = document.createElement("div")
@@ -472,6 +527,45 @@ let populate_results = function (plugins_list) {
             install_column.appendChild(install_icon)
         }
     }
+
+    // add event listener to the parent element
+    search_options.addEventListener("click", function(event) {
+        // prevent dropdown-menu from closing on click
+        event.stopPropagation()
+        // check if the clicked element was an input checkbox
+        if (event.target.tagName === "INPUT" && event.target.type === "checkbox") {
+            if (event.target.getAttribute("data-event-state") === "unchecked") {
+                // check
+                event.target.checked = true
+                event.target.indeterminate = false
+                event.target.setAttribute("data-event-state", "checked")
+            } else if (event.target.getAttribute("data-event-state") === "checked") {
+                // make intermediate
+                event.target.checked = false
+                event.target.indeterminate = true
+                event.target.setAttribute("data-event-state", "indeterminate")
+            } else if (event.target.getAttribute("data-event-state") === "indeterminate") {
+                // uncheck
+                event.target.checked = false
+                event.target.indeterminate = false
+                event.target.setAttribute("data-event-state", "unchecked")
+            }
+        }
+    })
+
+    // set data attributes for each checkbox
+    for (let i = 0; i < search_options.children.length; i++) {
+        let checkbox = search_options.children[i].children[0]
+        if (checkbox.checked && checkbox.indeterminate === false) {
+            checkbox.setAttribute("data-event-state", "checked")
+        }
+        else if (checkbox.checked === false && checkbox.indeterminate === true) {
+            checkbox.setAttribute("data-event-state", "indeterminate")
+        }
+        else if (checkbox.checked === false && checkbox.indeterminate === false) {
+            checkbox.setAttribute("data-event-state", "unchecked")
+        }
+    }
 }
 
 
@@ -506,7 +600,13 @@ let run_search = function () {
         if (field.type !== "submit" && field.type !== "button") {
             // checkbox fields
             if (field.type === "checkbox") {
-                data.append(field.id, field.checked)
+                if (field.indeterminate === true) {
+                    // exclude these categories completely
+                    data.append(`exclude_${field.id}`, field.indeterminate)
+                }
+                else {
+                    data.append(field.id, field.checked)
+                }
             }
             // radio fields... must be checked
             else if (field.type === "radio") {
@@ -522,65 +622,33 @@ let run_search = function () {
     }
 
     // extract the search values from the data object
-    let search_type = data.get("search_type")
     let search_term = data.get("search_term")
 
-    // if the search term is empty, don't do anything
-    if (search_term === "") {
-        return
-    }
-
     // hide the existing content
-    document.getElementById("Games").classList.add("d-none")
-    document.getElementById("Movies").classList.add("d-none")
-
-    // get the item type
-    let type = Object.keys(types_dict)[search_type]
-
-    // check if the all_search_items array is empty
-    if (types_dict[type]['all_search_items'].length === 0) {
-        // reset page count
-        let page = 1
-        let total_pages = 1
-
-        // get total number of pages
-        $.ajax({
-            async: false,
-            url: `${types_dict[type]['base_url']}pages.json`,
-            type: "GET",
-            dataType: "json",
-            success: function (result) {
-                total_pages = result['pages']
-            }
-        })
-
-        // loop through all pages
-        while (page <= total_pages) {
-            $.ajax({
-                async: false,
-                url: `${types_dict[type]['base_url']}all_page_${page}.json`,
-                type: "GET",
-                dataType: "json",
-                success: function (result) {
-                    // loop through all items in the page
-                    for (let item of result) {
-                        types_dict[type]['all_search_items'].push(item)
-                    }
-                }
-            })
-            page += 1
-        }
-    }
+    document.getElementById("Plugins").classList.add("d-none")
 
     // results list
     let result = []
 
-    // loop through all search items
-    for (let item of types_dict[type]['all_search_items']) {
-        // search using levenshtein distance
-        item['score'] = levenshteinDistance.get(search_term.toLowerCase(), item['title'].toLowerCase())
-        if (item['score'] >= 40) {
-            result.push(item)
+    // search title
+    let search_title = true
+    if (search_term === "") {
+        search_title = false
+    }
+
+    // add plugger plugins to all plugins list
+    for (let plugin in all_plugins) {
+        // no search term provided so add all plugins
+        if (search_title === false) {
+            result.push(all_plugins[plugin])
+        }
+        else {
+            // search using levenshtein distance
+            let score = levenshteinDistance.get(search_term.toLowerCase(), all_plugins[plugin]['name'].toLowerCase())
+            if (score >= 40) {
+                result.push(all_plugins[plugin])
+                result[result.length - 1]['score'] = score
+            }
         }
     }
 
@@ -591,16 +659,21 @@ let run_search = function () {
     search_container.appendChild(clear_results_button)
     clear_results_button.onclick = function () {
         search_container.innerHTML = ""
-        document.getElementById("Games").classList.remove("d-none")
-        document.getElementById("Movies").classList.remove("d-none")
+        document.getElementById("Plugins").classList.remove("d-none")
     }
 
     let item_type_container = document.createElement("div")
     search_container.appendChild(item_type_container)
 
-    let sorted = result.sort(rankingSorter('score', 'title'))
+    let sorted
+    if (search_title === true) {
+        sorted = result.sort(rankingSorter('score', 'name'))
+    }
+    else {
+        sorted = result.sort(rankingSorter('name', 'full_name')).reverse()
+    }
 
-    populate_results(type, sorted, item_type_container)
+    populate_results(sorted, search_container)
 }
 
 $(document).ready(function() {
