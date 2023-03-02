@@ -96,6 +96,9 @@ $(document).ready(function(){
 
     // populate the plugins container
     populate_results(all_plugins, plugins_container)
+
+    // set up the alert listener
+    setup_alert_listener()
 })
 
 
@@ -414,6 +417,14 @@ let populate_results = function (plugins_list, container) {
 
         }
         else if (plugins_list[plugin]['installed_data']['type'] === "system") {
+            // add the system plugin category
+            plugins_list[plugin]['categories'] = ["System Plugin"]
+            // add counts (for sorting only)
+            plugins_list[plugin]['stargazers_count'] = -1
+            plugins_list[plugin]['forks_count'] = -1
+            plugins_list[plugin]['open_pull_requests_count'] = -1
+            plugins_list[plugin]['open_issues_count'] = -1
+
             let category_column = document.createElement("div")
             category_column.className = "col-auto align-self-center"
             categories_row.appendChild(category_column)
@@ -527,7 +538,10 @@ let populate_results = function (plugins_list, container) {
             install_column.appendChild(install_icon)
         }
     }
+}
 
+
+let setup_alert_listener = function () {
     // add event listener to the parent element
     search_options.addEventListener("click", function(event) {
         // prevent dropdown-menu from closing on click
@@ -568,7 +582,6 @@ let populate_results = function (plugins_list, container) {
     }
 }
 
-
 let compare_urls = function (a, b) {
     // if a and b are not null
     if (a && b) {
@@ -604,8 +617,8 @@ let run_search = function () {
                     // exclude these categories completely
                     data.append(`exclude_${field.id}`, field.indeterminate)
                 }
-                else {
-                    data.append(field.id, field.checked)
+                else if (field.checked) {
+                    data.append(`include_${field.id}`, field.checked)
                 }
             }
             // radio fields... must be checked
@@ -622,7 +635,28 @@ let run_search = function () {
     }
 
     // extract the search values from the data object
+    // get the search term
     let search_term = data.get("search_term")
+    // get the sort type
+    let sort_type = data.get("sort_type")
+
+    // get the excluded and included categories
+    let excluded_categories = []
+    let included_categories = []
+    for (let key of data.keys()) {
+        if (key.startsWith("exclude_category_")) {
+            let category = key.replace("exclude_category_", "")
+            if (data.get(key) === "true") {
+                excluded_categories.push(category)
+            }
+        }
+        else if (key.startsWith("include_category_")) {
+            let category = key.replace("include_category_", "")
+            if (data.get(key) === "true") {
+                included_categories.push(category)
+            }
+        }
+    }
 
     // hide the existing content
     document.getElementById("Plugins").classList.add("d-none")
@@ -638,16 +672,36 @@ let run_search = function () {
 
     // add plugger plugins to all plugins list
     for (let plugin in all_plugins) {
-        // no search term provided so add all plugins
-        if (search_title === false) {
-            result.push(all_plugins[plugin])
+        let add_plugin = false
+
+        for (let category in all_plugins[plugin]['categories']) {
+            let cat_representation = all_plugins[plugin]['categories'][category].toLowerCase().replace(" ", "_")
+            // check if the plugin is in the excluded categories
+            if (excluded_categories.includes(cat_representation)) {
+                add_plugin = false
+                break
+            }
+            // check if the plugin is in the included categories
+            else if (included_categories.length === 0) {
+                add_plugin = true
+            }
+            else if (included_categories.length > 0 && included_categories.includes(cat_representation)) {
+                add_plugin = true
+            }
         }
-        else {
-            // search using levenshtein distance
-            let score = levenshteinDistance.get(search_term.toLowerCase(), all_plugins[plugin]['name'].toLowerCase())
-            if (score >= 40) {
+
+        // if the plugin is not in the excluded categories and is in the included categories
+        if (add_plugin === true) {
+            // no search term provided so add all plugins
+            if (search_title === false) {
                 result.push(all_plugins[plugin])
-                result[result.length - 1]['score'] = score
+            } else {
+                // search using levenshtein distance
+                let score = levenshteinDistance.get(search_term.toLowerCase(), all_plugins[plugin]['name'].toLowerCase())
+                if (score >= 40) {
+                    result.push(all_plugins[plugin])
+                    result[result.length - 1]['score'] = score
+                }
             }
         }
     }
@@ -666,11 +720,34 @@ let run_search = function () {
     search_container.appendChild(item_type_container)
 
     let sorted
+    let primary_sort
+    let secondary_sort
     if (search_title === true) {
-        sorted = result.sort(rankingSorter('score', 'name'))
+        if (sort_type === "0") {
+            primary_sort = 'score'
+            secondary_sort = 'name'
+        }
+        else {
+            primary_sort = sort_type
+            secondary_sort = 'score'
+        }
+        sorted = result.sort(rankingSorter(primary_sort, secondary_sort))
     }
     else {
-        sorted = result.sort(rankingSorter('name', 'full_name')).reverse()
+        if (sort_type === "0") {
+            primary_sort = 'name'
+            secondary_sort = 'full_name'
+        }
+        else {
+            primary_sort = sort_type
+            secondary_sort = 'full_name'
+        }
+        if (primary_sort === "name") {
+            sorted = result.sort(rankingSorter(primary_sort, secondary_sort)).reverse()
+        }
+        else {
+            sorted = result.sort(rankingSorter(primary_sort, secondary_sort))
+        }
     }
 
     populate_results(sorted, search_container)
