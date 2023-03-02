@@ -49,14 +49,13 @@
                     <section class="py-5 offset-anchor" id="Search">
                         <div class="container mb-5">
                             <form id="searchForm">
-                                <div class="form-group d-flex">
-                                    <div class="col-2 me-3">
+                                <div class="form-group d-flex flex-wrap">
+                                    <div class="col-lg-2 col-md-4 col-sm-8 col-12 me-3 mb-3">
                                         <div class="btn-group w-100">
                                             <button type="button" class="btn btn-warning rounded-0 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Categories
                                             </button>
-                                            <div id="search_type" class="dropdown-menu px-4 py-3 rounded-0 w-100 bg-dark border-white text-white"
-                                                 aria-label="{{ _('Search Categories') }}">
+                                            <div id="search_type" class="dropdown-menu px-4 py-3 rounded-0 w-100 bg-dark border-white text-white" aria-label="{{ _('Search Categories') }}">
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox" id="category_system_plugin">
                                                     <label class="form-check-label" for="category_system_plugin">{{ _('System Plugin') }}</label>
@@ -64,9 +63,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-2 me-3">
+                                    <div class="col-lg-2 col-md-4 col-sm-8 col-12 me-3 mb-3">
                                         <select class="form-select rounded-0" aria-label="{{ _('Sort Type') }}" id="sort_type">
-                                            <option selected value="0">{{ _('Default') }}</option>
+                                            <option value="0" selected disabled>{{ _('Sort Type') }}</option>
+                                            <option value="0">{{ _('Default') }}</option>
                                             <option value="name">{{ _('Name') }}</option>
                                             <option value="stargazers_count">{{ _('Stars') }}</option>
                                             <option value="forks_count">{{ _('Forks') }}</option>
@@ -74,10 +74,10 @@
                                             <option value="open_issues_count">{{ _('Open Issues') }}</option>
                                         </select>
                                     </div>
-                                    <div class="col-4 me-3">
-                                        <input type="text" class="form-control rounded-0" placeholder="Search" id="search_term">
+                                    <div class="col-lg-5 col-md-6 col-sm-8 col-12 me-3 mb-3">
+                                        <input type="text" class="form-control rounded-0 w-100" placeholder="Search" id="search_term">
                                     </div>
-                                    <button type="button" class="btn btn-warning ml-3 rounded-0" onclick="run_search()">
+                                    <button type="button" class="btn btn-warning ml-3 rounded-0 mb-3" onclick="run_search()">
                                         <i class="fa-fw fas fa-search"></i>{{ _('Search') }}</button>
                                 </div>
                             </form>
