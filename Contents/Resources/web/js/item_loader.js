@@ -95,14 +95,14 @@ $(document).ready(function(){
     all_plugins = all_plugins.sort(rankingSorter('name_lower', 'full_name')).reverse()
 
     // populate the plugins container
-    populate_results(all_plugins, plugins_container)
+    populate_results(all_plugins, plugins_container, true)
 
     // set up the alert listener
     setup_alert_listener()
 })
 
 
-let populate_results = function (plugins_list, container) {
+let populate_results = function (plugins_list, container, update_counts = false) {
     for (let plugin in plugins_list) {
         let plugin_name = plugins_list[plugin]['name']
 
@@ -188,11 +188,21 @@ let populate_results = function (plugins_list, container) {
                 search_option_label.setAttribute("for", category_id)
                 search_option_label.textContent = plugins_list[plugin]['categories'][category]
                 search_option.appendChild(search_option_label)
+                let search_option_count_label = document.createElement("label")
+                search_option_count_label.className = "form-check-label badge bg-danger ms-2"
+                search_option_count_label.setAttribute("for", category_id)
+                search_option_count_label.textContent = "1"
+                search_option.appendChild(search_option_count_label)
 
                 let add_category = true
                 for (let i = 0; i < search_options.children.length; i++) {
-                    if (search_options.children[i].textContent === search_option_label.textContent) {
+                    if (search_options.children[i].children[1].textContent === search_option_label.textContent) {
                         add_category = false
+                        // increment the count
+                        if (update_counts) {
+                            let count = parseInt(search_options.children[i].children[2].textContent)
+                            search_options.children[i].children[2].textContent = `${count + 1}`
+                        }
                         break
                     }
                 }
@@ -425,6 +435,12 @@ let populate_results = function (plugins_list, container) {
             plugins_list[plugin]['open_pull_requests_count'] = -1
             plugins_list[plugin]['open_issues_count'] = -1
 
+            // increment the count in the search_options drop down
+            if (update_counts) {
+                let system_plugin_count = document.getElementById("count_system_plugin")
+                system_plugin_count.textContent = `${parseInt(system_plugin_count.textContent) + 1}`
+            }
+
             let category_column = document.createElement("div")
             category_column.className = "col-auto align-self-center"
             categories_row.appendChild(category_column)
@@ -452,6 +468,56 @@ let populate_results = function (plugins_list, container) {
             let system_plugin_icon_inner = document.createElement("i")
             system_plugin_icon_inner.className = "fa-solid fa-chevron-right fa-stack-1x"
             system_plugin_icon.appendChild(system_plugin_icon_inner)
+        }
+        else if (plugins_list[plugin]['installed_data']['type'] === "user") {
+            // these are installed plugins that are not system plugins and not in our database
+
+            // add the installed plugin category
+            plugins_list[plugin]['categories'] = []  // empty list, "Installed Plugin" will be added later
+            // add counts (for sorting only)
+            plugins_list[plugin]['stargazers_count'] = -1
+            plugins_list[plugin]['forks_count'] = -1
+            plugins_list[plugin]['open_pull_requests_count'] = -1
+            plugins_list[plugin]['open_issues_count'] = -1
+        }
+
+        if (plugins_list[plugin]['installed']) {
+            // add installed category
+            try {
+                plugins_list[plugin]['categories'].includes("Installed Plugin")
+            } catch (e) {
+                // plugin is installed, but not a system plugin and not in our database
+                plugins_list[plugin]['categories'] = ["Installed Plugin"]
+            } finally {
+                if (plugins_list[plugin]['categories'].includes("Installed Plugin") === false) {
+                    // add "Installed Plugin" to the beginning of the array
+                    plugins_list[plugin]['categories'].unshift("Installed Plugin")
+
+                    // add the category badge
+                    let category_column = document.createElement("div")
+                    category_column.className = "col-auto align-self-center"
+                    // categories_row.appendChild(category_column)
+                    // move to the beginning of the row
+                    categories_row.insertBefore(category_column, categories_row.firstChild)
+                    let category_badge = document.createElement("span")
+                    category_badge.className = "badge bg-info text-dark"
+                    category_badge.textContent = "Installed Plugin"
+                    category_column.appendChild(category_badge)
+                } else {
+                    // change the badge color
+                    for (let category of categories_row.children) {
+                        if (category.textContent === "Installed Plugin") {
+                            category.children[0].className = "badge bg-info text-dark"
+                        }
+                    }
+                }
+
+                // increment the count in the search_options drop down
+                if (update_counts) {
+                    let installed_plugin_count = document.getElementById("count_installed_plugin")
+                    installed_plugin_count.textContent = `${parseInt(installed_plugin_count.textContent) + 1}`
+                }
+            }
         }
 
         let card_footer = document.createElement("div")
@@ -750,7 +816,7 @@ let run_search = function () {
         }
     }
 
-    populate_results(sorted, search_container)
+    populate_results(sorted, search_container, false)
 }
 
 $(document).ready(function() {
