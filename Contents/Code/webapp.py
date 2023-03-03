@@ -18,14 +18,13 @@ else:  # the code is running outside of Plex
 
 # lib imports
 import flask
-from flask import Flask, Response
-from flask import render_template, request, send_from_directory
+from flask import Flask, Response, render_template, request, send_from_directory
 from flask_babel import Babel
 import requests
 
 # local imports
-from const import bundle_identifier, plex_base_url, plugin_directory, plugin_logs_directory, \
-    system_plugins_directory, PLEXTOKEN
+from const import bundle_identifier, plex_base_url, plex_token, plugin_directory, plugin_logs_directory, \
+    system_plugins_directory
 
 
 # setup flask app
@@ -88,7 +87,7 @@ else:
 
 # default plex headers
 PLEX_HEADERS = {
-    'X-Plex-Token': PLEXTOKEN,
+    'X-Plex-Token': plex_token,
 }
 
 
@@ -420,12 +419,12 @@ def thumbnail(plugin_identifier):
         'jpg',
         'jpeg',
     ]
-    for image in image_priotity:
+    for img in image_priotity:
         if plugin_thumbnail:
             break  # break first loop
         for extension in image_extensions:
             plugin_thumbnail_path = os.path.join(plugin_path, 'Contents', 'Resources', '%s.%s' % (
-                image, extension))
+                img, extension))
             if os.path.isfile(plugin_thumbnail_path):
                 plugin_thumbnail = (os.path.dirname(plugin_thumbnail_path),
                                     os.path.basename(plugin_thumbnail_path))

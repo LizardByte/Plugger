@@ -1,6 +1,5 @@
 # standard imports
 import os
-import sys
 
 # plex debugging
 try:
@@ -16,4 +15,4 @@ plugin_directory = os.path.join(app_support_directory, 'Plug-ins')
 plugin_logs_directory = os.path.join(app_support_directory, 'Logs', 'PMS Plugin Logs')
 system_plugins_directory = Core.bundled_plugins_path
 plex_base_url = 'http://127.0.0.1:32400'
-PLEXTOKEN = os.environ.get('PLEXTOKEN')
+plex_token = os.environ.get('PLEXTOKEN')
