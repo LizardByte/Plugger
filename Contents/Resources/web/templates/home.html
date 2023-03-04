@@ -1,24 +1,53 @@
 {% extends 'base.html' %}
 {% block modals %}
+    {# Install Modal #}
+    <div class="modal fade" id="installModal" tabindex="-1" aria-labelledby="installModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-fullscreen-xxl-down">
+            <div class="modal-content bg-dark-gray text-white">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="installModalLabel">{{ _('Install') }}</h5>
+                    {# Close button #}
+                    <div class="d-flex align-items-center">
+                        <button type="button" class="btn-close btn-close-white ms-4" data-bs-dismiss="modal" aria-label="{{ _('Close') }}"></button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div id="install_section"></div>
+                </div>
+                <div class="modal-footer">
+                    {# Close button #}
+                    <div class="d-flex align-items-center">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="{{ _('Cancel') }}">{{ _('Cancel') }}</button>
+                    </div>
+                    {# Install button #}
+                    <div class="d-flex align-items-center">
+                        <button id="btn-install" type="button" class="btn btn-info" aria-label="{{ _('Install') }}">{{ _('Install') }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Logs Modal #}
     <div class="modal fade" id="logsModal" tabindex="-1" aria-labelledby="logsModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-fullscreen-xxl-down">
             <div class="modal-content bg-dark-gray text-white">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="logsModalLabel">Logs</h5>
+                    <h5 class="modal-title" id="logsModalLabel">{{ _('Logs') }}</h5>
                     {# Copy button #}
                     <div class="d-flex align-items-center ms-auto">
-                        <button id="copy-btn-header" type="button" class="btn btn-outline-light ms-auto" data-clipboard-target="#logs">
+                        <button id="copy-btn-header" type="button" class="btn btn-outline-light ms-auto" data-clipboard-target="#logs" aria-label="{{ _('Copy') }}">
                             <i class="fa-solid fa-fw fa-copy"></i>
                         </button>
                     </div>
                     {# Auto refresh toggle #}
                     <div class="form-check form-switch ms-4">
-                        <input class="form-check-input" type="checkbox" role="switch" id="switch_auto_refresh" checked>
+                        <input class="form-check-input" type="checkbox" role="switch" id="switch_auto_refresh" aria-label="{{ _('Auto refresh') }}" checked>
                         <label class="form-check-label" for="switch_auto_refresh">{{ _('Auto refresh') }}</label>
                     </div>
                     {# Close button #}
                     <div class="d-flex align-items-center">
-                        <button type="button" class="btn-close btn-close-white ms-4" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close btn-close-white ms-4" data-bs-dismiss="modal" aria-label="{{ _('Close') }}"></button>
                     </div>
                 </div>
                 <div class="modal-body">
@@ -27,13 +56,13 @@
                 <div class="modal-footer">
                     {# Copy button #}
                     <div class="d-flex align-items-center">
-                        <button id="copy-btn-footer" type="button" class="btn btn-outline-light" data-clipboard-target="#logs">
+                        <button id="copy-btn-footer" type="button" class="btn btn-outline-light" data-clipboard-target="#logs" aria-label="{{ _('Copy') }}">
                             <i class="fa-solid fa-fw fa-copy"></i>
                         </button>
                     </div>
                     {# Close button #}
                     <div class="d-flex align-items-center">
-                        <button type="button" class="btn-close btn-close-white ms-4" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close btn-close-white ms-4" data-bs-dismiss="modal" aria-label="{{ _('Close') }}"></button>
                     </div>
                 </div>
             </div>
@@ -53,7 +82,7 @@
                                     <div class="col-lg-3 col-md-4 col-sm-8 col-12 me-3 mb-3">
                                         <div class="btn-group w-100">
                                             <button type="button" class="btn btn-warning rounded-0 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Categories
+                                                {{ _('Categories') }}
                                             </button>
                                             <div id="search_type" class="dropdown-menu px-4 py-3 rounded-0 w-100 bg-dark border-white text-white" aria-label="{{ _('Search Categories') }}">
                                                 <div class="form-check">
@@ -74,6 +103,7 @@
                                             <option value="0" selected disabled>{{ _('Sort Type') }}</option>
                                             <option value="0">{{ _('Default') }}</option>
                                             <option value="name">{{ _('Name') }}</option>
+                                            <option value="github_id">{{ _('Created Date') }}</option>
                                             <option value="stargazers_count">{{ _('Stars') }}</option>
                                             <option value="forks_count">{{ _('Forks') }}</option>
                                             <option value="open_pull_requests_count">{{ _('Open Pull Requests') }}</option>
@@ -81,7 +111,7 @@
                                         </select>
                                     </div>
                                     <div class="col-lg-5 col-md-6 col-sm-8 col-12 me-3 mb-3">
-                                        <input type="text" class="form-control rounded-0 w-100" placeholder="Search" id="search_term">
+                                        <input type="text" class="form-control rounded-0 w-100" placeholder="{{ _('Search') }}" id="search_term">
                                     </div>
                                     <button type="button" class="btn btn-warning ml-3 rounded-0 mb-3" onclick="run_search()">
                                         <i class="fa-fw fas fa-search"></i>{{ _('Search') }}</button>
@@ -111,6 +141,138 @@
     {# Load Plugin List #}
     <script src="{{ url_for('static', filename='js/item_loader.js') }}"></script>
 
+    {# Install Modal #}
+    <script>
+        let installModal = document.getElementById('installModal')
+
+        installModal.addEventListener('show.bs.modal', function (event) {
+            // hide discord widget
+            let discord_widget = document.getElementsByTagName('widgetbot-crate')[0]
+            discord_widget.classList.add('d-none')
+
+            // Button that triggered the modal
+            let button = event.relatedTarget
+            // Extract info from data-bs-* attributes
+            let github_id = button.getAttribute('data-bs-github_id')
+            let plugin_name = button.getAttribute('data-bs-plugin_name')
+
+            // Update the modal's content.
+            let modalTitle = installModal.querySelector('.modal-title')
+            modalTitle.textContent = `{{ _('Install:') }} ${plugin_name}`
+
+            let install_section = installModal.querySelector('#install_section')
+            install_section.innerHTML = ''
+
+            // get PluggerDB plugins
+            // json data with key being the GitHub repo id
+            // will need to match the name property name or bundle property of the installed plugin data
+            $.ajax({
+                async: false,
+                url: "https://app.lizardbyte.dev/PluggerDB/plugins.json",
+                type: "GET",
+                dataType: "json",
+                success: function (result) {
+                    let plugin = result[github_id]
+                    let default_branch = plugin['default_branch']
+                    let branches = plugin['branches']
+                    let releases = plugin['releases']
+
+                    let dropdown = document.createElement('select')
+                    dropdown.classList.add('form-select')
+                    dropdown.classList.add('rounded-0')
+                    dropdown.classList.add('mb-3')
+                    dropdown.id = 'install_branch'
+                    dropdown.setAttribute('aria-label', '{{ _('Branch') }}')
+                    dropdown.setAttribute('aria-describedby', 'install_branch_help')
+                    dropdown.setAttribute('required', '')
+                    dropdown.setAttribute('onchange', 'update_install_url()')
+
+                    let branches_first = true
+
+                    // get the latest release date
+                    if (releases.length > 0) {
+                        let default_branch_commit_date = null
+                        let latest_release_date = releases[0]['release_date']
+
+                        // get default branch commit date
+                        for (let i = 0; i < branches.length; i++) {
+                            let branch = branches[i]
+                            // if the branch is the default branch, get the commit date
+                            if (branch['name'] === default_branch) {
+                                default_branch_commit_date = branch['commit_date']
+                                break
+                            }
+                        }
+
+                        // compare dates
+                        if (default_branch_commit_date < latest_release_date) {
+                            branches_first = false
+                        }
+                    }
+
+
+                    // if there are branches, then add them to the dropdown
+                    let dropdown_default_branch = null
+                    for (let i = 0; i < branches.length; i++) {
+                        let branch = branches[i]
+                        let option = document.createElement('option')
+                        option.value = branch['download_url']
+                        option.textContent = `${branch['name']} ({{ _('last updated:') }} ${branch['commit_date']})`
+                        // if the branch is the default branch, then move it to the top of the list
+                        if (branch['name'] === default_branch) {
+                            option.setAttribute('selected', '')  // set the option as selected
+                            dropdown.insertBefore(option, dropdown.firstChild)
+                            dropdown_default_branch = option
+                        } else {
+                            dropdown.appendChild(option)
+                        }
+                    }
+
+                    // if there are releases, then add them to the dropdown
+                    for (let i = 0; i < releases.length; i++) {
+                        let release = releases[i]
+                        let option = document.createElement('option')
+                        option.value = release['download_url']
+                        option.textContent = `${release['tag_name']} ({{ _('release date:') }} ${release['release_date']})`
+
+                        if (branches_first) {
+                            // if the default branch is newer than the latest release, then add the releases after the branches
+                            dropdown.appendChild(option)
+                        } else {
+                            // if latest release, make it selected
+                            if (i === 0) {
+                                option.setAttribute('selected', '')  // set the option as selected
+                                dropdown_default_branch.removeAttribute('selected')
+                            }
+
+                            // if the default branch is older than the latest release, then add the releases before the branches
+                            dropdown.insertBefore(option, dropdown_default_branch)
+                        }
+                    }
+
+                    // add the dropdown to the install_section
+                    install_section.appendChild(dropdown)
+
+                    // add the help text to the install_section
+                    let help = document.createElement('small')
+                    help.id = 'install_branch_help'
+                    help.classList.add('form-text')
+                    help.classList.add('text-muted')
+                    help.textContent = '{{ _('Select the branch or release to install.') }}'
+                    install_section.appendChild(help)
+                }
+            })
+
+            let install_plugin = function () {
+                let install_branch = installModal.querySelector('#install_branch')
+                let download_url = install_branch.value
+            }
+
+            installModal.addEventListener('hide.bs.modal', function () {
+                discord_widget.classList.remove('d-none')  // show discord widget
+            })
+        })
+    </script>
     {# Logs Modal #}
     <script type="text/javascript" src="{{ url_for('static', filename='node_modules/clipboard/dist/clipboard.min.js') }}"></script>
     <script>
@@ -119,7 +281,12 @@
     </script>
     <script>
         let logsModal = document.getElementById('logsModal')
+
         logsModal.addEventListener('show.bs.modal', function (event) {
+            // hide discord widget
+            let discord_widget = document.getElementsByTagName('widgetbot-crate')[0]
+            discord_widget.classList.add('d-none')
+
             // Button that triggered the modal
             let button = event.relatedTarget
             // Extract info from data-bs-* attributes
@@ -167,9 +334,9 @@
                 }
             }
 
-            // clear the interval when the modal is closed
-            logsModal.addEventListener('hide.bs.modal', function (event) {
-                clearInterval(updateInterval);
+            logsModal.addEventListener('hide.bs.modal', function () {
+                clearInterval(updateInterval)  // clear the interval when the modal is closed
+                discord_widget.classList.remove('d-none')  // show discord widget
             })
 
             // run the toggle function to set the initial state

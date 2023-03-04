@@ -2,6 +2,9 @@
 $.getScript('https://app.lizardbyte.dev/js/levenshtein_distance.js')
 $.getScript('https://app.lizardbyte.dev/js/ranking_sorter.js')
 
+// load local js scripts
+$.getScript('/web/js/translations.js')
+
 
 $(document).ready(function(){
     // Set cache = false for all jquery ajax requests.
@@ -45,10 +48,11 @@ $(document).ready(function(){
         }
     })
 
-    // set all plugins installed state to false
+    // set all plugins installed state to false and add the github_id
     for (let plugger_plugin in plugger_plugins) {
         plugger_plugins[plugger_plugin]['installed'] = false
         plugger_plugins[plugger_plugin]['installed_data'] = null
+        plugger_plugins[plugger_plugin]['github_id'] = parseInt(plugger_plugin)
     }
 
     // combine the two dictionaries
@@ -186,7 +190,7 @@ let populate_results = function (plugins_list, container, update_counts = false)
                 let search_option_label = document.createElement("label")
                 search_option_label.className = "form-check-label"
                 search_option_label.setAttribute("for", category_id)
-                search_option_label.textContent = plugins_list[plugin]['categories'][category]
+                search_option_label.textContent = getTranslation(plugins_list[plugin]['categories'][category])
                 search_option.appendChild(search_option_label)
                 let search_option_count_label = document.createElement("label")
                 search_option_count_label.className = "form-check-label badge bg-danger ms-2"
@@ -226,7 +230,7 @@ let populate_results = function (plugins_list, container, update_counts = false)
                 categories_row.appendChild(category_column)
                 let category_badge = document.createElement("span")
                 category_badge.className = "badge bg-secondary"
-                category_badge.textContent = plugins_list[plugin]['categories'][category]
+                category_badge.textContent = getTranslation(plugins_list[plugin]['categories'][category])
                 category_column.appendChild(category_badge)
             }
             // add a categories edit button using fontawesome icon
@@ -242,7 +246,7 @@ let populate_results = function (plugins_list, container, update_counts = false)
             category_column.appendChild(category_edit_button)
             let category_edit_icon = document.createElement("i")
             category_edit_icon.className = "fa-solid fa-edit fa-1x align-middle"
-            category_edit_icon.setAttribute('title', 'Edit Categories')
+            category_edit_icon.setAttribute('title', getTranslation('Edit Categories'))
             category_edit_button.appendChild(category_edit_icon)
 
             // GitHub url
@@ -272,7 +276,7 @@ let populate_results = function (plugins_list, container, update_counts = false)
                     homepage_column.appendChild(homepage_link)
                     let homepage_icon = document.createElement("i")
                     homepage_icon.className = "fa-solid fa-globe fa-xl align-middle"
-                    homepage_icon.setAttribute('title', 'Homepage')
+                    homepage_icon.setAttribute('title', getTranslation('Homepage'))
                     homepage_link.appendChild(homepage_icon)
                 }
             }
@@ -292,7 +296,7 @@ let populate_results = function (plugins_list, container, update_counts = false)
                     gh_pages_column.appendChild(gh_pages_link)
                     let gh_pages_icon = document.createElement("i")
                     gh_pages_icon.className = "fa-solid fa-file-code fa-xl align-middle"
-                    gh_pages_icon.setAttribute('title', 'Website')
+                    gh_pages_icon.setAttribute('title', getTranslation('Website'))
                     gh_pages_link.appendChild(gh_pages_icon)
                 }
             }
@@ -309,7 +313,7 @@ let populate_results = function (plugins_list, container, update_counts = false)
                 license_column.appendChild(license_link)
                 let license_icon = document.createElement("i")
                 license_icon.className = "fa-solid fa-file-contract fa-xl align-middle"
-                license_icon.setAttribute('title', 'License')
+                license_icon.setAttribute('title', getTranslation('License'))
                 license_link.appendChild(license_icon)
             }
 
@@ -325,7 +329,7 @@ let populate_results = function (plugins_list, container, update_counts = false)
                 wiki_column.appendChild(wiki_link)
                 let wiki_icon = document.createElement("i")
                 wiki_icon.className = "fa-solid fa-book fa-xl align-middle"
-                wiki_icon.setAttribute('title', 'GitHub Wiki')
+                wiki_icon.setAttribute('title', getTranslation('GitHub Wiki'))
                 wiki_link.appendChild(wiki_icon)
             }
 
@@ -341,7 +345,7 @@ let populate_results = function (plugins_list, container, update_counts = false)
                 discussions_column.appendChild(discussions_link)
                 let discussions_icon = document.createElement("i")
                 discussions_icon.className = "fa-solid fa-comments fa-xl align-middle"
-                discussions_icon.setAttribute('title', 'GitHub Discussions')
+                discussions_icon.setAttribute('title', getTranslation('GitHub Discussions'))
                 discussions_link.appendChild(discussions_icon)
             }
 
@@ -359,7 +363,7 @@ let populate_results = function (plugins_list, container, update_counts = false)
             stars_link.className = "nav-link nav-link-sm text-white"
             stars_link.href = `${plugins_list[plugin]['html_url']}/stargazers`
             stars_link.target = "_blank"
-            stars_link.setAttribute('title', 'Stars')
+            stars_link.setAttribute('title', getTranslation('Stars'))
             stars_column.appendChild(stars_link)
             let stars_icon = document.createElement("i")
             stars_icon.className = "fa-solid fa-star align-middle"
@@ -377,7 +381,7 @@ let populate_results = function (plugins_list, container, update_counts = false)
             forks_link.className = "nav-link nav-link-sm text-white"
             forks_link.href = `${plugins_list[plugin]['html_url']}/forks`
             forks_link.target = "_blank"
-            forks_link.setAttribute('title', 'Forks')
+            forks_link.setAttribute('title', getTranslation('Forks'))
             forks_column.appendChild(forks_link)
             let forks_icon = document.createElement("i")
             forks_icon.className = "fa-solid fa-code-fork align-middle"
@@ -395,7 +399,7 @@ let populate_results = function (plugins_list, container, update_counts = false)
             prs_link.className = "nav-link nav-link-sm text-white"
             prs_link.href = `${plugins_list[plugin]['html_url']}/pulls`
             prs_link.target = "_blank"
-            prs_link.setAttribute('title', 'Open Pull Requests')
+            prs_link.setAttribute('title', getTranslation('Open Pull Requests'))
             prs_column.appendChild(prs_link)
             let prs_icon = document.createElement("i")
             prs_icon.className = "fa-solid fa-code-pull-request align-middle"
@@ -414,7 +418,7 @@ let populate_results = function (plugins_list, container, update_counts = false)
                 issues_link.className = "nav-link nav-link-sm text-white"
                 issues_link.href = `${plugins_list[plugin]['html_url']}/issues`
                 issues_link.target = "_blank"
-                issues_link.setAttribute('title', 'Open Issues')
+                issues_link.setAttribute('title', getTranslation('Open Issues'))
                 issues_column.appendChild(issues_link)
                 let issues_icon = document.createElement("i")
                 issues_icon.className = "fa-regular fa-circle-dot align-middle"
@@ -430,6 +434,7 @@ let populate_results = function (plugins_list, container, update_counts = false)
             // add the system plugin category
             plugins_list[plugin]['categories'] = ["System Plugin"]
             // add counts (for sorting only)
+            plugins_list[plugin]['github_id'] = -1
             plugins_list[plugin]['stargazers_count'] = -1
             plugins_list[plugin]['forks_count'] = -1
             plugins_list[plugin]['open_pull_requests_count'] = -1
@@ -446,7 +451,7 @@ let populate_results = function (plugins_list, container, update_counts = false)
             categories_row.appendChild(category_column)
             let category_badge = document.createElement("span")
             category_badge.className = "badge bg-warning text-dark"
-            category_badge.textContent = "System Plugin"
+            category_badge.textContent = getTranslation("System Plugin")
             category_column.appendChild(category_badge)
 
             // Plex icon
@@ -460,7 +465,7 @@ let populate_results = function (plugins_list, container, update_counts = false)
             system_plugin_column.appendChild(system_plugin_link)
             let system_plugin_icon = document.createElement("span")
             system_plugin_icon.className = "fa-stack fa-xs"
-            system_plugin_icon.setAttribute('title', 'Plex Forum')
+            system_plugin_icon.setAttribute('title', getTranslation('Plex Forum'))
             system_plugin_link.appendChild(system_plugin_icon)
             let system_plugin_icon_outer = document.createElement("i")
             system_plugin_icon_outer.className = "fa-regular fa-circle fa-stack-2x"
@@ -475,6 +480,7 @@ let populate_results = function (plugins_list, container, update_counts = false)
             // add the installed plugin category
             plugins_list[plugin]['categories'] = []  // empty list, "Installed Plugin" will be added later
             // add counts (for sorting only)
+            plugins_list[plugin]['github_id'] = -1
             plugins_list[plugin]['stargazers_count'] = -1
             plugins_list[plugin]['forks_count'] = -1
             plugins_list[plugin]['open_pull_requests_count'] = -1
@@ -501,12 +507,12 @@ let populate_results = function (plugins_list, container, update_counts = false)
                     categories_row.insertBefore(category_column, categories_row.firstChild)
                     let category_badge = document.createElement("span")
                     category_badge.className = "badge bg-info text-dark"
-                    category_badge.textContent = "Installed Plugin"
+                    category_badge.textContent = getTranslation("Installed Plugin")
                     category_column.appendChild(category_badge)
                 } else {
                     // change the badge color
                     for (let category of categories_row.children) {
-                        if (category.textContent === "Installed Plugin") {
+                        if (category.textContent === getTranslation("Installed Plugin")) {
                             category.children[0].className = "badge bg-info text-dark"
                         }
                     }
@@ -530,7 +536,7 @@ let populate_results = function (plugins_list, container, update_counts = false)
 
             let installed_version = document.createElement("p")
             installed_version.className = "card-text ms-0 mx-2"
-            installed_version.textContent = `Installed Version: ${plugins_list[plugin]['installed_data']['version']}`
+            installed_version.textContent = `${getTranslation('Installed Version:')} ${plugins_list[plugin]['installed_data']['version']}`
             text_container.appendChild(installed_version)
 
             // add icon to open logs
@@ -543,15 +549,11 @@ let populate_results = function (plugins_list, container, update_counts = false)
             let logs_icon = document.createElement("i")
             logs_icon.className = "fa-solid fa-file-lines fa-xl align-middle"
             logs_icon.style.cssText = "cursor:pointer;cursor:hand"
-            logs_icon.setAttribute('title', 'Logs')
+            logs_icon.setAttribute('title', getTranslation('Logs'))
             logs_icon.setAttribute("data-bs-toggle", "modal")
             logs_icon.setAttribute("data-bs-target", "#logsModal")
             logs_icon.setAttribute("data-bs-plugin_name", plugin_name)
             logs_icon.setAttribute("data-bs-plugin_identifier", plugin_identifier)
-            // logs_icon.onclick = function () {
-            //     // open url
-            //     // window.open(`/logs/${plugin_identifier}`, "_blank")
-            // }
             logs_column.appendChild(logs_icon)
 
             if (plugins_list[plugin]['installed_data']['type'] === "user") {
@@ -564,7 +566,7 @@ let populate_results = function (plugins_list, container, update_counts = false)
                 let update_icon = document.createElement("i")
                 update_icon.className = "fa-solid fa-sync fa-xl align-middle"
                 update_icon.style.cssText = "cursor:pointer;cursor:hand"
-                update_icon.setAttribute('title', 'Force Update')
+                update_icon.setAttribute('title', getTranslation('Force Update'))
                 update_icon.onclick = function () {
                     // open url
                     window.open(`/update/${plugin_identifier}`, "_blank")
@@ -579,7 +581,7 @@ let populate_results = function (plugins_list, container, update_counts = false)
                 let uninstall_icon = document.createElement("i")
                 uninstall_icon.className = "fa-solid fa-trash fa-xl align-middle"
                 uninstall_icon.style.cssText = "cursor:pointer;cursor:hand"
-                uninstall_icon.setAttribute('title', 'Uninstall')
+                uninstall_icon.setAttribute('title', getTranslation('Uninstall'))
                 uninstall_icon.onclick = function () {
                     // open url
                     window.open(`/uninstall/${plugin_identifier}`, "_blank")
@@ -596,11 +598,11 @@ let populate_results = function (plugins_list, container, update_counts = false)
             let install_icon = document.createElement("i")
             install_icon.className = "fa-solid fa-download fa-xl align-middle"
             install_icon.style.cssText = "cursor:pointer;cursor:hand"
-            install_icon.setAttribute('title', 'Install')
-            install_icon.onclick = function () {
-                // open url
-                window.open(`/install/${plugins_list[plugin]['identifier']}`, "_blank")
-            }
+            install_icon.setAttribute('title', getTranslation('Install'))
+            install_icon.setAttribute("data-bs-toggle", "modal")
+            install_icon.setAttribute("data-bs-target", "#installModal")
+            install_icon.setAttribute("data-bs-plugin_name", plugin_name)
+            install_icon.setAttribute("data-bs-github_id", plugins_list[plugin]['github_id'])
             install_column.appendChild(install_icon)
         }
     }
@@ -775,7 +777,7 @@ let run_search = function () {
     // add a clear results button
     let clear_results_button = document.createElement("button")
     clear_results_button.className = "btn btn-danger rounded-0 mb-5"
-    clear_results_button.textContent = "Clear Results"
+    clear_results_button.textContent = getTranslation("Clear Results")
     search_container.appendChild(clear_results_button)
     clear_results_button.onclick = function () {
         search_container.innerHTML = ""

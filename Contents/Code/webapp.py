@@ -20,6 +20,7 @@ else:  # the code is running outside of Plex
 import flask
 from flask import Flask, Response, render_template, request, send_from_directory
 from flask_babel import Babel
+import polib
 import requests
 
 # local imports
@@ -437,3 +438,41 @@ def thumbnail(plugin_identifier):
 
     return send_from_directory(directory=plugin_thumbnail[0], filename=plugin_thumbnail[1],
                                mimetype=mime_type_map[image_extension])
+
+
+@app.route("/translations/", methods=["GET"])
+def translations():
+    # type: () -> Response
+    """
+    Serve the translations.
+
+    Returns
+    -------
+    Response
+        The translations.
+
+    Examples
+    --------
+    >>> translations()
+    """
+    locale = get_locale()
+
+    po_files = [
+        '%s/%s/LC_MESSAGES/plugger.po' % (app.config['BABEL_TRANSLATION_DIRECTORIES'], locale),  # selected locale
+        '%s/plugger.po' % app.config['BABEL_TRANSLATION_DIRECTORIES'],  # fallback to default domain
+    ]
+
+    for po_file in po_files:
+        if os.path.isfile(po_file):
+            po = polib.pofile(po_file)
+
+            # convert the po to json
+            data = dict()
+            for entry in po:
+                if entry.msgid:
+                    data[entry.msgid] = entry.msgstr
+                    Log.Debug('Translation: %s -> %s' % (entry.msgid, entry.msgstr))
+
+            return Response(response=json.dumps(data),
+                            status=200,
+                            mimetype='application/json')
