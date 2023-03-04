@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
 
-# standard imports
-import sys
-from threading import Thread
-
 # plex debugging
 try:
     import plexhints  # noqa: F401
@@ -21,7 +17,7 @@ else:  # the code is running outside of Plex
 
 # local imports
 from default_prefs import default_prefs
-from webapp import app
+from webapp import start_server
 
 
 def ValidatePrefs():
@@ -46,7 +42,6 @@ def ValidatePrefs():
     >>> ValidatePrefs()
     ...
     """
-    # todo - validate username and password
     error_message = ''  # start with a blank error message
 
     for key in default_prefs:
@@ -108,24 +103,11 @@ def Start():
     if prefs_valid.header == 'Error':
         Log.Warn('plug-in preferences are not valid.')
 
+    start_server()  # start the web server if it is not running
     Log.Debug('plug-in started.')
 
-    # use threading to start the flask app... or else web server seems to be killed after a couple of minutes
-    flask_thread = Thread(
-        target=app.run,
-        kwargs=dict(
-            host=Prefs['str_http_host'],
-            port=Prefs['int_http_port'],
-            debug=False,
-            use_reloader=False  # reloader doesn't work when running in a separate thread
-        )
-    )
 
-    # start flask application
-    flask_thread.start()
-
-
-@handler(prefix='/applications/plugger', name='Plugger', thumb='attribution.png')
+@handler(prefix='/applications/plugger', name='Plugger', thumb='icon-default.png')
 def main():
     """
     Create the main plug-in ``handler``.

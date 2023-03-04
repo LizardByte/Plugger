@@ -1,15 +1,68 @@
 {% extends 'base.html' %}
 {% block content %}
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="row">
-                  <h2>Logging will appear here:</h2>
-                    <div class="logging_window">
-                        <pre id="logs">{{ logs }}</pre>
-                    </div>
-                </div>
+        <div class="row text-white">
+            {# Auto refresh toggle #}
+            <div class="form-check form-switch mx-3">
+                <input class="form-check-input" type="checkbox" role="switch" id="switch_auto_refresh" checked>
+                <label class="form-check-label" for="switch_auto_refresh">{{ _('Auto refresh') }}</label>
+            </div>
+            <h2>{{ _('Plugin Logs:') }}</h2>
+            <div id="logging_window">
+                <pre id="logs"></pre>
+                <button id="copy-btn" type="button" class="btn btn-outline-light position-absolute top-0 end-0 mt-2 me-2" data-clipboard-target="#logs">
+                    <i class="fa-solid fa-fw fa-copy"></i>
+                </button>
             </div>
         </div>
     </div>
 {% endblock content %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{{ url_for('static', filename='node_modules/clipboard/dist/clipboard.min.js') }}"></script>
+    <script>
+        new ClipboardJS('#copy-btn')
+    </script>
+
+    <script>
+        // this will run every 5 seconds to update the logs
+        updateLogs = () => {
+            $.ajax({
+                url: "/log_stream/{{ plugin_identifier }}",
+                type: "GET",
+                success: function (data) {
+                    let log_container = document.getElementById("logs")
+                    log_container.innerHTML = data
+                }
+            })
+        }
+
+        // update the logs immediately
+        updateLogs()
+
+        // then setup update timer to update every 5 seconds
+        const updateIntervalPeriod = 5000
+        var updateInterval
+        // setInterval(updateLogs, updateIntervalPeriod)
+
+        // add event listeners to the auto-refresh toggle switch
+        const switchAutoRefresh = document.getElementById("switch_auto_refresh");
+        switchAutoRefresh.addEventListener("change", () => {
+            toggleAutoRefresh()
+        })
+
+        // function to toggle the auto-refresh switch
+        toggleAutoRefresh = () => {
+            if (switchAutoRefresh.checked) {
+                // turn on auto-refresh
+                updateInterval = setInterval(updateLogs, updateIntervalPeriod)
+            } else {
+                // turn off auto-refresh
+                clearInterval(updateInterval);
+            }
+        }
+
+        // run the toggle function to set the initial state
+        toggleAutoRefresh()
+    </script>
+{% endblock scripts %}

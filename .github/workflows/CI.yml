@@ -97,6 +97,7 @@ jobs:
             !**/Plugger.bundle/Dockerfile
             !**/Plugger.bundle/docs
             !**/Plugger.bundle/scripts
+            !**/Plugger.bundle/tests
 
       - name: Package Release
         shell: bash
@@ -113,6 +114,7 @@ jobs:
             "-xr!Plugger.bundle/Dockerfile" \
             "-xr!Plugger.bundle/docs" \
             "-xr!Plugger.bundle/scripts" \
+            "-xr!Plugger.bundle/tests" \
             a "./Plugger.bundle.zip" "Plugger.bundle"
 
           mkdir artifacts
