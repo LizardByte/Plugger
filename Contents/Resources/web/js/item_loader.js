@@ -793,7 +793,7 @@ let run_search = function () {
     if (search_title === true) {
         if (sort_type === "0") {
             primary_sort = 'score'
-            secondary_sort = 'name'
+            secondary_sort = 'name_lower'
         }
         else {
             primary_sort = sort_type
@@ -803,14 +803,14 @@ let run_search = function () {
     }
     else {
         if (sort_type === "0") {
-            primary_sort = 'name'
+            primary_sort = 'name_lower'
             secondary_sort = 'full_name'
         }
         else {
             primary_sort = sort_type
             secondary_sort = 'full_name'
         }
-        if (primary_sort === "name") {
+        if (primary_sort === "name_lower") {
             sorted = result.sort(rankingSorter(primary_sort, secondary_sort)).reverse()
         }
         else {
