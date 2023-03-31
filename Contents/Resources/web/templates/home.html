@@ -138,11 +138,27 @@
 {% endblock content %}
 
 {% block scripts %}
+    {# Load emoji-js #}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='node_modules/emoji-js/lib/emoji.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='node_modules/emoji-js/lib/emoji.min.js') }}"></script>
+
     {# Load Plugin List #}
     <script src="{{ url_for('static', filename='js/item_loader.js') }}"></script>
 
     {# Install Modal #}
     <script>
+        // add and remove border function
+        function add_remove_border(element) {
+            element.classList.toggle('border')
+            element.classList.toggle('border-warning')
+            element.classList.toggle('border-3')
+        }
+
+        // create emoji converter
+        let emoji = new EmojiConvertor()
+        emoji.replace_mode = 'unified'
+        emoji.allow_native = true
+
         let installModal = document.getElementById('installModal')
 
         installModal.addEventListener('show.bs.modal', function (event) {
@@ -163,6 +179,9 @@
             let install_section = installModal.querySelector('#install_section')
             install_section.innerHTML = ''
 
+            // selected element placeholder
+            let selected_element = null
+
             // get PluggerDB plugins
             // json data with key being the GitHub repo id
             // will need to match the name property name or bundle property of the installed plugin data
@@ -173,85 +192,133 @@
                 dataType: "json",
                 success: function (result) {
                     let plugin = result[github_id]
-                    let default_branch = plugin['default_branch']
-                    let branches = plugin['branches']
-                    let releases = plugin['releases']
 
-                    let dropdown = document.createElement('select')
-                    dropdown.classList.add('form-select')
-                    dropdown.classList.add('rounded-0')
-                    dropdown.classList.add('mb-3')
-                    dropdown.id = 'install_branch'
-                    dropdown.setAttribute('aria-label', '{{ _('Branch') }}')
-                    dropdown.setAttribute('aria-describedby', 'install_branch_help')
-                    dropdown.setAttribute('required', '')
-                    dropdown.setAttribute('onchange', 'update_install_url()')
+                    // global alert
+                    let alert = document.createElement('div')
+                    alert.className = 'alert alert-warning alert-dismissible fade show'
+                    alert.setAttribute('role', 'alert')
 
-                    let branches_first = true
+                    // alert message
+                    let alert_message = document.createElement('div')
+                    // add the text later
+                    alert.appendChild(alert_message)
 
-                    // get the latest release date
-                    if (releases.length > 0) {
-                        let default_branch_commit_date = null
-                        let latest_release_date = releases[0]['release_date']
+                    // alert close button
+                    let alert_close = document.createElement('button')
+                    alert_close.className = 'btn-close'
+                    alert_close.setAttribute('type', 'button')
+                    alert_close.setAttribute('data-bs-dismiss', 'alert')
+                    alert_close.setAttribute('aria-label', "{{ _('Close') }}")
+                    alert.appendChild(alert_close)
 
-                        // get default branch commit date
-                        for (let i = 0; i < branches.length; i++) {
-                            let branch = branches[i]
-                            // if the branch is the default branch, get the commit date
-                            if (branch['name'] === default_branch) {
-                                default_branch_commit_date = branch['commit_date']
-                                break
+                    // the download choices for the plugin
+                    let downloads = plugin['downloads']
+
+                    // create downloads div
+                    let download_options = document.createElement('div')
+
+                    // variables to help with warning messages and default selection
+                    let default_selection_type = null
+                    let latest_release = null
+                    let found_default_branch = false
+
+                    // loop through downloads
+                    for (let download of downloads) {
+                        // create a card for each download
+                        let card = document.createElement('div')
+                        card.className = 'card mb-3 bg-dark text-white selectable'
+                        // hand cursor
+                        card.style.cursor = 'pointer'
+
+                        let version = null
+                        let version_prefix = null
+
+                        download_options.appendChild(card)
+
+                        // process according to type
+                        if (download['type'] === 'release') {
+                            version = download['release_tag']
+                            version_prefix = "{{ _('Version:') }}"
+                        } else if (download['type'] === 'branch') {
+                            version = download['commit_sha'].substring(0, 7)  // first 7 characters of commit hash
+                            version_prefix = "{{ _('Branch:') }}"
+                        }
+
+                        // card title
+                        let card_body = document.createElement('div')
+                        card_body.className = 'card-body mx-3'
+
+                        // version row
+                        let version_row = document.createElement('div')
+                        version_row.className = 'row'
+                        if (version !== download['name']) {
+                            version_row.textContent = `${version_prefix} ${download['name']} (${version})`
+                        } else {
+                            version_row.textContent = `${version_prefix} ${download['name']}`
+                        }
+                        card_body.appendChild(version_row)
+
+                        // date row
+                        let date_row = document.createElement('div')
+                        date_row.className = 'row'
+                        date_row.textContent = `{{ _('Date:') }} ${download['date']}`
+                        card_body.appendChild(date_row)
+
+                        // set warning message for non latest releases and non default branches
+                        let warning = ""
+
+                        if (download['type'] === 'release') {
+                            if (found_default_branch === true) {
+                                warning = `${warning} ${emoji.replace_colons(":warning: {{ _('This release is older than the default branch.') }}")}<br>`
+                            }
+                            if (latest_release === true) {
+                                warning = `${warning} ${emoji.replace_colons(":warning: {{ _('This is not the latest release.') }}")}<br>`
+                            }
+                        } else if (download['type'] === 'branch') {
+                            if (download['default_branch'] === false) {
+                                warning = `${warning} ${emoji.replace_colons(":warning: {{ _('This is not the default branch.') }}")}<br>`
+                            }
+                            if (download['default_branch'] === true && latest_release !== null) {
+                                alert_message.textContent = emoji.replace_colons(":interrobang: {{ _('The default branch is older than the latest release. This plugin may not support installing from branches.') }}")
+                                install_section.appendChild(alert)
                             }
                         }
 
-                        // compare dates
-                        if (default_branch_commit_date < latest_release_date) {
-                            branches_first = false
+                        let warning_row = document.createElement('div')
+                        warning_row.className = 'row'
+                        warning_row.innerHTML = warning
+                        card_body.appendChild(warning_row)
+
+                        card.appendChild(card_body)
+
+                        // set default selection
+                        if (download['type'] === 'release' && latest_release === null) {
+                            latest_release = true
                         }
-                    }
-
-
-                    // if there are branches, then add them to the dropdown
-                    let dropdown_default_branch = null
-                    for (let i = 0; i < branches.length; i++) {
-                        let branch = branches[i]
-                        let option = document.createElement('option')
-                        option.value = branch['download_url']
-                        option.textContent = `${branch['name']} ({{ _('last updated:') }} ${branch['commit_date']})`
-                        // if the branch is the default branch, then move it to the top of the list
-                        if (branch['name'] === default_branch) {
-                            option.setAttribute('selected', '')  // set the option as selected
-                            dropdown.insertBefore(option, dropdown.firstChild)
-                            dropdown_default_branch = option
-                        } else {
-                            dropdown.appendChild(option)
+                        if (download['type'] === 'branch' && download['default_branch'] === true) {
+                            found_default_branch = true
                         }
-                    }
-
-                    // if there are releases, then add them to the dropdown
-                    for (let i = 0; i < releases.length; i++) {
-                        let release = releases[i]
-                        let option = document.createElement('option')
-                        option.value = release['download_url']
-                        option.textContent = `${release['tag_name']} ({{ _('release date:') }} ${release['release_date']})`
-
-                        if (branches_first) {
-                            // if the default branch is newer than the latest release, then add the releases after the branches
-                            dropdown.appendChild(option)
-                        } else {
-                            // if latest release, make it selected
-                            if (i === 0) {
-                                option.setAttribute('selected', '')  // set the option as selected
-                                dropdown_default_branch.removeAttribute('selected')
-                            }
-
-                            // if the default branch is older than the latest release, then add the releases before the branches
-                            dropdown.insertBefore(option, dropdown_default_branch)
+                        if (download['type'] === 'release' && default_selection_type === null) {
+                            // first release is default if it comes before default branch
+                            default_selection_type = 'release'
+                            add_remove_border(card)
+                            selected_element = card
+                        } else if (download['type'] === 'branch' && download['default_branch'] === true &&
+                            default_selection_type === null) {
+                            // default branch is default if it comes before first release
+                            default_selection_type = 'branch'
+                            add_remove_border(card)
+                            selected_element = card
                         }
-                    }
 
-                    // add the dropdown to the install_section
-                    install_section.appendChild(dropdown)
+                        // make card selectable and add event listener
+                        card.classList.add('selectable')
+                        card.addEventListener('click', function () {
+                            add_remove_border(selected_element)
+                            add_remove_border(card)
+                            selected_element = card
+                        })
+                    }
 
                     // add the help text to the install_section
                     let help = document.createElement('small')
@@ -260,6 +327,9 @@
                     help.classList.add('text-muted')
                     help.textContent = '{{ _('Select the branch or release to install.') }}'
                     install_section.appendChild(help)
+
+                    // add the options to the install_section
+                    install_section.appendChild(download_options)
                 }
             })
 
