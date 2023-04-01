@@ -176,6 +176,12 @@ let populate_results = function (plugins_list, container, update_counts = false)
 
         // for PluggerDB plugins
         if (plugins_list[plugin]['html_url']) {
+            // add archived plugin category if the plugin is archived
+            if (plugins_list[plugin]['archived'] === true && !plugins_list[plugin]['categories'].includes('Archived Plugin')) {
+                // add to beginning of array
+                plugins_list[plugin]['categories'].unshift('Archived Plugin')
+            }
+
             // create a badge for each category
             for (let category in plugins_list[plugin]['categories']) {
                 // if category is not in search_type drop down, add it
@@ -205,7 +211,7 @@ let populate_results = function (plugins_list, container, update_counts = false)
                         // increment the count
                         if (update_counts) {
                             let count = parseInt(search_options.children[i].children[2].textContent)
-                            search_options.children[i].children[2].textContent = `${count + 1}`
+                            search_options.children[i].children[2].textContent = (count + 1).toString()
                         }
                         break
                     }
@@ -234,7 +240,7 @@ let populate_results = function (plugins_list, container, update_counts = false)
                 category_column.appendChild(category_badge)
             }
             // add a categories edit button using fontawesome icon
-            // todo - pass categories to the issue form
+            // todo - pass categories to the issue form... if it's possible
             let edit_link = `https://github.com/LizardByte/PluggerDB/issues/new?assignees=&labels=request-plugin&template=plugin.yml&title=${encodeURIComponent('[PLUGIN]: ')}${encodeURIComponent(plugins_list[plugin]['html_url'].replace('https://github.com/', ''))}&github_url=${encodeURIComponent(plugins_list[plugin]['html_url'])}`
             let category_column = document.createElement("div")
             category_column.className = "col-auto align-self-center"
@@ -429,6 +435,18 @@ let populate_results = function (plugins_list, container, update_counts = false)
                 issues_link.appendChild(issues_text)
             }
 
+            // add archived warning
+            if (plugins_list[plugin]['archived'] === true) {
+                let archived_column = document.createElement("div")
+                archived_column.className = "col-auto align-self-center me-1"
+                stats_row.appendChild(archived_column)
+                let archived_icon = document.createElement("i")
+                archived_icon.className = "fa-solid fa-triangle-exclamation align-middle"
+                archived_icon.style.color = "#ffb02e"
+                archived_icon.setAttribute('title', getTranslation('Archived'))
+                archived_column.appendChild(archived_icon)
+            }
+
         }
         else if (plugins_list[plugin]['installed_data']['type'] === "system") {
             // add the system plugin category
@@ -443,7 +461,7 @@ let populate_results = function (plugins_list, container, update_counts = false)
             // increment the count in the search_options drop down
             if (update_counts) {
                 let system_plugin_count = document.getElementById("count_system_plugin")
-                system_plugin_count.textContent = `${parseInt(system_plugin_count.textContent) + 1}`
+                system_plugin_count.textContent = (parseInt(system_plugin_count.textContent) + 1).toString()
             }
 
             let category_column = document.createElement("div")
@@ -521,7 +539,7 @@ let populate_results = function (plugins_list, container, update_counts = false)
                 // increment the count in the search_options drop down
                 if (update_counts) {
                     let installed_plugin_count = document.getElementById("count_installed_plugin")
-                    installed_plugin_count.textContent = `${parseInt(installed_plugin_count.textContent) + 1}`
+                    installed_plugin_count.textContent = (parseInt(installed_plugin_count.textContent) + 1).toString()
                 }
             }
         }

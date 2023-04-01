@@ -193,13 +193,42 @@
                 success: function (result) {
                     let plugin = result[github_id]
 
+                    // archived alert
+                    if (plugin['archived'] === true) {
+                        let archived_alert = document.createElement('div')
+                        archived_alert.className = 'alert alert-danger alert-dismissible fade show'
+                        archived_alert.setAttribute('role', 'alert')
+
+                        let archived_alert_icon = document.createElement('i')
+                        archived_alert_icon.className = 'fa-solid fa-exclamation-triangle fa-lg me-2'
+                        archived_alert.appendChild(archived_alert_icon)
+
+                        let archived_alert_message = document.createElement('span')
+                        archived_alert_message.innerHTML = `{{ _('This plugin is archived and is no longer being maintained. It is highly unlikely this plugin will function properly.') }}`
+                        archived_alert.appendChild(archived_alert_message)
+
+                        let archived_alert_close = document.createElement('button')
+                        archived_alert_close.className = 'btn-close'
+                        archived_alert_close.setAttribute('type', 'button')
+                        archived_alert_close.setAttribute('data-bs-dismiss', 'alert')
+                        archived_alert_close.setAttribute('aria-label', "{{ _('Close') }}")
+                        archived_alert.appendChild(archived_alert_close)
+
+                        install_section.appendChild(archived_alert)
+                    }
+
                     // global alert
                     let alert = document.createElement('div')
                     alert.className = 'alert alert-warning alert-dismissible fade show'
                     alert.setAttribute('role', 'alert')
 
+                    // alert icon
+                    let alert_icon = document.createElement('i')
+                    // set class later
+                    alert.appendChild(alert_icon)
+
                     // alert message
-                    let alert_message = document.createElement('div')
+                    let alert_message = document.createElement('span')
                     // add the text later
                     alert.appendChild(alert_message)
 
@@ -279,7 +308,8 @@
                                 warning = `${warning} ${emoji.replace_colons(":warning: {{ _('This is not the default branch.') }}")}<br>`
                             }
                             if (download['default_branch'] === true && latest_release !== null) {
-                                alert_message.textContent = emoji.replace_colons(":interrobang: {{ _('The default branch is older than the latest release. This plugin may not support installing from branches.') }}")
+                                alert_icon.className = 'fa-solid fa-exclamation-triangle fa-lg me-2'
+                                alert_message.textContent = "{{ _('The default branch (<default_branch>) is older than the latest release. This plugin may not support installing from branches.') }}".replace('<default_branch>', download['name'])
                                 install_section.appendChild(alert)
                             }
                         }
