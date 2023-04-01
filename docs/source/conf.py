@@ -32,7 +32,7 @@ for directory in paths:
 
 # -- Project information -----------------------------------------------------
 project = 'Plugger'
-copyright = '%s, %s' % (datetime.now().year, project)
+project_copyright = '%s, %s' % (datetime.now().year, project)
 author = 'ReenigneArcher'
 
 # The full version, including alpha/beta/rc tags
