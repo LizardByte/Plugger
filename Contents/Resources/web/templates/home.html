@@ -12,16 +12,44 @@
                     </div>
                 </div>
                 <div class="modal-body">
-                    <div id="install_section"></div>
+                    <div id="install_version_section"></div>
+                    <form id="install_options_section" class="d-none">
+                        <div class="mb-3" id="install_options_version_div">
+                            <label class="form-label" for="install_options_version_overview">{{ _('Version') }}</label>
+                            <input id="install_options_version_overview" type="text" class="form-control rounded-0 " aria-label="{{ _('Version') }}" disabled readonly />
+                            <small class="form-text text-muted">{{ _("The branch or release to install.") }}</small>
+                            <i id="install_options_version_edit" class="fa-solid fa-fw fa-edit text-warning" onclick="previous_click()" style="cursor: pointer;"></i>
+                        </div>
+                        <div class="mb-3" id="install_options_assets_div">
+                            <label class="form-label" for="install_options_assets_select">{{ _('Download asset') }}</label>
+                            <select id="install_options_assets_select" class="form-select rounded-0"></select>
+                            <small class="form-text text-muted">{{ _('Select the asset to install.') }}</small>
+                        </div>
+                        <div class="mb-3" id="install_options_auto-update_div">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="install_options_auto-update_checkbox" checked>
+                                <label class="form-check-label" for="install_options_auto-update_checkbox">{{ _('Auto update') }}</label>
+                            </div>
+                            <small class="form-text text-muted">{{ _('Enable/disable auto update.') }}</small>
+                        </div>
+                        <div class="mb-3 input-group" id="install_options_destination-directory_div">
+                            <input id="install_options_destination-directory_input" type="text" class="form-control rounded-0" placeholder="{{ _('Destination') }}" aria-label="{{ _('Destination') }}" aria-describedby="destination-directory-addon">
+                            <span class="input-group-text rounded-0" id="destination-directory-addon">.bundle</span>
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     {# Close button #}
                     <div class="d-flex align-items-center">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="{{ _('Cancel') }}">{{ _('Cancel') }}</button>
                     </div>
-                    {# Install button #}
+                    {# Prev button #}
                     <div class="d-flex align-items-center">
-                        <button id="btn-install" type="button" class="btn btn-info" aria-label="{{ _('Install') }}">{{ _('Install') }}</button>
+                        <button id="btn-prev" type="button" class="btn btn-info" disabled aria-label="{{ _('Previous') }}" onclick="previous_click()">{{ _('Prev') }}</button>
+                    </div>
+                    {# Next button #}
+                    <div class="d-flex align-items-center">
+                        <button id="btn-next" type="button" class="btn btn-info" aria-label="{{ _('Next') }}" onclick="next_click()">{{ _('Next') }}</button>
                     </div>
                 </div>
             </div>
@@ -147,6 +175,9 @@
 
     {# Install Modal #}
     <script>
+        // selected element placeholder
+        let selected_element = null
+
         // add and remove border function
         function add_remove_border(element) {
             element.classList.toggle('border')
@@ -154,10 +185,112 @@
             element.classList.toggle('border-3')
         }
 
+        // set page counter
+        let current_page = 0
+
+        function change_version(old_element, new_element, downloads) {
+            // remove old border
+            if (old_element !== null) {
+                add_remove_border(old_element)
+            }
+
+            if (new_element !== null) {
+                add_remove_border(new_element)  // add new border
+                selected_element = new_element
+
+                // get asset options placeholder
+                let install_options_assets_select = document.getElementById('install_options_assets_select')
+                install_options_assets_select.innerHTML = ''
+
+                // index of selected download
+                let download_index = parseInt(new_element.getAttribute('plugger-download-index'))
+
+                // set version in options page
+                let install_options_version = document.getElementById('install_options_version_overview')
+                install_options_version.value = downloads[download_index]['name']
+
+                // loop through assets
+                for (let asset in downloads[download_index]['download_assets']) {
+                    // create option
+                    let option = document.createElement('option')
+                    option.value = downloads[download_index]['download_assets'][asset]
+                    option.textContent = asset
+
+                    // append option
+                    install_options_assets_select.appendChild(option)
+                }
+
+                // enable/disable auto update checkbox
+                let install_options_auto_update = new_element.getAttribute('plugger-auto-update')
+                let install_option_auto_update_checkbox = document.getElementById('install_options_auto-update_checkbox')
+                if (install_options_auto_update === 'true') {
+                    install_option_auto_update_checkbox.disabled = false
+                    install_option_auto_update_checkbox.checked = true
+                } else {
+                    install_option_auto_update_checkbox.disabled = true
+                    install_option_auto_update_checkbox.checked = false
+                }
+            }
+        }
+
         // create emoji converter
         let emoji = new EmojiConvertor()
         emoji.replace_mode = 'unified'
         emoji.allow_native = true
+
+        let install_version_section = document.getElementById('install_version_section')
+        install_version_section.innerHTML = ''
+        let install_options_section = document.getElementById('install_options_section')
+
+        // get prev/next buttons
+        let prev_button = document.getElementById('btn-prev')
+        let next_button = document.getElementById('btn-next')
+
+        function change_page() {
+            // ensure current page is within the limits
+            if (current_page < 0) {
+                current_page = 0
+            } else if (current_page > 2) {
+                current_page = 2
+            }
+
+            if (current_page === 0) {
+                install_version_section.classList.remove('d-none')
+                install_options_section.classList.add('d-none')
+                prev_button.disabled = true
+                next_button.disabled = false
+                next_button.textContent = '{{ _('Next') }}'
+            } else if (current_page === 1) {
+                install_version_section.classList.add('d-none')
+                install_options_section.classList.remove('d-none')
+                prev_button.disabled = false
+                next_button.disabled = false
+                next_button.textContent = '{{ _('Install') }}'
+            } else if (current_page === 2) {
+                install_version_section.classList.add('d-none')
+                install_options_section.classList.add('d-none')
+                next_button.disabled = true
+                next_button.textContent = '{{ _('Install') }}'
+                install_plugin()
+            }
+        }
+
+        function reset_modal() {
+            current_page = 0
+            change_page()
+        }
+
+        function previous_click() {
+            // decrement current page
+            current_page -= 1
+            change_page()
+        }
+
+        function next_click() {
+            // increment current page
+            current_page += 1
+            change_page()
+        }
 
         let installModal = document.getElementById('installModal')
 
@@ -175,12 +308,11 @@
             // Update the modal's content.
             let modalTitle = installModal.querySelector('.modal-title')
             modalTitle.textContent = `{{ _('Install:') }} ${plugin_name}`
+            let destination = document.getElementById('install_options_destination-directory_input')
+            destination.setAttribute('placeholder', plugin_name)
 
-            let install_section = installModal.querySelector('#install_section')
-            install_section.innerHTML = ''
-
-            // selected element placeholder
-            let selected_element = null
+            // reset the modal if it was previously used
+            reset_modal()
 
             // get PluggerDB plugins
             // json data with key being the GitHub repo id
@@ -214,31 +346,31 @@
                         archived_alert_close.setAttribute('aria-label', "{{ _('Close') }}")
                         archived_alert.appendChild(archived_alert_close)
 
-                        install_section.appendChild(archived_alert)
+                        install_version_section.appendChild(archived_alert)
                     }
 
                     // global alert
-                    let alert = document.createElement('div')
-                    alert.className = 'alert alert-warning alert-dismissible fade show'
-                    alert.setAttribute('role', 'alert')
+                    let global_alert = document.createElement('div')
+                    global_alert.className = 'alert alert-warning alert-dismissible fade show'
+                    global_alert.setAttribute('role', 'alert')
 
                     // alert icon
-                    let alert_icon = document.createElement('i')
+                    let global_alert_icon = document.createElement('i')
                     // set class later
-                    alert.appendChild(alert_icon)
+                    global_alert.appendChild(global_alert_icon)
 
                     // alert message
-                    let alert_message = document.createElement('span')
+                    let global_alert_message = document.createElement('span')
                     // add the text later
-                    alert.appendChild(alert_message)
+                    global_alert.appendChild(global_alert_message)
 
                     // alert close button
-                    let alert_close = document.createElement('button')
-                    alert_close.className = 'btn-close'
-                    alert_close.setAttribute('type', 'button')
-                    alert_close.setAttribute('data-bs-dismiss', 'alert')
-                    alert_close.setAttribute('aria-label', "{{ _('Close') }}")
-                    alert.appendChild(alert_close)
+                    let global_alert_close = document.createElement('button')
+                    global_alert_close.className = 'btn-close'
+                    global_alert_close.setAttribute('type', 'button')
+                    global_alert_close.setAttribute('data-bs-dismiss', 'alert')
+                    global_alert_close.setAttribute('aria-label', "{{ _('Close') }}")
+                    global_alert.appendChild(global_alert_close)
 
                     // the download choices for the plugin
                     let downloads = plugin['downloads']
@@ -248,7 +380,7 @@
 
                     // variables to help with warning messages and default selection
                     let default_selection_type = null
-                    let latest_release = null
+                    let found_latest_release = null
                     let found_default_branch = false
 
                     // loop through downloads
@@ -296,21 +428,34 @@
                         // set warning message for non latest releases and non default branches
                         let warning = ""
 
+                        card.setAttribute('plugger-download-index', downloads.indexOf(download))
+
                         if (download['type'] === 'release') {
+                            card.setAttribute('plugger-download-type', 'release')
                             if (found_default_branch === true) {
                                 warning = `${warning} ${emoji.replace_colons(":warning: {{ _('This release is older than the default branch.') }}")}<br>`
                             }
-                            if (latest_release === true) {
+                            if (found_latest_release === null) {
+                                found_latest_release = true
+                                card.setAttribute('plugger-auto-update', 'true')
+                            } else {
                                 warning = `${warning} ${emoji.replace_colons(":warning: {{ _('This is not the latest release.') }}")}<br>`
+                                card.setAttribute('plugger-auto-update', 'false')
                             }
                         } else if (download['type'] === 'branch') {
-                            if (download['default_branch'] === false) {
+                            card.setAttribute('plugger-download-type', 'branch')
+                            card.setAttribute('plugger-auto-update', 'true')  // all branches support auto update
+                            if (download['default_branch'] === true) {
+                                found_default_branch = true
+                            } else {
                                 warning = `${warning} ${emoji.replace_colons(":warning: {{ _('This is not the default branch.') }}")}<br>`
                             }
-                            if (download['default_branch'] === true && latest_release !== null) {
-                                alert_icon.className = 'fa-solid fa-exclamation-triangle fa-lg me-2'
-                                alert_message.textContent = "{{ _('The default branch (<default_branch>) is older than the latest release. This plugin may not support installing from branches.') }}".replace('<default_branch>', download['name'])
-                                install_section.appendChild(alert)
+                            if (download['default_branch'] === true) {
+                                if (found_latest_release !== null) {
+                                    global_alert_icon.className = 'fa-solid fa-exclamation-triangle fa-lg me-2'
+                                    global_alert_message.textContent = "{{ _('The default branch (<default_branch>) is older than the latest release. This plugin may not support installing from branches.') }}".replace('<default_branch>', download['name'])
+                                    install_version_section.appendChild(global_alert)
+                                }
                             }
                         }
 
@@ -321,51 +466,58 @@
 
                         card.appendChild(card_body)
 
+                        // get length of download_assets
+                        let download_assets_length = 0  // using .length directly gives undefined?
+                        for (let download_asset in download['download_assets']) {
+                            download_assets_length++
+                        }
+                        card.setAttribute('plugger-download-count', download_assets_length.toString())
+
                         // set default selection
-                        if (download['type'] === 'release' && latest_release === null) {
-                            latest_release = true
-                        }
-                        if (download['type'] === 'branch' && download['default_branch'] === true) {
-                            found_default_branch = true
-                        }
                         if (download['type'] === 'release' && default_selection_type === null) {
                             // first release is default if it comes before default branch
                             default_selection_type = 'release'
-                            add_remove_border(card)
-                            selected_element = card
+                            change_version(null, card, downloads)
                         } else if (download['type'] === 'branch' && download['default_branch'] === true &&
                             default_selection_type === null) {
                             // default branch is default if it comes before first release
                             default_selection_type = 'branch'
-                            add_remove_border(card)
-                            selected_element = card
+                            change_version(null, card, downloads)
                         }
 
                         // make card selectable and add event listener
                         card.classList.add('selectable')
                         card.addEventListener('click', function () {
-                            add_remove_border(selected_element)
-                            add_remove_border(card)
-                            selected_element = card
+                            change_version(selected_element, card, downloads)
                         })
                     }
 
-                    // add the help text to the install_section
+                    // add help text to the install_version_section
                     let help = document.createElement('small')
-                    help.id = 'install_branch_help'
+                    help.id = 'install_version_help'
                     help.classList.add('form-text')
                     help.classList.add('text-muted')
                     help.textContent = '{{ _('Select the branch or release to install.') }}'
-                    install_section.appendChild(help)
+                    install_version_section.appendChild(help)
 
-                    // add the options to the install_section
-                    install_section.appendChild(download_options)
+                    // add the options to the install_version_section
+                    install_version_section.appendChild(download_options)
                 }
             })
 
             let install_plugin = function () {
-                let install_branch = installModal.querySelector('#install_branch')
-                let download_url = install_branch.value
+                // get the selected download
+                let selected_download = parseInt(selected_element.getAttribute('plugger-download-index'))  // integer
+                let download_type = selected_element.getAttribute('plugger-download-type')  // release or branch
+                let auto_update = selected_element.getAttribute('plugger-auto-update')  // true or false
+                let download_count = parseInt(selected_element.getAttribute('plugger-download-count'))  // integer
+
+                alert('installing')
+                alert(selected_download)
+                alert(download_type)
+                alert(auto_update)
+                alert(github_id)
+                alert(download_count)
             }
 
             installModal.addEventListener('hide.bs.modal', function () {
