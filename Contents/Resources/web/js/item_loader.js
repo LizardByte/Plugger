@@ -1,17 +1,9 @@
-// load external js scripts
-$.getScript('https://app.lizardbyte.dev/js/levenshtein_distance.js')
-$.getScript('https://app.lizardbyte.dev/js/ranking_sorter.js')
-
-// load local js scripts
-$.getScript('/web/js/translations.js')
-
-
-$(document).ready(function(){
-    // Set cache = false for all jquery ajax requests.
-    $.ajaxSetup({
-        cache: false,
-    })
-})
+// scripts to load
+let scripts = [
+    '/web/js/translations.js',
+    'https://app.lizardbyte.dev/js/levenshtein_distance.js',
+    'https://app.lizardbyte.dev/js/ranking_sorter.js'
+]
 
 let installed_plugins = null
 let plugger_plugins = null
@@ -23,6 +15,21 @@ let plugins_container = document.getElementById("plugins-container")
 let search_options = document.getElementById("search_type")
 
 $(document).ready(function(){
+    // Set cache = false for all jquery ajax requests.
+    $.ajaxSetup({
+        cache: false,
+    })
+
+    let script_queue = scripts.map(function(script) {
+        return $.getScript(script)
+    })
+
+    $.when.apply(null, script_queue).done(function() {
+        initialize()
+    })
+})
+
+let initialize = function () {
     // get installed plugins
     // json data with key being the plugin_identifier
     $.ajax({
@@ -103,8 +110,16 @@ $(document).ready(function(){
 
     // set up the alert listener
     setup_alert_listener()
-})
 
+
+    // replace default function of enter key in search form
+    document.getElementById("searchForm").addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+            e.preventDefault()
+            run_search()
+        }
+    })
+}
 
 let populate_results = function (plugins_list, container, update_counts = false) {
     for (let plugin in plugins_list) {
@@ -127,15 +142,12 @@ let populate_results = function (plugins_list, container, update_counts = false)
         // if plugin installed
         if (plugins_list[plugin]['installed']) {
             thumb.src = `/thumbnail/${plugins_list[plugin]['installed_data']['bundle_identifier']}`
-        }
-        else {
+        } else {
             if (plugins_list[plugin]['thumb_image_url']) {
                 thumb.src = plugins_list[plugin]['thumb_image_url']
-            }
-            else if (plugins_list[plugin]['attribution_image_url']) {
+            } else if (plugins_list[plugin]['attribution_image_url']) {
                 thumb.src = plugins_list[plugin]['attribution_image_url']
-            }
-            else {
+            } else {
                 thumb.src = "/default-thumb.png"
             }
         }
@@ -291,7 +303,7 @@ let populate_results = function (plugins_list, container, update_counts = false)
             // add gh-pages url if it exists
             if (plugins_list[plugin]['gh_pages_url']) {
                 if (!compare_urls(plugins_list[plugin]['gh_pages_url'], plugins_list[plugin]['html_url']) &&
-                        !compare_urls(plugins_list[plugin]['gh_pages_url'], plugins_list[plugin]['homepage'])) {
+                    !compare_urls(plugins_list[plugin]['gh_pages_url'], plugins_list[plugin]['homepage'])) {
                     let gh_pages_column = document.createElement("div")
                     gh_pages_column.className = "col-auto align-self-center me-1"
                     urls_row.appendChild(gh_pages_column)
@@ -447,8 +459,7 @@ let populate_results = function (plugins_list, container, update_counts = false)
                 archived_column.appendChild(archived_icon)
             }
 
-        }
-        else if (plugins_list[plugin]['installed_data']['type'] === "system") {
+        } else if (plugins_list[plugin]['installed_data']['type'] === "system") {
             // add the system plugin category
             plugins_list[plugin]['categories'] = ["System Plugin"]
             // add counts (for sorting only)
@@ -491,8 +502,7 @@ let populate_results = function (plugins_list, container, update_counts = false)
             let system_plugin_icon_inner = document.createElement("i")
             system_plugin_icon_inner.className = "fa-solid fa-chevron-right fa-stack-1x"
             system_plugin_icon.appendChild(system_plugin_icon_inner)
-        }
-        else if (plugins_list[plugin]['installed_data']['type'] === "user") {
+        } else if (plugins_list[plugin]['installed_data']['type'] === "user") {
             // these are installed plugins that are not system plugins and not in our database
 
             // add the installed plugin category
@@ -563,7 +573,6 @@ let populate_results = function (plugins_list, container, update_counts = false)
             card_footer.appendChild(logs_column)
 
 
-
             let logs_icon = document.createElement("i")
             logs_icon.className = "fa-solid fa-file-lines fa-xl align-middle"
             logs_icon.style.cssText = "cursor:pointer;cursor:hand"
@@ -606,8 +615,7 @@ let populate_results = function (plugins_list, container, update_counts = false)
                 }
                 uninstall_column.appendChild(uninstall_icon)
             }
-        }
-        else {
+        } else {
             // add icon to install
             let install_column = document.createElement("div")
             install_column.className = "col-auto align-self-center me-1"
@@ -629,7 +637,7 @@ let populate_results = function (plugins_list, container, update_counts = false)
 
 let setup_alert_listener = function () {
     // add event listener to the parent element
-    search_options.addEventListener("click", function(event) {
+    search_options.addEventListener("click", function (event) {
         // prevent dropdown-menu from closing on click
         event.stopPropagation()
         // check if the clicked element was an input checkbox
@@ -658,11 +666,9 @@ let setup_alert_listener = function () {
         let checkbox = search_options.children[i].children[0]
         if (checkbox.checked && checkbox.indeterminate === false) {
             checkbox.setAttribute("data-event-state", "checked")
-        }
-        else if (checkbox.checked === false && checkbox.indeterminate === true) {
+        } else if (checkbox.checked === false && checkbox.indeterminate === true) {
             checkbox.setAttribute("data-event-state", "indeterminate")
-        }
-        else if (checkbox.checked === false && checkbox.indeterminate === false) {
+        } else if (checkbox.checked === false && checkbox.indeterminate === false) {
             checkbox.setAttribute("data-event-state", "unchecked")
         }
     }
@@ -683,7 +689,6 @@ let compare_urls = function (a, b) {
     return a === b;
 }
 
-
 let run_search = function () {
     // get the search container
     let search_container = document.getElementById("search-container")
@@ -702,8 +707,7 @@ let run_search = function () {
                 if (field.indeterminate === true) {
                     // exclude these categories completely
                     data.append(`exclude_${field.id}`, field.indeterminate)
-                }
-                else if (field.checked) {
+                } else if (field.checked) {
                     data.append(`include_${field.id}`, field.checked)
                 }
             }
@@ -735,8 +739,7 @@ let run_search = function () {
             if (data.get(key) === "true") {
                 excluded_categories.push(category)
             }
-        }
-        else if (key.startsWith("include_category_")) {
+        } else if (key.startsWith("include_category_")) {
             let category = key.replace("include_category_", "")
             if (data.get(key) === "true") {
                 included_categories.push(category)
@@ -770,8 +773,7 @@ let run_search = function () {
             // check if the plugin is in the included categories
             else if (included_categories.length === 0) {
                 add_plugin = true
-            }
-            else if (included_categories.length > 0 && included_categories.includes(cat_representation)) {
+            } else if (included_categories.length > 0 && included_categories.includes(cat_representation)) {
                 add_plugin = true
             }
         }
@@ -812,39 +814,25 @@ let run_search = function () {
         if (sort_type === "0") {
             primary_sort = 'score'
             secondary_sort = 'name_lower'
-        }
-        else {
+        } else {
             primary_sort = sort_type
             secondary_sort = 'score'
         }
         sorted = result.sort(rankingSorter(primary_sort, secondary_sort))
-    }
-    else {
+    } else {
         if (sort_type === "0") {
             primary_sort = 'name_lower'
             secondary_sort = 'full_name'
-        }
-        else {
+        } else {
             primary_sort = sort_type
             secondary_sort = 'full_name'
         }
         if (primary_sort === "name_lower") {
             sorted = result.sort(rankingSorter(primary_sort, secondary_sort)).reverse()
-        }
-        else {
+        } else {
             sorted = result.sort(rankingSorter(primary_sort, secondary_sort))
         }
     }
 
     populate_results(sorted, search_container, false)
 }
-
-$(document).ready(function() {
-    // replace default function of enter key in search form
-    document.getElementById("searchForm").addEventListener("keypress", function (e) {
-        if (e.key === "Enter") {
-            e.preventDefault()
-            run_search()
-        }
-    })
-})

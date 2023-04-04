@@ -15,6 +15,7 @@
                     <div id="install_version_section"></div>
                     <form id="install_options_section" class="d-none">
                         <div class="mb-3" id="install_options_version_div">
+                            <div id="install_options_version_data" data-github_id=""></div>
                             <label class="form-label" for="install_options_version_overview">{{ _('Version') }}</label>
                             <input id="install_options_version_overview" type="text" class="form-control rounded-0 " aria-label="{{ _('Version') }}" disabled readonly />
                             <small class="form-text text-muted">{{ _("The branch or release to install.") }}</small>
@@ -241,6 +242,7 @@
         let install_version_section = document.getElementById('install_version_section')
         install_version_section.innerHTML = ''
         let install_options_section = document.getElementById('install_options_section')
+        let version_data = document.getElementById('install_options_version_data')
 
         // get prev/next buttons
         let prev_button = document.getElementById('btn-prev')
@@ -276,6 +278,7 @@
         }
 
         function reset_modal() {
+            install_version_section.innerHTML = ''
             current_page = 0
             change_page()
         }
@@ -290,6 +293,22 @@
             // increment current page
             current_page += 1
             change_page()
+        }
+
+        function install_plugin() {
+            // get the selected download
+            let selected_download = parseInt(selected_element.getAttribute('plugger-download-index'))  // integer
+            let download_type = selected_element.getAttribute('plugger-download-type')  // release or branch
+            let auto_update = selected_element.getAttribute('plugger-auto-update')  // true or false
+            let github_id = version_data.getAttribute('data-github_id')  // github id
+            let download_count = parseInt(selected_element.getAttribute('plugger-download-count'))  // integer
+
+            alert('installing')
+            alert(selected_download)
+            alert(download_type)
+            alert(auto_update)
+            alert(github_id)
+            alert(download_count)
         }
 
         let installModal = document.getElementById('installModal')
@@ -308,6 +327,7 @@
             // Update the modal's content.
             let modalTitle = installModal.querySelector('.modal-title')
             modalTitle.textContent = `{{ _('Install:') }} ${plugin_name}`
+            version_data.setAttribute('data-github_id', github_id)
             let destination = document.getElementById('install_options_destination-directory_input')
             destination.setAttribute('placeholder', plugin_name)
 
@@ -504,21 +524,6 @@
                     install_version_section.appendChild(download_options)
                 }
             })
-
-            let install_plugin = function () {
-                // get the selected download
-                let selected_download = parseInt(selected_element.getAttribute('plugger-download-index'))  // integer
-                let download_type = selected_element.getAttribute('plugger-download-type')  // release or branch
-                let auto_update = selected_element.getAttribute('plugger-auto-update')  // true or false
-                let download_count = parseInt(selected_element.getAttribute('plugger-download-count'))  // integer
-
-                alert('installing')
-                alert(selected_download)
-                alert(download_type)
-                alert(auto_update)
-                alert(github_id)
-                alert(download_count)
-            }
 
             installModal.addEventListener('hide.bs.modal', function () {
                 discord_widget.classList.remove('d-none')  // show discord widget
