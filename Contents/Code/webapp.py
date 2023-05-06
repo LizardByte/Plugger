@@ -26,6 +26,7 @@ import requests
 # local imports
 from const import bundle_identifier, plex_base_url, plex_token, plugin_directory, plugin_logs_directory, \
     system_plugins_directory
+import plugin_manager
 
 
 # setup flask app
@@ -214,6 +215,17 @@ def image(img):
         return send_from_directory(directory=directory, filename=filename, mimetype=mime_type_map[file_extension])
     else:
         return Response(response='Image not found', status=404, mimetype='text/plain')
+
+
+@app.route('/api/plugin/install/', methods=["POST"])
+def install_plugin():
+    # type: () -> Response
+    """
+    Install a plugin.
+    """
+    data = request.get_json(force=True)
+
+    install_status = plugin_manager.initialize_install(plugin_data=data)
 
 
 # get list of installed plugins in json format
