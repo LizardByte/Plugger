@@ -12,8 +12,8 @@ Minimal setup is required to use Plugger. In addition to the installation, a cou
 Preferences
 -----------
 
-Locale
-^^^^^^
+Web UI Locale
+^^^^^^^^^^^^^
 
 Description
    The localization value to use for translations.

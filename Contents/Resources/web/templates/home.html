@@ -101,7 +101,7 @@
 
 {% block content %}
             <div class="container px-auto my-5">
-                <div class="col-lg-12 mx-auto" id="themerr-container" style="min-width: 335px">
+                <div class="col-lg-12 mx-auto" id="plugger-container" style="min-width: 335px">
 
                     <!-- Search section-->
                     <section class="py-5 offset-anchor" id="Search">
@@ -177,7 +177,7 @@
     {# Install Modal #}
     <script>
         // selected element placeholder
-        let selected_element = null
+        let selected_version = null
 
         // add and remove border function
         function add_remove_border(element) {
@@ -197,7 +197,7 @@
 
             if (new_element !== null) {
                 add_remove_border(new_element)  // add new border
-                selected_element = new_element
+                selected_version = new_element
 
                 // get asset options placeholder
                 let install_options_assets_select = document.getElementById('install_options_assets_select')
@@ -297,18 +297,39 @@
 
         function install_plugin() {
             // get the selected download
-            let selected_download = parseInt(selected_element.getAttribute('plugger-download-index'))  // integer
-            let download_type = selected_element.getAttribute('plugger-download-type')  // release or branch
-            let auto_update = selected_element.getAttribute('plugger-auto-update')  // true or false
+            let selected_download_index = parseInt(selected_version.getAttribute('plugger-download-index'))  // integer
+            let download_type = selected_version.getAttribute('plugger-download-type')  // release or branch
+            let auto_update = JSON.parse(selected_version.getAttribute('plugger-auto-update')) // true or false
             let github_id = version_data.getAttribute('data-github_id')  // github id
-            let download_count = parseInt(selected_element.getAttribute('plugger-download-count'))  // integer
+            let download_asset_count = parseInt(selected_version.getAttribute('plugger-download-asset-count'))  // integer
 
-            alert('installing')
-            alert(selected_download)
-            alert(download_type)
-            alert(auto_update)
-            alert(github_id)
-            alert(download_count)
+            let selected_asset = document.getElementById('install_options_assets_select').value
+            let destination_directory = document.getElementById('install_options_destination-directory_input')
+
+            if (destination_directory.value === '') {
+                destination_directory = destination_directory.placeholder
+            } else {
+                destination_directory = destination_directory.value
+            }
+
+            $.ajax({
+                async: true,
+                url: "/api/plugin/install/",
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    'download_data': {
+                        'auto_update': auto_update,
+                        'destination_directory': destination_directory,
+                        'download_asset_count': download_asset_count,
+                        'download_type': download_type,
+                        'selected_asset': selected_asset,
+                        'selected_download_index': selected_download_index,
+                    },
+                    'plugin': plugger_plugins[github_id],
+                })
+            })
         }
 
         let installModal = document.getElementById('installModal')
@@ -491,7 +512,7 @@
                         for (let download_asset in download['download_assets']) {
                             download_assets_length++
                         }
-                        card.setAttribute('plugger-download-count', download_assets_length.toString())
+                        card.setAttribute('plugger-download-asset-count', download_assets_length.toString())
 
                         // set default selection
                         if (download['type'] === 'release' && default_selection_type === null) {
@@ -508,7 +529,7 @@
                         // make card selectable and add event listener
                         card.classList.add('selectable')
                         card.addEventListener('click', function () {
-                            change_version(selected_element, card, downloads)
+                            change_version(selected_version, card, downloads)
                         })
                     }
 

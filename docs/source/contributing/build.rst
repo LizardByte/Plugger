@@ -7,7 +7,7 @@ Python 2.7.
 
 Clone
 -----
-Ensure `git <https://git-scm.com/>`_ is installed and run the following:
+Ensure `git <https://git-scm.com/>`__ is installed and run the following:
 
    .. code-block:: bash
 
@@ -35,6 +35,26 @@ Build Plist
    .. code-block:: bash
 
       python ./scripts/build_plist.py
+
+npm dependencies
+----------------
+Install nodejs and npm. Downloads available `here <https://nodejs.org/en/download/>`__.
+
+Install npm dependencies.
+   .. code-block:: bash
+
+      npm install
+
+Move modules directory.
+   Linux/macOS
+      .. code-block:: bash
+
+         mv ./node_modules ./Contents/Resources/web
+
+   Windows
+      .. code-block:: batch
+
+         move .\node_modules .\Contents\Resources\web
 
 Remote Build
 ------------

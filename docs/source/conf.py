@@ -73,7 +73,7 @@ master_doc = 'index'
 
 # images
 html_favicon = os.path.join(root_dir, 'Contents', 'Resources', 'web', 'images', 'favicon.ico')
-html_logo = os.path.join(root_dir, 'Contents', 'Resources', 'attribution.png')
+html_logo = os.path.join(root_dir, 'Contents', 'Resources', 'icon-default.png')
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

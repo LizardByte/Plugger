@@ -22,19 +22,24 @@ from flask import Flask, Response, render_template, request, send_from_directory
 from flask_babel import Babel
 import polib
 import requests
+from werkzeug.utils import secure_filename
 
 # local imports
 from const import bundle_identifier, plex_base_url, plex_token, plugin_directory, plugin_logs_directory, \
     system_plugins_directory
 import plugin_manager
 
+bundle_path = Core.bundle_path
+if bundle_path.endswith('test.bundle'):
+    # use current directory instead, to allow for testing outside of Plex
+    bundle_path = os.getcwd()
 
 # setup flask app
 app = Flask(
     import_name=__name__,
-    root_path=os.path.join(Core.bundle_path, 'Contents', 'Resources', 'web'),
-    static_folder=os.path.join(Core.bundle_path, 'Contents', 'Resources', 'web'),
-    template_folder=os.path.join(Core.bundle_path, 'Contents', 'Resources', 'web', 'templates')
+    root_path=os.path.join(bundle_path, 'Contents', 'Resources', 'web'),
+    static_folder=os.path.join(bundle_path, 'Contents', 'Resources', 'web'),
+    template_folder=os.path.join(bundle_path, 'Contents', 'Resources', 'web', 'templates')
     )
 
 # remove extra lines rendered jinja templates
@@ -50,7 +55,7 @@ babel = Babel(
     configure_jinja=True
 )
 
-app.config['BABEL_TRANSLATION_DIRECTORIES'] = os.path.join(Core.bundle_path, 'Contents', 'Strings')
+app.config['BABEL_TRANSLATION_DIRECTORIES'] = os.path.join(bundle_path, 'Contents', 'Strings')
 
 # setup logging for flask
 Log.Info('Adding flask log handlers to plex plugin logger')
@@ -159,13 +164,13 @@ def stop_server():
 
 
 @app.route('/', methods=["GET"])
-@app.route('/home/', methods=["GET"])
+@app.route('/home', methods=["GET"])
 def home():
     # type: () -> render_template
     """
     Serve the webapp home page.
 
-    .. todo:: This documentation needs to be improved.
+    This page is where most of the functionality for Plugger is provided.
 
     Returns
     -------
@@ -208,11 +213,14 @@ def image(img):
     >>> image('favicon.ico')
     """
     directory = os.path.join(app.static_folder, 'images')
-    filename = img
+    filename = os.path.basename(secure_filename(filename=img))  # sanitize the input
 
     if os.path.isfile(os.path.join(directory, filename)):
-        file_extension = filename.split('.')[-1]
-        return send_from_directory(directory=directory, filename=filename, mimetype=mime_type_map[file_extension])
+        file_extension = filename.rsplit('.', 1)[-1]
+        if file_extension in mime_type_map:
+            return send_from_directory(directory=directory, filename=filename, mimetype=mime_type_map[file_extension])
+        else:
+            return Response(response='Invalid file type', status=400, mimetype='text/plain')
     else:
         return Response(response='Image not found', status=404, mimetype='text/plain')
 
@@ -392,7 +400,7 @@ def log_stream(plugin_identifier):
     return Response(combined_log, mimetype="text/plain", content_type="text/event-stream")
 
 
-@app.route('/status/', methods=["GET"])
+@app.route('/status', methods=["GET"])
 def status():
     # type: () -> dict
     """
@@ -452,7 +460,7 @@ def thumbnail(plugin_identifier):
                                mimetype=mime_type_map[image_extension])
 
 
-@app.route("/translations/", methods=["GET"])
+@app.route("/translations", methods=["GET"])
 def translations():
     # type: () -> Response
     """
