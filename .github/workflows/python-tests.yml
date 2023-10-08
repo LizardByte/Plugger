@@ -18,8 +18,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: LizardByte/.github/actions/setup_python2@nightly
+      - name: Install Python
+        uses: LizardByte/action-setup-python
+        with:
+          python-version: '2.7'
 
       - name: Install python dependencies
         shell: bash

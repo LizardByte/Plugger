@@ -43,10 +43,12 @@ jobs:
         with:
           path: Plugger.bundle
 
-      - name: Install Python 2.7
-        uses: LizardByte/.github/actions/setup_python2@nightly
+      - name: Install Python
+        uses: LizardByte/action-setup-python
+        with:
+          python-version: '2.7'
 
-      - name: Set up Python 2.7 Dependencies
+      - name: Set up Python Dependencies
         working-directory: Plugger.bundle
         run: |
           echo "Installing Requirements"
