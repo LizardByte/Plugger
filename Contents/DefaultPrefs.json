@@ -2,7 +2,7 @@
 	{
 		"id": "enum_locale",
 		"type": "enum",
-		"label": "Locale",
+		"label": "Web UI Locale",
 		"default": "en",
 		"values": [
 			"de",

@@ -16,7 +16,7 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 root_dir = os.path.dirname(script_dir)
 locale_dir = os.path.join(root_dir, 'Contents', 'Strings')
 
-# retroarcher target locales
+# target locales
 target_locales = [
     'de',  # Deutsch
     'en',  # English

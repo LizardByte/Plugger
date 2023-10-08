@@ -1,11 +1,624 @@
 {% extends 'base.html' %}
-{% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <h1 class="text-center">Plugger</h1>
-                <p class="text-center">Something something.</p>
+{% block modals %}
+    {# Install Modal #}
+    <div class="modal fade" id="installModal" tabindex="-1" aria-labelledby="installModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-fullscreen-xxl-down">
+            <div class="modal-content bg-dark-gray text-white">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="installModalLabel">{{ _('Install') }}</h5>
+                    {# Close button #}
+                    <div class="d-flex align-items-center">
+                        <button type="button" class="btn-close btn-close-white ms-4" data-bs-dismiss="modal" aria-label="{{ _('Close') }}"></button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div id="install_version_section"></div>
+                    <form id="install_options_section" class="d-none">
+                        <div class="mb-3" id="install_options_version_div">
+                            <div id="install_options_version_data" data-github_id=""></div>
+                            <label class="form-label" for="install_options_version_overview">{{ _('Version') }}</label>
+                            <input id="install_options_version_overview" type="text" class="form-control rounded-0 " aria-label="{{ _('Version') }}" disabled readonly />
+                            <small class="form-text text-muted">{{ _("The branch or release to install.") }}</small>
+                            <i id="install_options_version_edit" class="fa-solid fa-fw fa-edit text-warning" onclick="previous_click()" style="cursor: pointer;"></i>
+                        </div>
+                        <div class="mb-3" id="install_options_assets_div">
+                            <label class="form-label" for="install_options_assets_select">{{ _('Download asset') }}</label>
+                            <select id="install_options_assets_select" class="form-select rounded-0"></select>
+                            <small class="form-text text-muted">{{ _('Select the asset to install.') }}</small>
+                        </div>
+                        <div class="mb-3" id="install_options_auto-update_div">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="install_options_auto-update_checkbox" checked>
+                                <label class="form-check-label" for="install_options_auto-update_checkbox">{{ _('Auto update') }}</label>
+                            </div>
+                            <small class="form-text text-muted">{{ _('Enable/disable auto update.') }}</small>
+                        </div>
+                        <div class="mb-3 input-group" id="install_options_destination-directory_div">
+                            <input id="install_options_destination-directory_input" type="text" class="form-control rounded-0" placeholder="{{ _('Destination') }}" aria-label="{{ _('Destination') }}" aria-describedby="destination-directory-addon">
+                            <span class="input-group-text rounded-0" id="destination-directory-addon">.bundle</span>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    {# Close button #}
+                    <div class="d-flex align-items-center">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="{{ _('Cancel') }}">{{ _('Cancel') }}</button>
+                    </div>
+                    {# Prev button #}
+                    <div class="d-flex align-items-center">
+                        <button id="btn-prev" type="button" class="btn btn-info" disabled aria-label="{{ _('Previous') }}" onclick="previous_click()">{{ _('Prev') }}</button>
+                    </div>
+                    {# Next button #}
+                    <div class="d-flex align-items-center">
+                        <button id="btn-next" type="button" class="btn btn-info" aria-label="{{ _('Next') }}" onclick="next_click()">{{ _('Next') }}</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    {# Logs Modal #}
+    <div class="modal fade" id="logsModal" tabindex="-1" aria-labelledby="logsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-fullscreen-xxl-down">
+            <div class="modal-content bg-dark-gray text-white">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logsModalLabel">{{ _('Logs') }}</h5>
+                    {# Copy button #}
+                    <div class="d-flex align-items-center ms-auto">
+                        <button id="copy-btn-header" type="button" class="btn btn-outline-light ms-auto" data-clipboard-target="#logs" aria-label="{{ _('Copy') }}">
+                            <i class="fa-solid fa-fw fa-copy"></i>
+                        </button>
+                    </div>
+                    {# Auto refresh toggle #}
+                    <div class="form-check form-switch ms-4">
+                        <input class="form-check-input" type="checkbox" role="switch" id="switch_auto_refresh" aria-label="{{ _('Auto refresh') }}" checked>
+                        <label class="form-check-label" for="switch_auto_refresh">{{ _('Auto refresh') }}</label>
+                    </div>
+                    {# Close button #}
+                    <div class="d-flex align-items-center">
+                        <button type="button" class="btn-close btn-close-white ms-4" data-bs-dismiss="modal" aria-label="{{ _('Close') }}"></button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <pre id="logs"></pre>
+                </div>
+                <div class="modal-footer">
+                    {# Copy button #}
+                    <div class="d-flex align-items-center">
+                        <button id="copy-btn-footer" type="button" class="btn btn-outline-light" data-clipboard-target="#logs" aria-label="{{ _('Copy') }}">
+                            <i class="fa-solid fa-fw fa-copy"></i>
+                        </button>
+                    </div>
+                    {# Close button #}
+                    <div class="d-flex align-items-center">
+                        <button type="button" class="btn-close btn-close-white ms-4" data-bs-dismiss="modal" aria-label="{{ _('Close') }}"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock modals %}
+
+{% block content %}
+            <div class="container px-auto my-5">
+                <div class="col-lg-12 mx-auto" id="plugger-container" style="min-width: 335px">
+
+                    <!-- Search section-->
+                    <section class="py-5 offset-anchor" id="Search">
+                        <div class="container mb-5">
+                            <form id="searchForm">
+                                <div class="form-group d-flex flex-wrap">
+                                    <div class="col-lg-3 col-md-4 col-sm-8 col-12 me-3 mb-3">
+                                        <div class="btn-group w-100">
+                                            <button type="button" class="btn btn-warning rounded-0 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                {{ _('Categories') }}
+                                            </button>
+                                            <div id="search_type" class="dropdown-menu px-4 py-3 rounded-0 w-100 bg-dark border-white text-white" aria-label="{{ _('Search Categories') }}">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="category_installed_plugin">
+                                                    <label class="form-check-label" for="category_installed_plugin">{{ _('Installed Plugin') }}</label><!-- whitespace is being added here
+                                                    --><label id="count_installed_plugin" class="form-check-label badge bg-danger ms-2" for="category_installed_plugin">0</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="category_system_plugin">
+                                                    <label class="form-check-label" for="category_system_plugin">{{ _('System Plugin') }}</label><!-- whitespace is being added here
+                                                    --><label id="count_system_plugin" class="form-check-label badge bg-danger ms-2" for="category_system_plugin">0</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-4 col-sm-8 col-12 me-3 mb-3">
+                                        <select class="form-select rounded-0" aria-label="{{ _('Sort Type') }}" id="sort_type">
+                                            <option value="0" selected disabled>{{ _('Sort Type') }}</option>
+                                            <option value="0">{{ _('Default') }}</option>
+                                            <option value="name_lower">{{ _('Name') }}</option>
+                                            <option value="github_id">{{ _('Created Date') }}</option>
+                                            <option value="stargazers_count">{{ _('Stars') }}</option>
+                                            <option value="forks_count">{{ _('Forks') }}</option>
+                                            <option value="open_pull_requests_count">{{ _('Open Pull Requests') }}</option>
+                                            <option value="open_issues_count">{{ _('Open Issues') }}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-5 col-md-6 col-sm-8 col-12 me-3 mb-3">
+                                        <input type="text" class="form-control rounded-0 w-100" placeholder="{{ _('Search') }}" id="search_term">
+                                    </div>
+                                    <button type="button" class="btn btn-warning ml-3 rounded-0 mb-3" onclick="run_search()">
+                                        <i class="fa-fw fas fa-search"></i>{{ _('Search') }}</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="search-container"></div>
+                    </section>
+
+                    <!-- Plugins section-->
+                    <section class="py-5 offset-anchor" id="Plugins">
+                        <div class="row gx-5 justify-content-center">
+                            <div class="col-lg-8 col-xl-6">
+                                <div class="text-center text-white">
+                                    <h2 class="fw-bolder">{{ _('Plugins') }}</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="plugins-container"></div>
+                    </section>
+
+                </div>
+            </div>
 {% endblock content %}
+
+{% block scripts %}
+    {# Load emoji-js #}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='node_modules/emoji-js/lib/emoji.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='node_modules/emoji-js/lib/emoji.min.js') }}"></script>
+
+    {# Load Plugin List #}
+    <script src="{{ url_for('static', filename='js/item_loader.js') }}"></script>
+
+    {# Install Modal #}
+    <script>
+        // selected element placeholder
+        let selected_version = null
+
+        // add and remove border function
+        function add_remove_border(element) {
+            element.classList.toggle('border')
+            element.classList.toggle('border-warning')
+            element.classList.toggle('border-3')
+        }
+
+        // set page counter
+        let current_page = 0
+
+        function change_version(old_element, new_element, downloads) {
+            // remove old border
+            if (old_element !== null) {
+                add_remove_border(old_element)
+            }
+
+            if (new_element !== null) {
+                add_remove_border(new_element)  // add new border
+                selected_version = new_element
+
+                // get asset options placeholder
+                let install_options_assets_select = document.getElementById('install_options_assets_select')
+                install_options_assets_select.innerHTML = ''
+
+                // index of selected download
+                let download_index = parseInt(new_element.getAttribute('plugger-download-index'))
+
+                // set version in options page
+                let install_options_version = document.getElementById('install_options_version_overview')
+                install_options_version.value = downloads[download_index]['name']
+
+                // loop through assets
+                for (let asset in downloads[download_index]['download_assets']) {
+                    // create option
+                    let option = document.createElement('option')
+                    option.value = downloads[download_index]['download_assets'][asset]
+                    option.textContent = asset
+
+                    // append option
+                    install_options_assets_select.appendChild(option)
+                }
+
+                // enable/disable auto update checkbox
+                let install_options_auto_update = new_element.getAttribute('plugger-auto-update')
+                let install_option_auto_update_checkbox = document.getElementById('install_options_auto-update_checkbox')
+                if (install_options_auto_update === 'true') {
+                    install_option_auto_update_checkbox.disabled = false
+                    install_option_auto_update_checkbox.checked = true
+                } else {
+                    install_option_auto_update_checkbox.disabled = true
+                    install_option_auto_update_checkbox.checked = false
+                }
+            }
+        }
+
+        // create emoji converter
+        let emoji = new EmojiConvertor()
+        emoji.replace_mode = 'unified'
+        emoji.allow_native = true
+
+        let install_version_section = document.getElementById('install_version_section')
+        install_version_section.innerHTML = ''
+        let install_options_section = document.getElementById('install_options_section')
+        let version_data = document.getElementById('install_options_version_data')
+
+        // get prev/next buttons
+        let prev_button = document.getElementById('btn-prev')
+        let next_button = document.getElementById('btn-next')
+
+        function change_page() {
+            // ensure current page is within the limits
+            if (current_page < 0) {
+                current_page = 0
+            } else if (current_page > 2) {
+                current_page = 2
+            }
+
+            if (current_page === 0) {
+                install_version_section.classList.remove('d-none')
+                install_options_section.classList.add('d-none')
+                prev_button.disabled = true
+                next_button.disabled = false
+                next_button.textContent = '{{ _('Next') }}'
+            } else if (current_page === 1) {
+                install_version_section.classList.add('d-none')
+                install_options_section.classList.remove('d-none')
+                prev_button.disabled = false
+                next_button.disabled = false
+                next_button.textContent = '{{ _('Install') }}'
+            } else if (current_page === 2) {
+                install_version_section.classList.add('d-none')
+                install_options_section.classList.add('d-none')
+                next_button.disabled = true
+                next_button.textContent = '{{ _('Install') }}'
+                install_plugin()
+            }
+        }
+
+        function reset_modal() {
+            install_version_section.innerHTML = ''
+            current_page = 0
+            change_page()
+        }
+
+        function previous_click() {
+            // decrement current page
+            current_page -= 1
+            change_page()
+        }
+
+        function next_click() {
+            // increment current page
+            current_page += 1
+            change_page()
+        }
+
+        function install_plugin() {
+            // get the selected download
+            let selected_download_index = parseInt(selected_version.getAttribute('plugger-download-index'))  // integer
+            let download_type = selected_version.getAttribute('plugger-download-type')  // release or branch
+            let auto_update = JSON.parse(selected_version.getAttribute('plugger-auto-update')) // true or false
+            let github_id = version_data.getAttribute('data-github_id')  // github id
+            let download_asset_count = parseInt(selected_version.getAttribute('plugger-download-asset-count'))  // integer
+
+            let selected_asset = document.getElementById('install_options_assets_select').value
+            let destination_directory = document.getElementById('install_options_destination-directory_input')
+
+            if (destination_directory.value === '') {
+                destination_directory = destination_directory.placeholder
+            } else {
+                destination_directory = destination_directory.value
+            }
+
+            $.ajax({
+                async: true,
+                url: "/api/plugin/install/",
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    'download_data': {
+                        'auto_update': auto_update,
+                        'destination_directory': destination_directory,
+                        'download_asset_count': download_asset_count,
+                        'download_type': download_type,
+                        'selected_asset': selected_asset,
+                        'selected_download_index': selected_download_index,
+                    },
+                    'plugin': plugger_plugins[github_id],
+                })
+            })
+        }
+
+        let installModal = document.getElementById('installModal')
+
+        installModal.addEventListener('show.bs.modal', function (event) {
+            // hide discord widget
+            let discord_widget = document.getElementsByTagName('widgetbot-crate')[0]
+            discord_widget.classList.add('d-none')
+
+            // Button that triggered the modal
+            let button = event.relatedTarget
+            // Extract info from data-bs-* attributes
+            let github_id = button.getAttribute('data-bs-github_id')
+            let plugin_name = button.getAttribute('data-bs-plugin_name')
+
+            // Update the modal's content.
+            let modalTitle = installModal.querySelector('.modal-title')
+            modalTitle.textContent = `{{ _('Install:') }} ${plugin_name}`
+            version_data.setAttribute('data-github_id', github_id)
+            let destination = document.getElementById('install_options_destination-directory_input')
+            destination.setAttribute('placeholder', plugin_name)
+
+            // reset the modal if it was previously used
+            reset_modal()
+
+            // get PluggerDB plugins
+            // json data with key being the GitHub repo id
+            // will need to match the name property name or bundle property of the installed plugin data
+            $.ajax({
+                async: false,
+                url: "https://app.lizardbyte.dev/PluggerDB/plugins.json",
+                type: "GET",
+                dataType: "json",
+                success: function (result) {
+                    let plugin = result[github_id]
+
+                    // archived alert
+                    if (plugin['archived'] === true) {
+                        let archived_alert = document.createElement('div')
+                        archived_alert.className = 'alert alert-danger alert-dismissible fade show'
+                        archived_alert.setAttribute('role', 'alert')
+
+                        let archived_alert_icon = document.createElement('i')
+                        archived_alert_icon.className = 'fa-solid fa-exclamation-triangle fa-lg me-2'
+                        archived_alert.appendChild(archived_alert_icon)
+
+                        let archived_alert_message = document.createElement('span')
+                        archived_alert_message.innerHTML = `{{ _('This plugin is archived and is no longer being maintained. It is highly unlikely this plugin will function properly.') }}`
+                        archived_alert.appendChild(archived_alert_message)
+
+                        let archived_alert_close = document.createElement('button')
+                        archived_alert_close.className = 'btn-close'
+                        archived_alert_close.setAttribute('type', 'button')
+                        archived_alert_close.setAttribute('data-bs-dismiss', 'alert')
+                        archived_alert_close.setAttribute('aria-label', "{{ _('Close') }}")
+                        archived_alert.appendChild(archived_alert_close)
+
+                        install_version_section.appendChild(archived_alert)
+                    }
+
+                    // global alert
+                    let global_alert = document.createElement('div')
+                    global_alert.className = 'alert alert-warning alert-dismissible fade show'
+                    global_alert.setAttribute('role', 'alert')
+
+                    // alert icon
+                    let global_alert_icon = document.createElement('i')
+                    // set class later
+                    global_alert.appendChild(global_alert_icon)
+
+                    // alert message
+                    let global_alert_message = document.createElement('span')
+                    // add the text later
+                    global_alert.appendChild(global_alert_message)
+
+                    // alert close button
+                    let global_alert_close = document.createElement('button')
+                    global_alert_close.className = 'btn-close'
+                    global_alert_close.setAttribute('type', 'button')
+                    global_alert_close.setAttribute('data-bs-dismiss', 'alert')
+                    global_alert_close.setAttribute('aria-label', "{{ _('Close') }}")
+                    global_alert.appendChild(global_alert_close)
+
+                    // the download choices for the plugin
+                    let downloads = plugin['downloads']
+
+                    // create downloads div
+                    let download_options = document.createElement('div')
+
+                    // variables to help with warning messages and default selection
+                    let default_selection_type = null
+                    let found_latest_release = null
+                    let found_default_branch = false
+
+                    // loop through downloads
+                    for (let download of downloads) {
+                        // create a card for each download
+                        let card = document.createElement('div')
+                        card.className = 'card mb-3 bg-dark text-white selectable'
+                        // hand cursor
+                        card.style.cursor = 'pointer'
+
+                        let version = null
+                        let version_prefix = null
+
+                        download_options.appendChild(card)
+
+                        // process according to type
+                        if (download['type'] === 'release') {
+                            version = download['release_tag']
+                            version_prefix = "{{ _('Version:') }}"
+                        } else if (download['type'] === 'branch') {
+                            version = download['commit_sha'].substring(0, 7)  // first 7 characters of commit hash
+                            version_prefix = "{{ _('Branch:') }}"
+                        }
+
+                        // card title
+                        let card_body = document.createElement('div')
+                        card_body.className = 'card-body mx-3'
+
+                        // version row
+                        let version_row = document.createElement('div')
+                        version_row.className = 'row'
+                        if (version !== download['name']) {
+                            version_row.textContent = `${version_prefix} ${download['name']} (${version})`
+                        } else {
+                            version_row.textContent = `${version_prefix} ${download['name']}`
+                        }
+                        card_body.appendChild(version_row)
+
+                        // date row
+                        let date_row = document.createElement('div')
+                        date_row.className = 'row'
+                        date_row.textContent = `{{ _('Date:') }} ${download['date']}`
+                        card_body.appendChild(date_row)
+
+                        // set warning message for non latest releases and non default branches
+                        let warning = ""
+
+                        card.setAttribute('plugger-download-index', downloads.indexOf(download))
+
+                        if (download['type'] === 'release') {
+                            card.setAttribute('plugger-download-type', 'release')
+                            if (found_default_branch === true) {
+                                warning = `${warning} ${emoji.replace_colons(":warning: {{ _('This release is older than the default branch.') }}")}<br>`
+                            }
+                            if (found_latest_release === null) {
+                                found_latest_release = true
+                                card.setAttribute('plugger-auto-update', 'true')
+                            } else {
+                                warning = `${warning} ${emoji.replace_colons(":warning: {{ _('This is not the latest release.') }}")}<br>`
+                                card.setAttribute('plugger-auto-update', 'false')
+                            }
+                        } else if (download['type'] === 'branch') {
+                            card.setAttribute('plugger-download-type', 'branch')
+                            card.setAttribute('plugger-auto-update', 'true')  // all branches support auto update
+                            if (download['default_branch'] === true) {
+                                found_default_branch = true
+                            } else {
+                                warning = `${warning} ${emoji.replace_colons(":warning: {{ _('This is not the default branch.') }}")}<br>`
+                            }
+                            if (download['default_branch'] === true) {
+                                if (found_latest_release !== null) {
+                                    global_alert_icon.className = 'fa-solid fa-exclamation-triangle fa-lg me-2'
+                                    global_alert_message.textContent = "{{ _('The default branch (<default_branch>) is older than the latest release. This plugin may not support installing from branches.') }}".replace('<default_branch>', download['name'])
+                                    install_version_section.appendChild(global_alert)
+                                }
+                            }
+                        }
+
+                        let warning_row = document.createElement('div')
+                        warning_row.className = 'row'
+                        warning_row.innerHTML = warning
+                        card_body.appendChild(warning_row)
+
+                        card.appendChild(card_body)
+
+                        // get length of download_assets
+                        let download_assets_length = 0  // using .length directly gives undefined?
+                        for (let download_asset in download['download_assets']) {
+                            download_assets_length++
+                        }
+                        card.setAttribute('plugger-download-asset-count', download_assets_length.toString())
+
+                        // set default selection
+                        if (download['type'] === 'release' && default_selection_type === null) {
+                            // first release is default if it comes before default branch
+                            default_selection_type = 'release'
+                            change_version(null, card, downloads)
+                        } else if (download['type'] === 'branch' && download['default_branch'] === true &&
+                            default_selection_type === null) {
+                            // default branch is default if it comes before first release
+                            default_selection_type = 'branch'
+                            change_version(null, card, downloads)
+                        }
+
+                        // make card selectable and add event listener
+                        card.classList.add('selectable')
+                        card.addEventListener('click', function () {
+                            change_version(selected_version, card, downloads)
+                        })
+                    }
+
+                    // add help text to the install_version_section
+                    let help = document.createElement('small')
+                    help.id = 'install_version_help'
+                    help.classList.add('form-text')
+                    help.classList.add('text-muted')
+                    help.textContent = '{{ _('Select the branch or release to install.') }}'
+                    install_version_section.appendChild(help)
+
+                    // add the options to the install_version_section
+                    install_version_section.appendChild(download_options)
+                }
+            })
+
+            installModal.addEventListener('hide.bs.modal', function () {
+                discord_widget.classList.remove('d-none')  // show discord widget
+            })
+        })
+    </script>
+    {# Logs Modal #}
+    <script type="text/javascript" src="{{ url_for('static', filename='node_modules/clipboard/dist/clipboard.min.js') }}"></script>
+    <script>
+        new ClipboardJS('#copy-btn-header')
+        new ClipboardJS('#copy-btn-footer')
+    </script>
+    <script>
+        let logsModal = document.getElementById('logsModal')
+
+        logsModal.addEventListener('show.bs.modal', function (event) {
+            // hide discord widget
+            let discord_widget = document.getElementsByTagName('widgetbot-crate')[0]
+            discord_widget.classList.add('d-none')
+
+            // Button that triggered the modal
+            let button = event.relatedTarget
+            // Extract info from data-bs-* attributes
+            let plugin_identifier = button.getAttribute('data-bs-plugin_identifier')
+            let plugin_name = button.getAttribute('data-bs-plugin_name')
+
+            // Update the modal's content.
+            let modalTitle = logsModal.querySelector('.modal-title')
+            modalTitle.textContent = `{{ _('Logs:') }} ${plugin_name}`
+
+            // this will run every 5 seconds to update the logs
+            let updateLogs = () => {
+                $.ajax({
+                    url: `/log_stream/${plugin_identifier}`,
+                    type: "GET",
+                    success: function (data) {
+                        let log_container = document.getElementById("logs")
+                        log_container.innerHTML = data
+                    }
+                })
+            }
+
+            // update the logs immediately
+            updateLogs()
+
+            // then setup update timer to update every 5 seconds
+            const updateIntervalPeriod = 5000
+            let updateInterval
+            // setInterval(updateLogs, updateIntervalPeriod)
+
+            // add event listeners to the auto-refresh toggle switch
+            const switchAutoRefresh = document.getElementById("switch_auto_refresh");
+            switchAutoRefresh.addEventListener("change", () => {
+                toggleAutoRefresh()
+            })
+
+            // function to toggle the auto-refresh switch
+            let toggleAutoRefresh = () => {
+                if (switchAutoRefresh.checked) {
+                    // turn on auto-refresh
+                    updateInterval = setInterval(updateLogs, updateIntervalPeriod)
+                } else {
+                    // turn off auto-refresh
+                    clearInterval(updateInterval);
+                }
+            }
+
+            logsModal.addEventListener('hide.bs.modal', function () {
+                clearInterval(updateInterval)  // clear the interval when the modal is closed
+                discord_widget.classList.remove('d-none')  // show discord widget
+            })
+
+            // run the toggle function to set the initial state
+            toggleAutoRefresh()
+        })
+    </script>
+{% endblock scripts %}

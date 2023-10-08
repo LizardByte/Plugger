@@ -6,7 +6,7 @@ on:
     branches: [nightly]
     paths:  # prevents workflow from running unless these files change
       - '.github/workflows/localize.yml'
-      - 'Contents/Scripts/plugger.po'
+      - 'Contents/Strings/plugger.po'
       - 'Contents/Code/**.py'
       - 'Contents/Resources/web/templates/**'
   workflow_dispatch:
@@ -27,8 +27,8 @@ jobs:
 
       - name: Set up Python Dependencies
         run: |
-          python -m pip install --upgrade pip setuptools
-          python -m pip install -r requirements.txt
+          python -m pip install --upgrade pip setuptools requests
+          python -m pip install -r requirements.txt  # requests is required to install python-plexapi
 
       - name: Update Strings
         run: |
@@ -40,14 +40,14 @@ jobs:
           git config --global pager.diff false
 
           # print the git diff
-          git diff Contents/Scripts/plugger.po
+          git diff Contents/Strings/plugger.po
 
           # set the variable with minimal output, replacing `\t` with ` `
-          OUTPUT=$(git diff --numstat locale/retroarcher.po | sed -e "s#\t# #g")
+          OUTPUT=$(git diff --numstat Contents/Strings/plugger.po | sed -e "s#\t# #g")
           echo "git_diff=${OUTPUT}" >> $GITHUB_ENV
 
       - name: git reset
-        if: ${{ env.git_diff == '1 1 Contents/Scripts/plugger.po' }}  # only run if more than 1 line changed
+        if: ${{ env.git_diff == '1 1 Contents/Strings/plugger.po' }}  # only run if more than 1 line changed
         run: |
           git reset --hard
 
@@ -59,7 +59,7 @@ jobs:
         uses: peter-evans/create-pull-request@v4
         with:
           add-paths: |
-            Contents/Scripts/*.po
+            Contents/Strings/*.po
           token: ${{ secrets.GH_BOT_TOKEN }}  # must trigger PR tests
           commit-message: New localization template
           branch: localize/update

@@ -9,17 +9,11 @@ Minimal setup is required to use Plugger. In addition to the installation, a cou
    #. Select the gear cog when hovering over the Plugger plugin tile.
    #. Set the values of the preferences and save.
 
-.. Note:: If a movie's metadata was refreshed and no theme song was added, it is most likely that the movie is not in
-   the database. Please see :ref:`contributing/database <contributing/database:database>` for information on how to
-   contribute.
-
-.. Attention:: It may take several minutes after completing a metadata refresh for a theme song to be available.
-
 Preferences
 -----------
 
-Locale
-^^^^^^
+Web UI Locale
+^^^^^^^^^^^^^
 
 Description
    The localization value to use for translations.
