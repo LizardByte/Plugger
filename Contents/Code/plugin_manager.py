@@ -20,6 +20,8 @@ def initialize_install(plugin_data):
 
     Parses the plugin data for further processing depending on the conditions.
 
+    .. todo:: Complete this function.
+
     Parameters
     ----------
     plugin_data : dict
@@ -28,7 +30,7 @@ def initialize_install(plugin_data):
     Returns
     -------
     bool
-        Whether or not the plugin was successfully installed/migrated/updated.
+        Whether the plugin was successfully installed/migrated/updated.
     """
     Log.Debug("{}: {}".format("plugger_support_directory", plugger_data_directory))
     Log.Debug("{}: {}".format("plugin_directory", plugin_directory))

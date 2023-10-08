@@ -230,10 +230,13 @@ def install_plugin():
     # type: () -> Response
     """
     Install a plugin.
+
+    .. todo:: Complete this function.
     """
     data = request.get_json(force=True)
 
     install_status = plugin_manager.initialize_install(plugin_data=data)
+    Log.Warn('Installing plugins is not yet supported, status: {}'.format(install_status))
 
 
 # get list of installed plugins in json format
