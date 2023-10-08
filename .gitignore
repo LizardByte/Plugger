@@ -167,10 +167,7 @@ plexhints-temp
 *cache.sqlite
 
 # Remove python modules
-Contents/Libraries/Shared/*
-
-# Keep requirements.txt files
-!*requirements.txt
+Contents/Libraries/Shared/
 
 # npm
 node_modules/

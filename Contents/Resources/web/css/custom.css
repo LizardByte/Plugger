@@ -15,7 +15,7 @@ body {
 /*we need to put content higher so links aren't blocked by the transparent border.*/
 .container {
     position: relative;
-    z-index: 1;
+    /*z-index: 1;*/
 }
 
 .navbar {
@@ -111,6 +111,15 @@ body {
         margin-left: 20px;
         margin-right: 20px;
     }
+}
+
+.feature {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  width: 3rem;
+  font-size: 1.5rem;
 }
 
 .widgetbot {

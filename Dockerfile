@@ -1,8 +1,7 @@
 # syntax=docker/dockerfile:1.4
 # artifacts: false
 # platforms: linux/amd64,linux/arm64/v8,linux/arm/v7
-FROM python:2.7.17-buster AS buildstage
-# in order to use ubuntu:22.04 or newer, we will need to install git from source
+FROM ubuntu:22.04 AS buildstage
 
 # build args
 ARG BUILD_VERSION
@@ -18,8 +17,9 @@ RUN <<_DEPS
 set -e
 apt-get update -y
 apt-get install -y --no-install-recommends \
-  nodejs=10.24.0* \
-  npm=5.8.0*
+  npm=8.5.* \
+  python2=2.7.18* \
+  python-pip=20.3.4*
 apt-get clean
 rm -rf /var/lib/apt/lists/*
 _DEPS
@@ -34,7 +34,7 @@ WORKDIR /build
 RUN <<_PIP
 #!/bin/bash
 set -e
-python -m pip --no-python-version-warning --disable-pip-version-check install --no-cache-dir --upgrade \
+python2 -m pip --no-python-version-warning --disable-pip-version-check install --no-cache-dir --upgrade \
   pip setuptools requests
 # requests required to install python-plexapi
 # dev requirements not necessary for docker image, significantly speeds up build since lxml doesn't need to build
@@ -44,9 +44,9 @@ _PIP
 RUN <<_BUILD
 #!/bin/bash
 set -e
-python -m pip --no-python-version-warning --disable-pip-version-check install --no-cache-dir --upgrade \
+python2 -m pip --no-python-version-warning --disable-pip-version-check install --no-cache-dir --upgrade \
   --target=./Contents/Libraries/Shared -r requirements.txt --no-warn-script-location
-python ./scripts/build_plist.py
+python2 ./scripts/build_plist.py
 _BUILD
 
 # setup npm and dependencies

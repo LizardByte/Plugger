@@ -43,17 +43,17 @@ jobs:
         with:
           path: Plugger.bundle
 
-      - name: Install Python 2.7
-        uses: actions/setup-python@v4
+      - name: Install Python
+        uses: LizardByte/action-setup-python@master
         with:
           python-version: '2.7'
 
-      - name: Set up Python 2.7 Dependencies
+      - name: Set up Python Dependencies
         working-directory: Plugger.bundle
         run: |
           echo "Installing Requirements"
           python --version
-          python -m pip --no-python-version-warning --disable-pip-version-check install --upgrade pip setuptools
+          python -m pip --no-python-version-warning --disable-pip-version-check install --upgrade pip setuptools wheel
 
           # install dev requirements
           python -m pip install --upgrade -r requirements-dev.txt
@@ -97,6 +97,7 @@ jobs:
             !**/Plugger.bundle/Dockerfile
             !**/Plugger.bundle/docs
             !**/Plugger.bundle/scripts
+            !**/Plugger.bundle/tests
 
       - name: Package Release
         shell: bash
@@ -113,6 +114,7 @@ jobs:
             "-xr!Plugger.bundle/Dockerfile" \
             "-xr!Plugger.bundle/docs" \
             "-xr!Plugger.bundle/scripts" \
+            "-xr!Plugger.bundle/tests" \
             a "./Plugger.bundle.zip" "Plugger.bundle"
 
           mkdir artifacts
