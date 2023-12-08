@@ -1,4 +1,4 @@
-:github_url: https://github.com/LizardByte/Plugger/tree/nightly/docs/source/about/troubleshooting.rst
+:github_url: https://github.com/LizardByte/Plugger/blob/master/docs/source/about/troubleshooting.rst
 
 Troubleshooting
 ===============
