@@ -1,0 +1,354 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: lizardbyte\n"
+"Report-Msgid-Bugs-To: github.com/plugger\n"
+"POT-Creation-Date: 2023-10-08 20:05+0000\n"
+"PO-Revision-Date: 2023-12-08 03:34\n"
+"Last-Translator: \n"
+"Language-Team: Swedish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: lizardbyte\n"
+"X-Crowdin-Project-ID: 606145\n"
+"X-Crowdin-Language: sv-SE\n"
+"X-Crowdin-File: /[LizardByte.Plugger] master/plugger.po\n"
+"X-Crowdin-File-ID: 5792\n"
+"Language: sv_SE\n"
+
+#: Contents/Resources/web/templates/home.html:8
+#: Contents/Resources/web/templates/home.html:270
+#: Contents/Resources/web/templates/home.html:275
+#: Contents/Resources/web/templates/translations.html:18
+msgid "Install"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:11
+#: Contents/Resources/web/templates/home.html:79
+#: Contents/Resources/web/templates/home.html:94
+#: Contents/Resources/web/templates/home.html:387
+#: Contents/Resources/web/templates/home.html:413
+msgid "Close"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:19
+#: Contents/Resources/web/templates/home.html:20
+msgid "Version"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:21
+msgid "The branch or release to install."
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:25
+msgid "Download asset"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:27
+msgid "Select the asset to install."
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:32
+msgid "Auto update"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:34
+msgid "Enable/disable auto update."
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:37
+msgid "Destination"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:45
+msgid "Cancel"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:49
+msgid "Previous"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:49
+msgid "Prev"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:53
+#: Contents/Resources/web/templates/home.html:264
+msgid "Next"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:65
+#: Contents/Resources/web/templates/translations.html:20
+msgid "Logs"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:68
+#: Contents/Resources/web/templates/home.html:88
+msgid "Copy"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:74
+#: Contents/Resources/web/templates/home.html:75
+#: Contents/Resources/web/templates/logs.html:8
+msgid "Auto refresh"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:114
+msgid "Categories"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:116
+msgid "Search Categories"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:119
+#: Contents/Resources/web/templates/translations.html:7
+msgid "Installed Plugin"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:124
+#: Contents/Resources/web/templates/translations.html:8
+msgid "System Plugin"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:131
+#: Contents/Resources/web/templates/home.html:132
+msgid "Sort Type"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:133
+msgid "Default"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:134
+msgid "Name"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:135
+msgid "Created Date"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:136
+#: Contents/Resources/web/templates/translations.html:24
+msgid "Stars"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:137
+#: Contents/Resources/web/templates/translations.html:14
+msgid "Forks"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:138
+#: Contents/Resources/web/templates/translations.html:22
+msgid "Open Pull Requests"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:139
+#: Contents/Resources/web/templates/translations.html:21
+msgid "Open Issues"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:143
+#: Contents/Resources/web/templates/home.html:146
+msgid "Search"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:158
+#: Contents/Resources/web/templates/navbar.html:66
+msgid "Plugins"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:350
+msgid "Install:"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:380
+msgid "This plugin is archived and is no longer being maintained. It is highly unlikely this plugin will function properly."
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:443
+msgid "Version:"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:446
+msgid "Branch:"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:466
+msgid "Date:"
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:477
+msgid "This release is older than the default branch."
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:483
+msgid "This is not the latest release."
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:492
+msgid "This is not the default branch."
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:497
+msgid "The default branch (<default_branch>) is older than the latest release. This plugin may not support installing from branches."
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:541
+msgid "Select the branch or release to install."
+msgstr ""
+
+#: Contents/Resources/web/templates/home.html:576
+msgid "Logs:"
+msgstr ""
+
+#: Contents/Resources/web/templates/logs.html:10
+msgid "Plugin Logs:"
+msgstr ""
+
+#: Contents/Resources/web/templates/navbar.html:25
+msgid "Donate"
+msgstr ""
+
+#: Contents/Resources/web/templates/navbar.html:30
+msgid "GitHub Sponsors"
+msgstr ""
+
+#: Contents/Resources/web/templates/navbar.html:46
+msgid "Support"
+msgstr ""
+
+#: Contents/Resources/web/templates/navbar.html:51
+msgid "Docs"
+msgstr ""
+
+#: Contents/Resources/web/templates/navbar.html:55
+msgid "Support Center"
+msgstr ""
+
+#: Contents/Resources/web/templates/navbar.html:61
+msgid "Home"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:4
+msgid "Clear Results"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:5
+msgid "Installed Version:"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:6
+msgid "Archived Plugin"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:11
+msgid "Archived"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:12
+msgid "Edit Categories"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:13
+msgid "Force Update"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:15
+msgid "GitHub Discussions"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:16
+msgid "GitHub Wiki"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:17
+msgid "Homepage"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:19
+msgid "License"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:23
+msgid "Plex Forum"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:25
+msgid "Uninstall"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:26
+msgid "Website"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:29
+msgid "Adult"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:30
+msgid "Anime"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:31
+msgid "Channels"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:32
+msgid "Games"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:33
+msgid "Metadata Agent"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:34
+msgid "Movies"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:35
+msgid "Music"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:36
+msgid "News"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:37
+msgid "Photos"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:38
+msgid "Podcasts"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:39
+msgid "Radio"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:40
+msgid "Scanner"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:41
+msgid "Services"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:42
+msgid "Subtitles"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:43
+msgid "TV"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:44
+msgid "Utility"
+msgstr ""
+
+#: Contents/Resources/web/templates/translations.html:45
+msgid "Videos"
+msgstr ""
+
