@@ -1,4 +1,4 @@
-:github_url: https://github.com/LizardByte/Plugger/tree/nightly/DOCKER_README.md
+:github_url: https://github.com/LizardByte/Plugger/blob/master/DOCKER_README.md
 
 Docker
 ------

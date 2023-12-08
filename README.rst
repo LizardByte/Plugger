@@ -1,4 +1,4 @@
-:github_url: https://github.com/LizardByte/Plugger/tree/nightly/README.rst
+:github_url: https://github.com/LizardByte/Plugger/blob/master/README.rst
 
 Overview
 ========
