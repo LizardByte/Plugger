@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: lizardbyte\n"
 "Report-Msgid-Bugs-To: github.com/plugger\n"
 "POT-Creation-Date: 2023-10-08 20:05+0000\n"
-"PO-Revision-Date: 2023-12-08 03:34\n"
+"PO-Revision-Date: 2023-12-10 22:28\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr ""
 #: Contents/Resources/web/templates/home.html:275
 #: Contents/Resources/web/templates/translations.html:18
 msgid "Install"
-msgstr ""
+msgstr "Instalar"
 
 #: Contents/Resources/web/templates/home.html:11
 #: Contents/Resources/web/templates/home.html:79
@@ -31,20 +31,20 @@ msgstr ""
 #: Contents/Resources/web/templates/home.html:387
 #: Contents/Resources/web/templates/home.html:413
 msgid "Close"
-msgstr ""
+msgstr "Cerrar"
 
 #: Contents/Resources/web/templates/home.html:19
 #: Contents/Resources/web/templates/home.html:20
 msgid "Version"
-msgstr ""
+msgstr "Versión"
 
 #: Contents/Resources/web/templates/home.html:21
 msgid "The branch or release to install."
-msgstr ""
+msgstr "La rama o versión a instalar."
 
 #: Contents/Resources/web/templates/home.html:25
 msgid "Download asset"
-msgstr ""
+msgstr "Descargar recursos"
 
 #: Contents/Resources/web/templates/home.html:27
 msgid "Select the asset to install."
