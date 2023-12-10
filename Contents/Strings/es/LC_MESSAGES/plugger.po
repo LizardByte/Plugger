@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: lizardbyte\n"
 "Report-Msgid-Bugs-To: github.com/plugger\n"
 "POT-Creation-Date: 2023-10-08 20:05+0000\n"
-"PO-Revision-Date: 2023-12-10 22:28\n"
+"PO-Revision-Date: 2023-12-10 23:52\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
@@ -48,307 +48,307 @@ msgstr "Descargar recursos"
 
 #: Contents/Resources/web/templates/home.html:27
 msgid "Select the asset to install."
-msgstr ""
+msgstr "Seleccione el recurso a instalar."
 
 #: Contents/Resources/web/templates/home.html:32
 msgid "Auto update"
-msgstr ""
+msgstr "Actualización automática"
 
 #: Contents/Resources/web/templates/home.html:34
 msgid "Enable/disable auto update."
-msgstr ""
+msgstr "Habilitar/deshabilitar actualización automática"
 
 #: Contents/Resources/web/templates/home.html:37
 msgid "Destination"
-msgstr ""
+msgstr "Destino"
 
 #: Contents/Resources/web/templates/home.html:45
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #: Contents/Resources/web/templates/home.html:49
 msgid "Previous"
-msgstr ""
+msgstr "Anterior"
 
 #: Contents/Resources/web/templates/home.html:49
 msgid "Prev"
-msgstr ""
+msgstr "Anterior"
 
 #: Contents/Resources/web/templates/home.html:53
 #: Contents/Resources/web/templates/home.html:264
 msgid "Next"
-msgstr ""
+msgstr "Siguiente"
 
 #: Contents/Resources/web/templates/home.html:65
 #: Contents/Resources/web/templates/translations.html:20
 msgid "Logs"
-msgstr ""
+msgstr "Registros"
 
 #: Contents/Resources/web/templates/home.html:68
 #: Contents/Resources/web/templates/home.html:88
 msgid "Copy"
-msgstr ""
+msgstr "Copiar"
 
 #: Contents/Resources/web/templates/home.html:74
 #: Contents/Resources/web/templates/home.html:75
 #: Contents/Resources/web/templates/logs.html:8
 msgid "Auto refresh"
-msgstr ""
+msgstr "Actualización automática"
 
 #: Contents/Resources/web/templates/home.html:114
 msgid "Categories"
-msgstr ""
+msgstr "Categorías"
 
 #: Contents/Resources/web/templates/home.html:116
 msgid "Search Categories"
-msgstr ""
+msgstr "Buscar categorías"
 
 #: Contents/Resources/web/templates/home.html:119
 #: Contents/Resources/web/templates/translations.html:7
 msgid "Installed Plugin"
-msgstr ""
+msgstr "Plugins instalados"
 
 #: Contents/Resources/web/templates/home.html:124
 #: Contents/Resources/web/templates/translations.html:8
 msgid "System Plugin"
-msgstr ""
+msgstr "Plugin del sistema"
 
 #: Contents/Resources/web/templates/home.html:131
 #: Contents/Resources/web/templates/home.html:132
 msgid "Sort Type"
-msgstr ""
+msgstr "Tipo de clasificación"
 
 #: Contents/Resources/web/templates/home.html:133
 msgid "Default"
-msgstr ""
+msgstr "Predeterminado"
 
 #: Contents/Resources/web/templates/home.html:134
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #: Contents/Resources/web/templates/home.html:135
 msgid "Created Date"
-msgstr ""
+msgstr "Fecha de creación"
 
 #: Contents/Resources/web/templates/home.html:136
 #: Contents/Resources/web/templates/translations.html:24
 msgid "Stars"
-msgstr ""
+msgstr "Estrellas"
 
 #: Contents/Resources/web/templates/home.html:137
 #: Contents/Resources/web/templates/translations.html:14
 msgid "Forks"
-msgstr ""
+msgstr "Bifurcaciones"
 
 #: Contents/Resources/web/templates/home.html:138
 #: Contents/Resources/web/templates/translations.html:22
 msgid "Open Pull Requests"
-msgstr ""
+msgstr "Abrir solicitudes de extracción"
 
 #: Contents/Resources/web/templates/home.html:139
 #: Contents/Resources/web/templates/translations.html:21
 msgid "Open Issues"
-msgstr ""
+msgstr "Incidencias abiertas"
 
 #: Contents/Resources/web/templates/home.html:143
 #: Contents/Resources/web/templates/home.html:146
 msgid "Search"
-msgstr ""
+msgstr "Buscar"
 
 #: Contents/Resources/web/templates/home.html:158
 #: Contents/Resources/web/templates/navbar.html:66
 msgid "Plugins"
-msgstr ""
+msgstr "Plugins"
 
 #: Contents/Resources/web/templates/home.html:350
 msgid "Install:"
-msgstr ""
+msgstr "Instalar:"
 
 #: Contents/Resources/web/templates/home.html:380
 msgid "This plugin is archived and is no longer being maintained. It is highly unlikely this plugin will function properly."
-msgstr ""
+msgstr "Este plugin está archivado y ya no está siendo mantenido. Es muy poco probable que este plugin funcione correctamente."
 
 #: Contents/Resources/web/templates/home.html:443
 msgid "Version:"
-msgstr ""
+msgstr "Versión:"
 
 #: Contents/Resources/web/templates/home.html:446
 msgid "Branch:"
-msgstr ""
+msgstr "Rama:"
 
 #: Contents/Resources/web/templates/home.html:466
 msgid "Date:"
-msgstr ""
+msgstr "Fecha:"
 
 #: Contents/Resources/web/templates/home.html:477
 msgid "This release is older than the default branch."
-msgstr ""
+msgstr "Esta versión es más antigua que la rama predeterminada."
 
 #: Contents/Resources/web/templates/home.html:483
 msgid "This is not the latest release."
-msgstr ""
+msgstr "Esta no es la última versión."
 
 #: Contents/Resources/web/templates/home.html:492
 msgid "This is not the default branch."
-msgstr ""
+msgstr "Esta no es la rama predeterminada."
 
 #: Contents/Resources/web/templates/home.html:497
 msgid "The default branch (<default_branch>) is older than the latest release. This plugin may not support installing from branches."
-msgstr ""
+msgstr "La rama predeterminada (<default_branch>) es más antigua que la última versión. Este plugin puede no soportar la instalación desde ramas."
 
 #: Contents/Resources/web/templates/home.html:541
 msgid "Select the branch or release to install."
-msgstr ""
+msgstr "Seleccione la rama o versión a instalar."
 
 #: Contents/Resources/web/templates/home.html:576
 msgid "Logs:"
-msgstr ""
+msgstr "Registros:"
 
 #: Contents/Resources/web/templates/logs.html:10
 msgid "Plugin Logs:"
-msgstr ""
+msgstr "Registro de plugin:"
 
 #: Contents/Resources/web/templates/navbar.html:25
 msgid "Donate"
-msgstr ""
+msgstr "Donar"
 
 #: Contents/Resources/web/templates/navbar.html:30
 msgid "GitHub Sponsors"
-msgstr ""
+msgstr "Patrocinadores de GitHub"
 
 #: Contents/Resources/web/templates/navbar.html:46
 msgid "Support"
-msgstr ""
+msgstr "Soporte"
 
 #: Contents/Resources/web/templates/navbar.html:51
 msgid "Docs"
-msgstr ""
+msgstr "Docs"
 
 #: Contents/Resources/web/templates/navbar.html:55
 msgid "Support Center"
-msgstr ""
+msgstr "Centro de soporte"
 
 #: Contents/Resources/web/templates/navbar.html:61
 msgid "Home"
-msgstr ""
+msgstr "Inicio"
 
 #: Contents/Resources/web/templates/translations.html:4
 msgid "Clear Results"
-msgstr ""
+msgstr "Borrar resultados"
 
 #: Contents/Resources/web/templates/translations.html:5
 msgid "Installed Version:"
-msgstr ""
+msgstr "Versión instalada:"
 
 #: Contents/Resources/web/templates/translations.html:6
 msgid "Archived Plugin"
-msgstr ""
+msgstr "Plugin archivado"
 
 #: Contents/Resources/web/templates/translations.html:11
 msgid "Archived"
-msgstr ""
+msgstr "Archivado"
 
 #: Contents/Resources/web/templates/translations.html:12
 msgid "Edit Categories"
-msgstr ""
+msgstr "Editar categorías"
 
 #: Contents/Resources/web/templates/translations.html:13
 msgid "Force Update"
-msgstr ""
+msgstr "Forzar actualización"
 
 #: Contents/Resources/web/templates/translations.html:15
 msgid "GitHub Discussions"
-msgstr ""
+msgstr "Discusiones GitHub"
 
 #: Contents/Resources/web/templates/translations.html:16
 msgid "GitHub Wiki"
-msgstr ""
+msgstr "GitHub Wiki"
 
 #: Contents/Resources/web/templates/translations.html:17
 msgid "Homepage"
-msgstr ""
+msgstr "Página de inicio"
 
 #: Contents/Resources/web/templates/translations.html:19
 msgid "License"
-msgstr ""
+msgstr "Licencia"
 
 #: Contents/Resources/web/templates/translations.html:23
 msgid "Plex Forum"
-msgstr ""
+msgstr "Foro de Plex"
 
 #: Contents/Resources/web/templates/translations.html:25
 msgid "Uninstall"
-msgstr ""
+msgstr "Desinstalar"
 
 #: Contents/Resources/web/templates/translations.html:26
 msgid "Website"
-msgstr ""
+msgstr "Sitio Web"
 
 #: Contents/Resources/web/templates/translations.html:29
 msgid "Adult"
-msgstr ""
+msgstr "Adulto"
 
 #: Contents/Resources/web/templates/translations.html:30
 msgid "Anime"
-msgstr ""
+msgstr "Anime"
 
 #: Contents/Resources/web/templates/translations.html:31
 msgid "Channels"
-msgstr ""
+msgstr "Canales"
 
 #: Contents/Resources/web/templates/translations.html:32
 msgid "Games"
-msgstr ""
+msgstr "Juegos"
 
 #: Contents/Resources/web/templates/translations.html:33
 msgid "Metadata Agent"
-msgstr ""
+msgstr "Agente de metadatos"
 
 #: Contents/Resources/web/templates/translations.html:34
 msgid "Movies"
-msgstr ""
+msgstr "Películas"
 
 #: Contents/Resources/web/templates/translations.html:35
 msgid "Music"
-msgstr ""
+msgstr "Música"
 
 #: Contents/Resources/web/templates/translations.html:36
 msgid "News"
-msgstr ""
+msgstr "Noticias"
 
 #: Contents/Resources/web/templates/translations.html:37
 msgid "Photos"
-msgstr ""
+msgstr "Fotos"
 
 #: Contents/Resources/web/templates/translations.html:38
 msgid "Podcasts"
-msgstr ""
+msgstr "Podcasts"
 
 #: Contents/Resources/web/templates/translations.html:39
 msgid "Radio"
-msgstr ""
+msgstr "Radio"
 
 #: Contents/Resources/web/templates/translations.html:40
 msgid "Scanner"
-msgstr ""
+msgstr "Escáner"
 
 #: Contents/Resources/web/templates/translations.html:41
 msgid "Services"
-msgstr ""
+msgstr "Servicios"
 
 #: Contents/Resources/web/templates/translations.html:42
 msgid "Subtitles"
-msgstr ""
+msgstr "Subtítulos"
 
 #: Contents/Resources/web/templates/translations.html:43
 msgid "TV"
-msgstr ""
+msgstr "TV"
 
 #: Contents/Resources/web/templates/translations.html:44
 msgid "Utility"
-msgstr ""
+msgstr "Utilidad"
 
 #: Contents/Resources/web/templates/translations.html:45
 msgid "Videos"
-msgstr ""
+msgstr "Videos"
 
