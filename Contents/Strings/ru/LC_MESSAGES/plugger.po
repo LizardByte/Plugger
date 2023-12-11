@@ -1,0 +1,354 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: lizardbyte\n"
+"Report-Msgid-Bugs-To: github.com/plugger\n"
+"POT-Creation-Date: 2023-10-08 20:05+0000\n"
+"PO-Revision-Date: 2023-12-10 23:52\n"
+"Last-Translator: \n"
+"Language-Team: Russian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Crowdin-Project: lizardbyte\n"
+"X-Crowdin-Project-ID: 606145\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: /[LizardByte.Plugger] master/plugger.po\n"
+"X-Crowdin-File-ID: 5792\n"
+"Language: ru_RU\n"
+
+#: Contents/Resources/web/templates/home.html:8
+#: Contents/Resources/web/templates/home.html:270
+#: Contents/Resources/web/templates/home.html:275
+#: Contents/Resources/web/templates/translations.html:18
+msgid "Install"
+msgstr "Установить"
+
+#: Contents/Resources/web/templates/home.html:11
+#: Contents/Resources/web/templates/home.html:79
+#: Contents/Resources/web/templates/home.html:94
+#: Contents/Resources/web/templates/home.html:387
+#: Contents/Resources/web/templates/home.html:413
+msgid "Close"
+msgstr "Закрыть"
+
+#: Contents/Resources/web/templates/home.html:19
+#: Contents/Resources/web/templates/home.html:20
+msgid "Version"
+msgstr "Версии"
+
+#: Contents/Resources/web/templates/home.html:21
+msgid "The branch or release to install."
+msgstr "Ветка или релиз для установки."
+
+#: Contents/Resources/web/templates/home.html:25
+msgid "Download asset"
+msgstr "Скачать актив"
+
+#: Contents/Resources/web/templates/home.html:27
+msgid "Select the asset to install."
+msgstr "Выберите медиафайл для установки."
+
+#: Contents/Resources/web/templates/home.html:32
+msgid "Auto update"
+msgstr "Автообновление"
+
+#: Contents/Resources/web/templates/home.html:34
+msgid "Enable/disable auto update."
+msgstr "Включить/отключить автоматическое обновление."
+
+#: Contents/Resources/web/templates/home.html:37
+msgid "Destination"
+msgstr "Назначение"
+
+#: Contents/Resources/web/templates/home.html:45
+msgid "Cancel"
+msgstr "Отмена"
+
+#: Contents/Resources/web/templates/home.html:49
+msgid "Previous"
+msgstr "Назад"
+
+#: Contents/Resources/web/templates/home.html:49
+msgid "Prev"
+msgstr "Предыдущий"
+
+#: Contents/Resources/web/templates/home.html:53
+#: Contents/Resources/web/templates/home.html:264
+msgid "Next"
+msgstr "Далее"
+
+#: Contents/Resources/web/templates/home.html:65
+#: Contents/Resources/web/templates/translations.html:20
+msgid "Logs"
+msgstr "Логи"
+
+#: Contents/Resources/web/templates/home.html:68
+#: Contents/Resources/web/templates/home.html:88
+msgid "Copy"
+msgstr "Копировать"
+
+#: Contents/Resources/web/templates/home.html:74
+#: Contents/Resources/web/templates/home.html:75
+#: Contents/Resources/web/templates/logs.html:8
+msgid "Auto refresh"
+msgstr "Автообновление"
+
+#: Contents/Resources/web/templates/home.html:114
+msgid "Categories"
+msgstr "Категории"
+
+#: Contents/Resources/web/templates/home.html:116
+msgid "Search Categories"
+msgstr "Поиск категорий"
+
+#: Contents/Resources/web/templates/home.html:119
+#: Contents/Resources/web/templates/translations.html:7
+msgid "Installed Plugin"
+msgstr "Установленный плагин"
+
+#: Contents/Resources/web/templates/home.html:124
+#: Contents/Resources/web/templates/translations.html:8
+msgid "System Plugin"
+msgstr "Системный плагин"
+
+#: Contents/Resources/web/templates/home.html:131
+#: Contents/Resources/web/templates/home.html:132
+msgid "Sort Type"
+msgstr "Тип сортировки"
+
+#: Contents/Resources/web/templates/home.html:133
+msgid "Default"
+msgstr "По умолчанию"
+
+#: Contents/Resources/web/templates/home.html:134
+msgid "Name"
+msgstr "Наименование"
+
+#: Contents/Resources/web/templates/home.html:135
+msgid "Created Date"
+msgstr "Дата создания"
+
+#: Contents/Resources/web/templates/home.html:136
+#: Contents/Resources/web/templates/translations.html:24
+msgid "Stars"
+msgstr "Звезды"
+
+#: Contents/Resources/web/templates/home.html:137
+#: Contents/Resources/web/templates/translations.html:14
+msgid "Forks"
+msgstr "Forks"
+
+#: Contents/Resources/web/templates/home.html:138
+#: Contents/Resources/web/templates/translations.html:22
+msgid "Open Pull Requests"
+msgstr "Открыть Pull Request"
+
+#: Contents/Resources/web/templates/home.html:139
+#: Contents/Resources/web/templates/translations.html:21
+msgid "Open Issues"
+msgstr "Открытые задачи"
+
+#: Contents/Resources/web/templates/home.html:143
+#: Contents/Resources/web/templates/home.html:146
+msgid "Search"
+msgstr "Искать"
+
+#: Contents/Resources/web/templates/home.html:158
+#: Contents/Resources/web/templates/navbar.html:66
+msgid "Plugins"
+msgstr "Плагины"
+
+#: Contents/Resources/web/templates/home.html:350
+msgid "Install:"
+msgstr "Установить:"
+
+#: Contents/Resources/web/templates/home.html:380
+msgid "This plugin is archived and is no longer being maintained. It is highly unlikely this plugin will function properly."
+msgstr "Этот плагин архивирован и больше не поддерживается. Этот плагин вряд ли будет работать правильно."
+
+#: Contents/Resources/web/templates/home.html:443
+msgid "Version:"
+msgstr "Версия:"
+
+#: Contents/Resources/web/templates/home.html:446
+msgid "Branch:"
+msgstr "Ветка:"
+
+#: Contents/Resources/web/templates/home.html:466
+msgid "Date:"
+msgstr "Дата:"
+
+#: Contents/Resources/web/templates/home.html:477
+msgid "This release is older than the default branch."
+msgstr "Эта версия старше, чем ветка по умолчанию."
+
+#: Contents/Resources/web/templates/home.html:483
+msgid "This is not the latest release."
+msgstr "Это не последний релиз."
+
+#: Contents/Resources/web/templates/home.html:492
+msgid "This is not the default branch."
+msgstr "Это не стандартная ветка."
+
+#: Contents/Resources/web/templates/home.html:497
+msgid "The default branch (<default_branch>) is older than the latest release. This plugin may not support installing from branches."
+msgstr "Ветка по умолчанию (<default_branch>) старше последней версии. Этот плагин может не поддерживать установку из ветвей."
+
+#: Contents/Resources/web/templates/home.html:541
+msgid "Select the branch or release to install."
+msgstr "Выберите ветку или релиз для установки."
+
+#: Contents/Resources/web/templates/home.html:576
+msgid "Logs:"
+msgstr "Логи:"
+
+#: Contents/Resources/web/templates/logs.html:10
+msgid "Plugin Logs:"
+msgstr "Журнал плагина:"
+
+#: Contents/Resources/web/templates/navbar.html:25
+msgid "Donate"
+msgstr "Пожертвовать"
+
+#: Contents/Resources/web/templates/navbar.html:30
+msgid "GitHub Sponsors"
+msgstr "Спонсоры на GitHub"
+
+#: Contents/Resources/web/templates/navbar.html:46
+msgid "Support"
+msgstr "Поддержка"
+
+#: Contents/Resources/web/templates/navbar.html:51
+msgid "Docs"
+msgstr "Документация"
+
+#: Contents/Resources/web/templates/navbar.html:55
+msgid "Support Center"
+msgstr "Центр поддержки"
+
+#: Contents/Resources/web/templates/navbar.html:61
+msgid "Home"
+msgstr "Главная"
+
+#: Contents/Resources/web/templates/translations.html:4
+msgid "Clear Results"
+msgstr "Очистить результаты"
+
+#: Contents/Resources/web/templates/translations.html:5
+msgid "Installed Version:"
+msgstr "Установленная версия:"
+
+#: Contents/Resources/web/templates/translations.html:6
+msgid "Archived Plugin"
+msgstr "Архивный плагин"
+
+#: Contents/Resources/web/templates/translations.html:11
+msgid "Archived"
+msgstr "Архивировано"
+
+#: Contents/Resources/web/templates/translations.html:12
+msgid "Edit Categories"
+msgstr "Редактировать категории"
+
+#: Contents/Resources/web/templates/translations.html:13
+msgid "Force Update"
+msgstr "Сделать обновление"
+
+#: Contents/Resources/web/templates/translations.html:15
+msgid "GitHub Discussions"
+msgstr "GitHub Discussions"
+
+#: Contents/Resources/web/templates/translations.html:16
+msgid "GitHub Wiki"
+msgstr "GitHub Wiki"
+
+#: Contents/Resources/web/templates/translations.html:17
+msgid "Homepage"
+msgstr "Главная страница"
+
+#: Contents/Resources/web/templates/translations.html:19
+msgid "License"
+msgstr "Лицензия"
+
+#: Contents/Resources/web/templates/translations.html:23
+msgid "Plex Forum"
+msgstr "Форум Plex"
+
+#: Contents/Resources/web/templates/translations.html:25
+msgid "Uninstall"
+msgstr "Удалить"
+
+#: Contents/Resources/web/templates/translations.html:26
+msgid "Website"
+msgstr "Сайт"
+
+#: Contents/Resources/web/templates/translations.html:29
+msgid "Adult"
+msgstr "Взрослый"
+
+#: Contents/Resources/web/templates/translations.html:30
+msgid "Anime"
+msgstr "Аниме"
+
+#: Contents/Resources/web/templates/translations.html:31
+msgid "Channels"
+msgstr "Каналы"
+
+#: Contents/Resources/web/templates/translations.html:32
+msgid "Games"
+msgstr "Игры"
+
+#: Contents/Resources/web/templates/translations.html:33
+msgid "Metadata Agent"
+msgstr "Агент метаданных"
+
+#: Contents/Resources/web/templates/translations.html:34
+msgid "Movies"
+msgstr "Фильмы"
+
+#: Contents/Resources/web/templates/translations.html:35
+msgid "Music"
+msgstr "Музыка"
+
+#: Contents/Resources/web/templates/translations.html:36
+msgid "News"
+msgstr "Новости"
+
+#: Contents/Resources/web/templates/translations.html:37
+msgid "Photos"
+msgstr "Фото"
+
+#: Contents/Resources/web/templates/translations.html:38
+msgid "Podcasts"
+msgstr "Подкасты"
+
+#: Contents/Resources/web/templates/translations.html:39
+msgid "Radio"
+msgstr "Радио"
+
+#: Contents/Resources/web/templates/translations.html:40
+msgid "Scanner"
+msgstr "Сканер"
+
+#: Contents/Resources/web/templates/translations.html:41
+msgid "Services"
+msgstr "Услуги"
+
+#: Contents/Resources/web/templates/translations.html:42
+msgid "Subtitles"
+msgstr "Субтитры"
+
+#: Contents/Resources/web/templates/translations.html:43
+msgid "TV"
+msgstr "ТВ"
+
+#: Contents/Resources/web/templates/translations.html:44
+msgid "Utility"
+msgstr "Утилита"
+
+#: Contents/Resources/web/templates/translations.html:45
+msgid "Videos"
+msgstr "Видео"
+

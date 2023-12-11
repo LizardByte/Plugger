@@ -1,0 +1,354 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: lizardbyte\n"
+"Report-Msgid-Bugs-To: github.com/plugger\n"
+"POT-Creation-Date: 2023-10-08 20:05+0000\n"
+"PO-Revision-Date: 2023-12-10 23:52\n"
+"Last-Translator: \n"
+"Language-Team: Spanish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: lizardbyte\n"
+"X-Crowdin-Project-ID: 606145\n"
+"X-Crowdin-Language: es-ES\n"
+"X-Crowdin-File: /[LizardByte.Plugger] master/plugger.po\n"
+"X-Crowdin-File-ID: 5792\n"
+"Language: es_ES\n"
+
+#: Contents/Resources/web/templates/home.html:8
+#: Contents/Resources/web/templates/home.html:270
+#: Contents/Resources/web/templates/home.html:275
+#: Contents/Resources/web/templates/translations.html:18
+msgid "Install"
+msgstr "Instalar"
+
+#: Contents/Resources/web/templates/home.html:11
+#: Contents/Resources/web/templates/home.html:79
+#: Contents/Resources/web/templates/home.html:94
+#: Contents/Resources/web/templates/home.html:387
+#: Contents/Resources/web/templates/home.html:413
+msgid "Close"
+msgstr "Cerrar"
+
+#: Contents/Resources/web/templates/home.html:19
+#: Contents/Resources/web/templates/home.html:20
+msgid "Version"
+msgstr "Versión"
+
+#: Contents/Resources/web/templates/home.html:21
+msgid "The branch or release to install."
+msgstr "La rama o versión a instalar."
+
+#: Contents/Resources/web/templates/home.html:25
+msgid "Download asset"
+msgstr "Descargar recursos"
+
+#: Contents/Resources/web/templates/home.html:27
+msgid "Select the asset to install."
+msgstr "Seleccione el recurso a instalar."
+
+#: Contents/Resources/web/templates/home.html:32
+msgid "Auto update"
+msgstr "Actualización automática"
+
+#: Contents/Resources/web/templates/home.html:34
+msgid "Enable/disable auto update."
+msgstr "Habilitar/deshabilitar actualización automática"
+
+#: Contents/Resources/web/templates/home.html:37
+msgid "Destination"
+msgstr "Destino"
+
+#: Contents/Resources/web/templates/home.html:45
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: Contents/Resources/web/templates/home.html:49
+msgid "Previous"
+msgstr "Anterior"
+
+#: Contents/Resources/web/templates/home.html:49
+msgid "Prev"
+msgstr "Anterior"
+
+#: Contents/Resources/web/templates/home.html:53
+#: Contents/Resources/web/templates/home.html:264
+msgid "Next"
+msgstr "Siguiente"
+
+#: Contents/Resources/web/templates/home.html:65
+#: Contents/Resources/web/templates/translations.html:20
+msgid "Logs"
+msgstr "Registros"
+
+#: Contents/Resources/web/templates/home.html:68
+#: Contents/Resources/web/templates/home.html:88
+msgid "Copy"
+msgstr "Copiar"
+
+#: Contents/Resources/web/templates/home.html:74
+#: Contents/Resources/web/templates/home.html:75
+#: Contents/Resources/web/templates/logs.html:8
+msgid "Auto refresh"
+msgstr "Actualización automática"
+
+#: Contents/Resources/web/templates/home.html:114
+msgid "Categories"
+msgstr "Categorías"
+
+#: Contents/Resources/web/templates/home.html:116
+msgid "Search Categories"
+msgstr "Buscar categorías"
+
+#: Contents/Resources/web/templates/home.html:119
+#: Contents/Resources/web/templates/translations.html:7
+msgid "Installed Plugin"
+msgstr "Plugins instalados"
+
+#: Contents/Resources/web/templates/home.html:124
+#: Contents/Resources/web/templates/translations.html:8
+msgid "System Plugin"
+msgstr "Plugin del sistema"
+
+#: Contents/Resources/web/templates/home.html:131
+#: Contents/Resources/web/templates/home.html:132
+msgid "Sort Type"
+msgstr "Tipo de clasificación"
+
+#: Contents/Resources/web/templates/home.html:133
+msgid "Default"
+msgstr "Predeterminado"
+
+#: Contents/Resources/web/templates/home.html:134
+msgid "Name"
+msgstr "Nombre"
+
+#: Contents/Resources/web/templates/home.html:135
+msgid "Created Date"
+msgstr "Fecha de creación"
+
+#: Contents/Resources/web/templates/home.html:136
+#: Contents/Resources/web/templates/translations.html:24
+msgid "Stars"
+msgstr "Estrellas"
+
+#: Contents/Resources/web/templates/home.html:137
+#: Contents/Resources/web/templates/translations.html:14
+msgid "Forks"
+msgstr "Bifurcaciones"
+
+#: Contents/Resources/web/templates/home.html:138
+#: Contents/Resources/web/templates/translations.html:22
+msgid "Open Pull Requests"
+msgstr "Abrir solicitudes de extracción"
+
+#: Contents/Resources/web/templates/home.html:139
+#: Contents/Resources/web/templates/translations.html:21
+msgid "Open Issues"
+msgstr "Incidencias abiertas"
+
+#: Contents/Resources/web/templates/home.html:143
+#: Contents/Resources/web/templates/home.html:146
+msgid "Search"
+msgstr "Buscar"
+
+#: Contents/Resources/web/templates/home.html:158
+#: Contents/Resources/web/templates/navbar.html:66
+msgid "Plugins"
+msgstr "Plugins"
+
+#: Contents/Resources/web/templates/home.html:350
+msgid "Install:"
+msgstr "Instalar:"
+
+#: Contents/Resources/web/templates/home.html:380
+msgid "This plugin is archived and is no longer being maintained. It is highly unlikely this plugin will function properly."
+msgstr "Este plugin está archivado y ya no está siendo mantenido. Es muy poco probable que este plugin funcione correctamente."
+
+#: Contents/Resources/web/templates/home.html:443
+msgid "Version:"
+msgstr "Versión:"
+
+#: Contents/Resources/web/templates/home.html:446
+msgid "Branch:"
+msgstr "Rama:"
+
+#: Contents/Resources/web/templates/home.html:466
+msgid "Date:"
+msgstr "Fecha:"
+
+#: Contents/Resources/web/templates/home.html:477
+msgid "This release is older than the default branch."
+msgstr "Esta versión es más antigua que la rama predeterminada."
+
+#: Contents/Resources/web/templates/home.html:483
+msgid "This is not the latest release."
+msgstr "Esta no es la última versión."
+
+#: Contents/Resources/web/templates/home.html:492
+msgid "This is not the default branch."
+msgstr "Esta no es la rama predeterminada."
+
+#: Contents/Resources/web/templates/home.html:497
+msgid "The default branch (<default_branch>) is older than the latest release. This plugin may not support installing from branches."
+msgstr "La rama predeterminada (<default_branch>) es más antigua que la última versión. Este plugin puede no soportar la instalación desde ramas."
+
+#: Contents/Resources/web/templates/home.html:541
+msgid "Select the branch or release to install."
+msgstr "Seleccione la rama o versión a instalar."
+
+#: Contents/Resources/web/templates/home.html:576
+msgid "Logs:"
+msgstr "Registros:"
+
+#: Contents/Resources/web/templates/logs.html:10
+msgid "Plugin Logs:"
+msgstr "Registro de plugin:"
+
+#: Contents/Resources/web/templates/navbar.html:25
+msgid "Donate"
+msgstr "Donar"
+
+#: Contents/Resources/web/templates/navbar.html:30
+msgid "GitHub Sponsors"
+msgstr "Patrocinadores de GitHub"
+
+#: Contents/Resources/web/templates/navbar.html:46
+msgid "Support"
+msgstr "Soporte"
+
+#: Contents/Resources/web/templates/navbar.html:51
+msgid "Docs"
+msgstr "Docs"
+
+#: Contents/Resources/web/templates/navbar.html:55
+msgid "Support Center"
+msgstr "Centro de soporte"
+
+#: Contents/Resources/web/templates/navbar.html:61
+msgid "Home"
+msgstr "Inicio"
+
+#: Contents/Resources/web/templates/translations.html:4
+msgid "Clear Results"
+msgstr "Borrar resultados"
+
+#: Contents/Resources/web/templates/translations.html:5
+msgid "Installed Version:"
+msgstr "Versión instalada:"
+
+#: Contents/Resources/web/templates/translations.html:6
+msgid "Archived Plugin"
+msgstr "Plugin archivado"
+
+#: Contents/Resources/web/templates/translations.html:11
+msgid "Archived"
+msgstr "Archivado"
+
+#: Contents/Resources/web/templates/translations.html:12
+msgid "Edit Categories"
+msgstr "Editar categorías"
+
+#: Contents/Resources/web/templates/translations.html:13
+msgid "Force Update"
+msgstr "Forzar actualización"
+
+#: Contents/Resources/web/templates/translations.html:15
+msgid "GitHub Discussions"
+msgstr "Discusiones GitHub"
+
+#: Contents/Resources/web/templates/translations.html:16
+msgid "GitHub Wiki"
+msgstr "GitHub Wiki"
+
+#: Contents/Resources/web/templates/translations.html:17
+msgid "Homepage"
+msgstr "Página de inicio"
+
+#: Contents/Resources/web/templates/translations.html:19
+msgid "License"
+msgstr "Licencia"
+
+#: Contents/Resources/web/templates/translations.html:23
+msgid "Plex Forum"
+msgstr "Foro de Plex"
+
+#: Contents/Resources/web/templates/translations.html:25
+msgid "Uninstall"
+msgstr "Desinstalar"
+
+#: Contents/Resources/web/templates/translations.html:26
+msgid "Website"
+msgstr "Sitio Web"
+
+#: Contents/Resources/web/templates/translations.html:29
+msgid "Adult"
+msgstr "Adulto"
+
+#: Contents/Resources/web/templates/translations.html:30
+msgid "Anime"
+msgstr "Anime"
+
+#: Contents/Resources/web/templates/translations.html:31
+msgid "Channels"
+msgstr "Canales"
+
+#: Contents/Resources/web/templates/translations.html:32
+msgid "Games"
+msgstr "Juegos"
+
+#: Contents/Resources/web/templates/translations.html:33
+msgid "Metadata Agent"
+msgstr "Agente de metadatos"
+
+#: Contents/Resources/web/templates/translations.html:34
+msgid "Movies"
+msgstr "Películas"
+
+#: Contents/Resources/web/templates/translations.html:35
+msgid "Music"
+msgstr "Música"
+
+#: Contents/Resources/web/templates/translations.html:36
+msgid "News"
+msgstr "Noticias"
+
+#: Contents/Resources/web/templates/translations.html:37
+msgid "Photos"
+msgstr "Fotos"
+
+#: Contents/Resources/web/templates/translations.html:38
+msgid "Podcasts"
+msgstr "Podcasts"
+
+#: Contents/Resources/web/templates/translations.html:39
+msgid "Radio"
+msgstr "Radio"
+
+#: Contents/Resources/web/templates/translations.html:40
+msgid "Scanner"
+msgstr "Escáner"
+
+#: Contents/Resources/web/templates/translations.html:41
+msgid "Services"
+msgstr "Servicios"
+
+#: Contents/Resources/web/templates/translations.html:42
+msgid "Subtitles"
+msgstr "Subtítulos"
+
+#: Contents/Resources/web/templates/translations.html:43
+msgid "TV"
+msgstr "TV"
+
+#: Contents/Resources/web/templates/translations.html:44
+msgid "Utility"
+msgstr "Utilidad"
+
+#: Contents/Resources/web/templates/translations.html:45
+msgid "Videos"
+msgstr "Videos"
+
