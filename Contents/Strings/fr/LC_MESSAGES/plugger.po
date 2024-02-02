@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: lizardbyte\n"
 "Report-Msgid-Bugs-To: github.com/plugger\n"
 "POT-Creation-Date: 2023-10-08 20:05+0000\n"
-"PO-Revision-Date: 2023-12-10 23:52\n"
+"PO-Revision-Date: 2024-01-18 18:48\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
@@ -194,7 +194,7 @@ msgstr "Ce n'est pas la branche par défaut."
 
 #: Contents/Resources/web/templates/home.html:497
 msgid "The default branch (<default_branch>) is older than the latest release. This plugin may not support installing from branches."
-msgstr ""
+msgstr "La branche par défaut (<default_branch>) est plus ancienne que la dernière version. Il se peut que ce plugin ne prenne pas en charge l'installation à partir de branches."
 
 #: Contents/Resources/web/templates/home.html:541
 msgid "Select the branch or release to install."

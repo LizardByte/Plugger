@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: lizardbyte\n"
 "Report-Msgid-Bugs-To: github.com/plugger\n"
 "POT-Creation-Date: 2023-10-08 20:05+0000\n"
-"PO-Revision-Date: 2023-12-10 23:52\n"
+"PO-Revision-Date: 2023-12-29 08:53\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "MIME-Version: 1.0\n"
@@ -44,7 +44,7 @@ msgstr "Il ramo o il rilascio da installare."
 
 #: Contents/Resources/web/templates/home.html:25
 msgid "Download asset"
-msgstr "Scarica asset"
+msgstr "Scarica risorsa"
 
 #: Contents/Resources/web/templates/home.html:27
 msgid "Select the asset to install."
