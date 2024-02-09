@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: lizardbyte\n"
 "Report-Msgid-Bugs-To: github.com/plugger\n"
 "POT-Creation-Date: 2023-10-08 20:05+0000\n"
-"PO-Revision-Date: 2023-12-29 08:53\n"
+"PO-Revision-Date: 2024-02-09 01:21\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "MIME-Version: 1.0\n"
@@ -82,7 +82,7 @@ msgstr "Successivo"
 #: Contents/Resources/web/templates/home.html:65
 #: Contents/Resources/web/templates/translations.html:20
 msgid "Logs"
-msgstr "Registri"
+msgstr "Log"
 
 #: Contents/Resources/web/templates/home.html:68
 #: Contents/Resources/web/templates/home.html:88
@@ -158,7 +158,7 @@ msgstr "Cerca"
 #: Contents/Resources/web/templates/home.html:158
 #: Contents/Resources/web/templates/navbar.html:66
 msgid "Plugins"
-msgstr "Componenti aggiuntivi"
+msgstr "Plugin"
 
 #: Contents/Resources/web/templates/home.html:350
 msgid "Install:"
@@ -214,7 +214,7 @@ msgstr "Dona"
 
 #: Contents/Resources/web/templates/navbar.html:30
 msgid "GitHub Sponsors"
-msgstr "GitHub Sponsors"
+msgstr "Sponsor di GitHub"
 
 #: Contents/Resources/web/templates/navbar.html:46
 msgid "Support"
