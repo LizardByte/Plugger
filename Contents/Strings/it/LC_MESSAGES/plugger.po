@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: lizardbyte\n"
 "Report-Msgid-Bugs-To: github.com/plugger\n"
 "POT-Creation-Date: 2023-10-08 20:05+0000\n"
-"PO-Revision-Date: 2024-02-09 01:21\n"
+"PO-Revision-Date: 2024-03-10 14:59\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "MIME-Version: 1.0\n"
@@ -72,7 +72,7 @@ msgstr "Precedente"
 
 #: Contents/Resources/web/templates/home.html:49
 msgid "Prev"
-msgstr "Precedente"
+msgstr "Prec."
 
 #: Contents/Resources/web/templates/home.html:53
 #: Contents/Resources/web/templates/home.html:264
