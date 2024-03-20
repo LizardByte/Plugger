@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: lizardbyte\n"
 "Report-Msgid-Bugs-To: github.com/plugger\n"
 "POT-Creation-Date: 2023-10-08 20:05+0000\n"
-"PO-Revision-Date: 2024-03-15 20:48\n"
+"PO-Revision-Date: 2024-03-20 19:06\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "MIME-Version: 1.0\n"
@@ -210,7 +210,7 @@ msgstr "插件日志："
 
 #: Contents/Resources/web/templates/navbar.html:25
 msgid "Donate"
-msgstr "捐助"
+msgstr "捐赠"
 
 #: Contents/Resources/web/templates/navbar.html:30
 msgid "GitHub Sponsors"
@@ -230,7 +230,7 @@ msgstr "支持中心"
 
 #: Contents/Resources/web/templates/navbar.html:61
 msgid "Home"
-msgstr "首页"
+msgstr "主页"
 
 #: Contents/Resources/web/templates/translations.html:4
 msgid "Clear Results"
