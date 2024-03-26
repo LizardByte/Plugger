@@ -1,0 +1,6 @@
+{
+  "bool_log_werkzeug_messages": "Logga alla webbservermeddelanden (kräver omstart av Plex Media Server)",
+  "enum_locale": "Web UI Locale",
+  "int_http_port": "Web UI Port (kräver omstart av Plex Media Server)",
+  "str_http_host": "Webb UI värdadress (kräver omstart av Plex Media Server)"
+}
