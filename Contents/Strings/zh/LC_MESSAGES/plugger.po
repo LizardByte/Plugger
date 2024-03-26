@@ -3,27 +3,27 @@ msgstr ""
 "Project-Id-Version: lizardbyte\n"
 "Report-Msgid-Bugs-To: github.com/plugger\n"
 "POT-Creation-Date: 2023-10-08 20:05+0000\n"
-"PO-Revision-Date: 2024-03-10 14:59\n"
+"PO-Revision-Date: 2024-03-20 19:06\n"
 "Last-Translator: \n"
-"Language-Team: Italian\n"
+"Language-Team: Chinese Simplified\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Crowdin-Project: lizardbyte\n"
 "X-Crowdin-Project-ID: 606145\n"
-"X-Crowdin-Language: it\n"
+"X-Crowdin-Language: zh-CN\n"
 "X-Crowdin-File: /[LizardByte.Plugger] master/plugger.po\n"
 "X-Crowdin-File-ID: 5792\n"
-"Language: it_IT\n"
+"Language: zh_CN\n"
 
 #: Contents/Resources/web/templates/home.html:8
 #: Contents/Resources/web/templates/home.html:270
 #: Contents/Resources/web/templates/home.html:275
 #: Contents/Resources/web/templates/translations.html:18
 msgid "Install"
-msgstr "Installa"
+msgstr "安装"
 
 #: Contents/Resources/web/templates/home.html:11
 #: Contents/Resources/web/templates/home.html:79
@@ -31,109 +31,109 @@ msgstr "Installa"
 #: Contents/Resources/web/templates/home.html:387
 #: Contents/Resources/web/templates/home.html:413
 msgid "Close"
-msgstr "Chiudi"
+msgstr "关闭"
 
 #: Contents/Resources/web/templates/home.html:19
 #: Contents/Resources/web/templates/home.html:20
 msgid "Version"
-msgstr "Versione"
+msgstr "版本"
 
 #: Contents/Resources/web/templates/home.html:21
 msgid "The branch or release to install."
-msgstr "Il ramo o il rilascio da installare."
+msgstr "分支或发布以安装。"
 
 #: Contents/Resources/web/templates/home.html:25
 msgid "Download asset"
-msgstr "Scarica risorsa"
+msgstr "下载资产"
 
 #: Contents/Resources/web/templates/home.html:27
 msgid "Select the asset to install."
-msgstr "Selezionare la risorsa da installare."
+msgstr "选择要安装的资产。"
 
 #: Contents/Resources/web/templates/home.html:32
 msgid "Auto update"
-msgstr "Aggiornamento automatico"
+msgstr "自动更新"
 
 #: Contents/Resources/web/templates/home.html:34
 msgid "Enable/disable auto update."
-msgstr "Attiva/disattiva aggiornamento automatico."
+msgstr "启用/禁用自动更新。"
 
 #: Contents/Resources/web/templates/home.html:37
 msgid "Destination"
-msgstr "Destinazione"
+msgstr "目标"
 
 #: Contents/Resources/web/templates/home.html:45
 msgid "Cancel"
-msgstr "Annulla"
+msgstr "取消"
 
 #: Contents/Resources/web/templates/home.html:49
 msgid "Previous"
-msgstr "Precedente"
+msgstr "上一个"
 
 #: Contents/Resources/web/templates/home.html:49
 msgid "Prev"
-msgstr "Prec."
+msgstr "上一个"
 
 #: Contents/Resources/web/templates/home.html:53
 #: Contents/Resources/web/templates/home.html:264
 msgid "Next"
-msgstr "Successivo"
+msgstr "下一个"
 
 #: Contents/Resources/web/templates/home.html:65
 #: Contents/Resources/web/templates/translations.html:20
 msgid "Logs"
-msgstr "Log"
+msgstr "日志"
 
 #: Contents/Resources/web/templates/home.html:68
 #: Contents/Resources/web/templates/home.html:88
 msgid "Copy"
-msgstr "Copia"
+msgstr "复制"
 
 #: Contents/Resources/web/templates/home.html:74
 #: Contents/Resources/web/templates/home.html:75
 #: Contents/Resources/web/templates/logs.html:8
 msgid "Auto refresh"
-msgstr "Aggiornamento automatico"
+msgstr "自动刷新"
 
 #: Contents/Resources/web/templates/home.html:114
 msgid "Categories"
-msgstr "Categorie"
+msgstr "类别管理"
 
 #: Contents/Resources/web/templates/home.html:116
 msgid "Search Categories"
-msgstr "Cerca Categorie"
+msgstr "搜索类别"
 
 #: Contents/Resources/web/templates/home.html:119
 #: Contents/Resources/web/templates/translations.html:7
 msgid "Installed Plugin"
-msgstr "Plugin Installato"
+msgstr "已安装的插件"
 
 #: Contents/Resources/web/templates/home.html:124
 #: Contents/Resources/web/templates/translations.html:8
 msgid "System Plugin"
-msgstr "Plugin Di Sistema"
+msgstr "系统插件"
 
 #: Contents/Resources/web/templates/home.html:131
 #: Contents/Resources/web/templates/home.html:132
 msgid "Sort Type"
-msgstr "Tipo Di Ordine"
+msgstr "排序类型"
 
 #: Contents/Resources/web/templates/home.html:133
 msgid "Default"
-msgstr "Predefinito"
+msgstr "默认设置"
 
 #: Contents/Resources/web/templates/home.html:134
 msgid "Name"
-msgstr "Nome"
+msgstr "名称"
 
 #: Contents/Resources/web/templates/home.html:135
 msgid "Created Date"
-msgstr "Data Di Creazione"
+msgstr "创建日期"
 
 #: Contents/Resources/web/templates/home.html:136
 #: Contents/Resources/web/templates/translations.html:24
 msgid "Stars"
-msgstr "Stelle"
+msgstr "星星"
 
 #: Contents/Resources/web/templates/home.html:137
 #: Contents/Resources/web/templates/translations.html:14
@@ -143,118 +143,118 @@ msgstr "Forks"
 #: Contents/Resources/web/templates/home.html:138
 #: Contents/Resources/web/templates/translations.html:22
 msgid "Open Pull Requests"
-msgstr "Apri Richieste Pull"
+msgstr "打开拉取请求"
 
 #: Contents/Resources/web/templates/home.html:139
 #: Contents/Resources/web/templates/translations.html:21
 msgid "Open Issues"
-msgstr "Problemi Aperti"
+msgstr "打开问题"
 
 #: Contents/Resources/web/templates/home.html:143
 #: Contents/Resources/web/templates/home.html:146
 msgid "Search"
-msgstr "Cerca"
+msgstr "搜索"
 
 #: Contents/Resources/web/templates/home.html:158
 #: Contents/Resources/web/templates/navbar.html:66
 msgid "Plugins"
-msgstr "Plugin"
+msgstr "插件"
 
 #: Contents/Resources/web/templates/home.html:350
 msgid "Install:"
-msgstr "Installa:"
+msgstr "安装:"
 
 #: Contents/Resources/web/templates/home.html:380
 msgid "This plugin is archived and is no longer being maintained. It is highly unlikely this plugin will function properly."
-msgstr "Questo plugin è archiviato e non è più mantenuto. È altamente improbabile che questo plugin funzioni correttamente."
+msgstr "此插件已存档，不再被维护。这个插件很可能正常运行。"
 
 #: Contents/Resources/web/templates/home.html:443
 msgid "Version:"
-msgstr "Versione:"
+msgstr "版本："
 
 #: Contents/Resources/web/templates/home.html:446
 msgid "Branch:"
-msgstr "Ramo:"
+msgstr "分支："
 
 #: Contents/Resources/web/templates/home.html:466
 msgid "Date:"
-msgstr "Data:"
+msgstr "日期:"
 
 #: Contents/Resources/web/templates/home.html:477
 msgid "This release is older than the default branch."
-msgstr "Questa versione è più vecchia del ramo predefinito."
+msgstr "此版本比默认分支早。"
 
 #: Contents/Resources/web/templates/home.html:483
 msgid "This is not the latest release."
-msgstr "Questa non è l'ultima versione."
+msgstr "这不是最新的版本。"
 
 #: Contents/Resources/web/templates/home.html:492
 msgid "This is not the default branch."
-msgstr "Questo non è il ramo predefinito."
+msgstr "这不是默认分支。"
 
 #: Contents/Resources/web/templates/home.html:497
 msgid "The default branch (<default_branch>) is older than the latest release. This plugin may not support installing from branches."
-msgstr "Il ramo predefinito (<default_branch>) è più vecchio dell'ultima versione. Questo plugin potrebbe non supportare l'installazione da rami."
+msgstr "默认分支 (<default_branch>早于最新版本。此插件可能不支持从分支安装。"
 
 #: Contents/Resources/web/templates/home.html:541
 msgid "Select the branch or release to install."
-msgstr "Selezionare il ramo o il rilascio da installare."
+msgstr "选择分支或发布以安装。"
 
 #: Contents/Resources/web/templates/home.html:576
 msgid "Logs:"
-msgstr "Log:"
+msgstr "日志："
 
 #: Contents/Resources/web/templates/logs.html:10
 msgid "Plugin Logs:"
-msgstr "Log Plugin:"
+msgstr "插件日志："
 
 #: Contents/Resources/web/templates/navbar.html:25
 msgid "Donate"
-msgstr "Dona"
+msgstr "捐赠"
 
 #: Contents/Resources/web/templates/navbar.html:30
 msgid "GitHub Sponsors"
-msgstr "Sponsor di GitHub"
+msgstr "GitHub Sponsors"
 
 #: Contents/Resources/web/templates/navbar.html:46
 msgid "Support"
-msgstr "Supporto"
+msgstr "支持"
 
 #: Contents/Resources/web/templates/navbar.html:51
 msgid "Docs"
-msgstr "Documentazione"
+msgstr "文档"
 
 #: Contents/Resources/web/templates/navbar.html:55
 msgid "Support Center"
-msgstr "Centro assistenza"
+msgstr "支持中心"
 
 #: Contents/Resources/web/templates/navbar.html:61
 msgid "Home"
-msgstr "Home"
+msgstr "主页"
 
 #: Contents/Resources/web/templates/translations.html:4
 msgid "Clear Results"
-msgstr "Cancella Risultati"
+msgstr "清除结果"
 
 #: Contents/Resources/web/templates/translations.html:5
 msgid "Installed Version:"
-msgstr "Versione Installata:"
+msgstr "已安装版本："
 
 #: Contents/Resources/web/templates/translations.html:6
 msgid "Archived Plugin"
-msgstr "Plugin Archiviato"
+msgstr "存档的插件"
 
 #: Contents/Resources/web/templates/translations.html:11
 msgid "Archived"
-msgstr "Archiviato"
+msgstr "已存档"
 
 #: Contents/Resources/web/templates/translations.html:12
 msgid "Edit Categories"
-msgstr "Modifica Categorie"
+msgstr "编辑类别"
 
 #: Contents/Resources/web/templates/translations.html:13
 msgid "Force Update"
-msgstr "Forza Aggiornamento"
+msgstr "强制更新"
 
 #: Contents/Resources/web/templates/translations.html:15
 msgid "GitHub Discussions"
@@ -266,89 +266,89 @@ msgstr "GitHub Wiki"
 
 #: Contents/Resources/web/templates/translations.html:17
 msgid "Homepage"
-msgstr "Homepage"
+msgstr "主页"
 
 #: Contents/Resources/web/templates/translations.html:19
 msgid "License"
-msgstr "Licenza"
+msgstr "许可协议"
 
 #: Contents/Resources/web/templates/translations.html:23
 msgid "Plex Forum"
-msgstr "Forum Plex"
+msgstr "Plex论坛"
 
 #: Contents/Resources/web/templates/translations.html:25
 msgid "Uninstall"
-msgstr "Disinstalla"
+msgstr "卸载"
 
 #: Contents/Resources/web/templates/translations.html:26
 msgid "Website"
-msgstr "Sito"
+msgstr "网址"
 
 #: Contents/Resources/web/templates/translations.html:29
 msgid "Adult"
-msgstr "Adulto"
+msgstr "成年人"
 
 #: Contents/Resources/web/templates/translations.html:30
 msgid "Anime"
-msgstr "Anime"
+msgstr "青色"
 
 #: Contents/Resources/web/templates/translations.html:31
 msgid "Channels"
-msgstr "Canali"
+msgstr "频道"
 
 #: Contents/Resources/web/templates/translations.html:32
 msgid "Games"
-msgstr "Giochi"
+msgstr "游戏"
 
 #: Contents/Resources/web/templates/translations.html:33
 msgid "Metadata Agent"
-msgstr "Agente Metadati"
+msgstr "元数据代理"
 
 #: Contents/Resources/web/templates/translations.html:34
 msgid "Movies"
-msgstr "Film"
+msgstr "电影"
 
 #: Contents/Resources/web/templates/translations.html:35
 msgid "Music"
-msgstr "Musica"
+msgstr "音乐"
 
 #: Contents/Resources/web/templates/translations.html:36
 msgid "News"
-msgstr "Notizie"
+msgstr "新闻"
 
 #: Contents/Resources/web/templates/translations.html:37
 msgid "Photos"
-msgstr "Foto"
+msgstr "照片"
 
 #: Contents/Resources/web/templates/translations.html:38
 msgid "Podcasts"
-msgstr "Podcast"
+msgstr "播客"
 
 #: Contents/Resources/web/templates/translations.html:39
 msgid "Radio"
-msgstr "Radio"
+msgstr "收音机"
 
 #: Contents/Resources/web/templates/translations.html:40
 msgid "Scanner"
-msgstr "Scanner"
+msgstr "扫描器"
 
 #: Contents/Resources/web/templates/translations.html:41
 msgid "Services"
-msgstr "Servizi"
+msgstr "服务"
 
 #: Contents/Resources/web/templates/translations.html:42
 msgid "Subtitles"
-msgstr "Sottotitoli"
+msgstr "字幕"
 
 #: Contents/Resources/web/templates/translations.html:43
 msgid "TV"
-msgstr "TV"
+msgstr "电视机"
 
 #: Contents/Resources/web/templates/translations.html:44
 msgid "Utility"
-msgstr "Utilità"
+msgstr "工具"
 
 #: Contents/Resources/web/templates/translations.html:45
 msgid "Videos"
-msgstr "Video"
+msgstr "视频"
 
