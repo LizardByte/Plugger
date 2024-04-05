@@ -1,0 +1,354 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: lizardbyte\n"
+"Report-Msgid-Bugs-To: github.com/plugger\n"
+"POT-Creation-Date: 2023-10-08 20:05+0000\n"
+"PO-Revision-Date: 2024-04-05 17:48\n"
+"Last-Translator: \n"
+"Language-Team: Japanese\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Crowdin-Project: lizardbyte\n"
+"X-Crowdin-Project-ID: 606145\n"
+"X-Crowdin-Language: ja\n"
+"X-Crowdin-File: /[LizardByte.Plugger] master/plugger.po\n"
+"X-Crowdin-File-ID: 5792\n"
+"Language: ja_JP\n"
+
+#: Contents/Resources/web/templates/home.html:8
+#: Contents/Resources/web/templates/home.html:270
+#: Contents/Resources/web/templates/home.html:275
+#: Contents/Resources/web/templates/translations.html:18
+msgid "Install"
+msgstr "インストール"
+
+#: Contents/Resources/web/templates/home.html:11
+#: Contents/Resources/web/templates/home.html:79
+#: Contents/Resources/web/templates/home.html:94
+#: Contents/Resources/web/templates/home.html:387
+#: Contents/Resources/web/templates/home.html:413
+msgid "Close"
+msgstr "閉じる"
+
+#: Contents/Resources/web/templates/home.html:19
+#: Contents/Resources/web/templates/home.html:20
+msgid "Version"
+msgstr "バージョン"
+
+#: Contents/Resources/web/templates/home.html:21
+msgid "The branch or release to install."
+msgstr "インストールするブランチまたはリリース。"
+
+#: Contents/Resources/web/templates/home.html:25
+msgid "Download asset"
+msgstr "アセットをダウンロード"
+
+#: Contents/Resources/web/templates/home.html:27
+msgid "Select the asset to install."
+msgstr "インストールするアセットを選択します。"
+
+#: Contents/Resources/web/templates/home.html:32
+msgid "Auto update"
+msgstr "自動アップデート"
+
+#: Contents/Resources/web/templates/home.html:34
+msgid "Enable/disable auto update."
+msgstr "自動更新を有効/無効にします。"
+
+#: Contents/Resources/web/templates/home.html:37
+msgid "Destination"
+msgstr "保存先"
+
+#: Contents/Resources/web/templates/home.html:45
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: Contents/Resources/web/templates/home.html:49
+msgid "Previous"
+msgstr "前"
+
+#: Contents/Resources/web/templates/home.html:49
+msgid "Prev"
+msgstr "前"
+
+#: Contents/Resources/web/templates/home.html:53
+#: Contents/Resources/web/templates/home.html:264
+msgid "Next"
+msgstr "次へ"
+
+#: Contents/Resources/web/templates/home.html:65
+#: Contents/Resources/web/templates/translations.html:20
+msgid "Logs"
+msgstr "ログ"
+
+#: Contents/Resources/web/templates/home.html:68
+#: Contents/Resources/web/templates/home.html:88
+msgid "Copy"
+msgstr "コピー"
+
+#: Contents/Resources/web/templates/home.html:74
+#: Contents/Resources/web/templates/home.html:75
+#: Contents/Resources/web/templates/logs.html:8
+msgid "Auto refresh"
+msgstr "自動更新"
+
+#: Contents/Resources/web/templates/home.html:114
+msgid "Categories"
+msgstr "カテゴリ"
+
+#: Contents/Resources/web/templates/home.html:116
+msgid "Search Categories"
+msgstr "カテゴリを検索"
+
+#: Contents/Resources/web/templates/home.html:119
+#: Contents/Resources/web/templates/translations.html:7
+msgid "Installed Plugin"
+msgstr "インストール済みプラグイン"
+
+#: Contents/Resources/web/templates/home.html:124
+#: Contents/Resources/web/templates/translations.html:8
+msgid "System Plugin"
+msgstr "システムプラグイン"
+
+#: Contents/Resources/web/templates/home.html:131
+#: Contents/Resources/web/templates/home.html:132
+msgid "Sort Type"
+msgstr "ソートタイプ"
+
+#: Contents/Resources/web/templates/home.html:133
+msgid "Default"
+msgstr "デフォルト"
+
+#: Contents/Resources/web/templates/home.html:134
+msgid "Name"
+msgstr "名前"
+
+#: Contents/Resources/web/templates/home.html:135
+msgid "Created Date"
+msgstr "作成日"
+
+#: Contents/Resources/web/templates/home.html:136
+#: Contents/Resources/web/templates/translations.html:24
+msgid "Stars"
+msgstr "星"
+
+#: Contents/Resources/web/templates/home.html:137
+#: Contents/Resources/web/templates/translations.html:14
+msgid "Forks"
+msgstr "Forks"
+
+#: Contents/Resources/web/templates/home.html:138
+#: Contents/Resources/web/templates/translations.html:22
+msgid "Open Pull Requests"
+msgstr "プルリクエストを開く"
+
+#: Contents/Resources/web/templates/home.html:139
+#: Contents/Resources/web/templates/translations.html:21
+msgid "Open Issues"
+msgstr "未解決の課題"
+
+#: Contents/Resources/web/templates/home.html:143
+#: Contents/Resources/web/templates/home.html:146
+msgid "Search"
+msgstr "検索"
+
+#: Contents/Resources/web/templates/home.html:158
+#: Contents/Resources/web/templates/navbar.html:66
+msgid "Plugins"
+msgstr "プラグイン"
+
+#: Contents/Resources/web/templates/home.html:350
+msgid "Install:"
+msgstr "インストール:"
+
+#: Contents/Resources/web/templates/home.html:380
+msgid "This plugin is archived and is no longer being maintained. It is highly unlikely this plugin will function properly."
+msgstr "このプラグインはアーカイブされており、メンテナンスされていません。このプラグインは正常に機能する可能性は低いです。"
+
+#: Contents/Resources/web/templates/home.html:443
+msgid "Version:"
+msgstr "バージョン:"
+
+#: Contents/Resources/web/templates/home.html:446
+msgid "Branch:"
+msgstr "ブランチ:"
+
+#: Contents/Resources/web/templates/home.html:466
+msgid "Date:"
+msgstr "日付:"
+
+#: Contents/Resources/web/templates/home.html:477
+msgid "This release is older than the default branch."
+msgstr "このリリースはデフォルトのブランチよりも古いです。"
+
+#: Contents/Resources/web/templates/home.html:483
+msgid "This is not the latest release."
+msgstr "これは最新のリリースではありません。"
+
+#: Contents/Resources/web/templates/home.html:492
+msgid "This is not the default branch."
+msgstr "これはデフォルトのブランチではありません。"
+
+#: Contents/Resources/web/templates/home.html:497
+msgid "The default branch (<default_branch>) is older than the latest release. This plugin may not support installing from branches."
+msgstr "The default branch (<default_branch>) is older than the latest release. This plugin may not support installation from branches."
+
+#: Contents/Resources/web/templates/home.html:541
+msgid "Select the branch or release to install."
+msgstr "インストールするブランチまたはリリースを選択します。"
+
+#: Contents/Resources/web/templates/home.html:576
+msgid "Logs:"
+msgstr "ログ:"
+
+#: Contents/Resources/web/templates/logs.html:10
+msgid "Plugin Logs:"
+msgstr "プラグインログ:"
+
+#: Contents/Resources/web/templates/navbar.html:25
+msgid "Donate"
+msgstr "寄付"
+
+#: Contents/Resources/web/templates/navbar.html:30
+msgid "GitHub Sponsors"
+msgstr "GitHub Sponsors"
+
+#: Contents/Resources/web/templates/navbar.html:46
+msgid "Support"
+msgstr "サポート"
+
+#: Contents/Resources/web/templates/navbar.html:51
+msgid "Docs"
+msgstr "ドキュメント"
+
+#: Contents/Resources/web/templates/navbar.html:55
+msgid "Support Center"
+msgstr "サポートセンター"
+
+#: Contents/Resources/web/templates/navbar.html:61
+msgid "Home"
+msgstr "ホーム"
+
+#: Contents/Resources/web/templates/translations.html:4
+msgid "Clear Results"
+msgstr "結果をクリア"
+
+#: Contents/Resources/web/templates/translations.html:5
+msgid "Installed Version:"
+msgstr "インストール済みバージョン:"
+
+#: Contents/Resources/web/templates/translations.html:6
+msgid "Archived Plugin"
+msgstr "アーカイブされたプラグイン"
+
+#: Contents/Resources/web/templates/translations.html:11
+msgid "Archived"
+msgstr "アーカイブ済み"
+
+#: Contents/Resources/web/templates/translations.html:12
+msgid "Edit Categories"
+msgstr "カテゴリを編集"
+
+#: Contents/Resources/web/templates/translations.html:13
+msgid "Force Update"
+msgstr "強制的に更新"
+
+#: Contents/Resources/web/templates/translations.html:15
+msgid "GitHub Discussions"
+msgstr "GitHub Discussions"
+
+#: Contents/Resources/web/templates/translations.html:16
+msgid "GitHub Wiki"
+msgstr "GitHub Wiki"
+
+#: Contents/Resources/web/templates/translations.html:17
+msgid "Homepage"
+msgstr "ホームページ"
+
+#: Contents/Resources/web/templates/translations.html:19
+msgid "License"
+msgstr "ライセンス"
+
+#: Contents/Resources/web/templates/translations.html:23
+msgid "Plex Forum"
+msgstr "プレックスフォーラム"
+
+#: Contents/Resources/web/templates/translations.html:25
+msgid "Uninstall"
+msgstr "アンインストール"
+
+#: Contents/Resources/web/templates/translations.html:26
+msgid "Website"
+msgstr "ウェブサイト"
+
+#: Contents/Resources/web/templates/translations.html:29
+msgid "Adult"
+msgstr "大人"
+
+#: Contents/Resources/web/templates/translations.html:30
+msgid "Anime"
+msgstr "Anime"
+
+#: Contents/Resources/web/templates/translations.html:31
+msgid "Channels"
+msgstr "チャンネル"
+
+#: Contents/Resources/web/templates/translations.html:32
+msgid "Games"
+msgstr "ゲーム"
+
+#: Contents/Resources/web/templates/translations.html:33
+msgid "Metadata Agent"
+msgstr "メタデータエージェント"
+
+#: Contents/Resources/web/templates/translations.html:34
+msgid "Movies"
+msgstr "映画"
+
+#: Contents/Resources/web/templates/translations.html:35
+msgid "Music"
+msgstr "音楽"
+
+#: Contents/Resources/web/templates/translations.html:36
+msgid "News"
+msgstr "ニュース"
+
+#: Contents/Resources/web/templates/translations.html:37
+msgid "Photos"
+msgstr "写真"
+
+#: Contents/Resources/web/templates/translations.html:38
+msgid "Podcasts"
+msgstr "ポッドキャスト"
+
+#: Contents/Resources/web/templates/translations.html:39
+msgid "Radio"
+msgstr "ラジオ"
+
+#: Contents/Resources/web/templates/translations.html:40
+msgid "Scanner"
+msgstr "Scanner"
+
+#: Contents/Resources/web/templates/translations.html:41
+msgid "Services"
+msgstr "サービス"
+
+#: Contents/Resources/web/templates/translations.html:42
+msgid "Subtitles"
+msgstr "字幕"
+
+#: Contents/Resources/web/templates/translations.html:43
+msgid "TV"
+msgstr "テレビ"
+
+#: Contents/Resources/web/templates/translations.html:44
+msgid "Utility"
+msgstr "ユーティリティ"
+
+#: Contents/Resources/web/templates/translations.html:45
+msgid "Videos"
+msgstr "動画"
+
