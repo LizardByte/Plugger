@@ -1,0 +1,6 @@
+{
+  "bool_log_werkzeug_messages": "すべてのWebサーバーメッセージをログに記録します（プレックス メディアサーバーの再起動が必要です）",
+  "enum_locale": "Web UI Locale",
+  "int_http_port": "Web UI ポート（プレックス メディア サーバーの再起動が必要）",
+  "str_http_host": "Web UI ホスト アドレス (プレックス メディア サーバーの再起動が必要)"
+}

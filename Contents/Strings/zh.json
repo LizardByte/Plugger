@@ -1,0 +1,6 @@
+{
+  "bool_log_werkzeug_messages": "记录所有 web 服务器消息 (需要 Plex媒体服务器重启)",
+  "enum_locale": "Web UI Locale",
+  "int_http_port": "Web 界面端口 (需要 Plex媒体服务器重启)",
+  "str_http_host": "Web 界面主机地址 (需要 Plex媒体服务器重启)"
+}

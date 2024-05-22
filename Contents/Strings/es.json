@@ -1,0 +1,6 @@
+{
+  "bool_log_werkzeug_messages": "Registrar todos los mensajes del servidor web (requiere reiniciar Plex Media Server)",
+  "enum_locale": "UI Web local",
+  "int_http_port": "Puerto de UI Web (requiere reiniciar Plex Media Server)",
+  "str_http_host": "Dirección de host UI Web (requiere reiniciar Plex Media Server)"
+}

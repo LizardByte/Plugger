@@ -1,0 +1,6 @@
+{
+  "bool_log_werkzeug_messages": "Журнал всех сообщений веб-сервера (требуется перезапуск Plex Media Server)",
+  "enum_locale": "Web UI Locale",
+  "int_http_port": "WebUI порт (требуется перезапуск Plex Media Server)",
+  "str_http_host": "Адрес Web UI хоста (требуется перезапуск Plex Media Server)"
+}
