@@ -28,6 +28,10 @@ Integrations
    :alt: Read the Docs
    :target: http://plugger.readthedocs.io/
 
+.. image:: https://img.shields.io/codecov/c/gh/LizardByte/Plugger?token=LID1Y7IEKI&style=for-the-badge&logo=codecov&label=codecov
+   :alt: Codecov
+   :target: https://codecov.io/gh/LizardByte/Plugger
+
 Downloads
 ---------
 
