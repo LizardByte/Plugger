@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: lizardbyte\n"
 "Report-Msgid-Bugs-To: github.com/plugger\n"
 "POT-Creation-Date: 2023-10-08 20:05+0000\n"
-"PO-Revision-Date: 2024-04-18 23:10\n"
+"PO-Revision-Date: 2024-05-25 23:28\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "MIME-Version: 1.0\n"
@@ -158,7 +158,8 @@ msgstr "Pesquisa"
 #: Contents/Resources/web/templates/home.html:158
 #: Contents/Resources/web/templates/navbar.html:66
 msgid "Plugins"
-msgstr "Complementos"
+msgstr "Documentation\n"
+"Read the documentation to le"
 
 #: Contents/Resources/web/templates/home.html:350
 msgid "Install:"

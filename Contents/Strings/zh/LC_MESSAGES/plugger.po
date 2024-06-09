@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: lizardbyte\n"
 "Report-Msgid-Bugs-To: github.com/plugger\n"
 "POT-Creation-Date: 2023-10-08 20:05+0000\n"
-"PO-Revision-Date: 2024-03-20 19:06\n"
+"PO-Revision-Date: 2024-06-08 03:29\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "MIME-Version: 1.0\n"
@@ -124,7 +124,7 @@ msgstr "默认设置"
 
 #: Contents/Resources/web/templates/home.html:134
 msgid "Name"
-msgstr "名称"
+msgstr "名字"
 
 #: Contents/Resources/web/templates/home.html:135
 msgid "Created Date"
