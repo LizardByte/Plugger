@@ -1,0 +1,6 @@
+{
+  "bool_log_werkzeug_messages": "Log all web server messages (requires Plex Media Server restart)",
+  "enum_locale": "Web UI Locale",
+  "int_http_port": "Web UI Port (requires Plex Media Server restart)",
+  "str_http_host": "Web UI Host Address (requires Plex Media Server restart)"
+}
