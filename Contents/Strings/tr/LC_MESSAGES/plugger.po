@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: lizardbyte\n"
 "Report-Msgid-Bugs-To: github.com/plugger\n"
 "POT-Creation-Date: 2023-10-08 20:05+0000\n"
-"PO-Revision-Date: 2024-06-16 15:13\n"
+"PO-Revision-Date: 2024-06-16 18:02\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr ""
 #: Contents/Resources/web/templates/home.html:275
 #: Contents/Resources/web/templates/translations.html:18
 msgid "Install"
-msgstr ""
+msgstr "Kurulum"
 
 #: Contents/Resources/web/templates/home.html:11
 #: Contents/Resources/web/templates/home.html:79
@@ -31,324 +31,324 @@ msgstr ""
 #: Contents/Resources/web/templates/home.html:387
 #: Contents/Resources/web/templates/home.html:413
 msgid "Close"
-msgstr ""
+msgstr "Kapat"
 
 #: Contents/Resources/web/templates/home.html:19
 #: Contents/Resources/web/templates/home.html:20
 msgid "Version"
-msgstr ""
+msgstr "Versiyon"
 
 #: Contents/Resources/web/templates/home.html:21
 msgid "The branch or release to install."
-msgstr ""
+msgstr "Kurulacak dal veya sürüm."
 
 #: Contents/Resources/web/templates/home.html:25
 msgid "Download asset"
-msgstr ""
+msgstr "Varlık indir"
 
 #: Contents/Resources/web/templates/home.html:27
 msgid "Select the asset to install."
-msgstr ""
+msgstr "Yüklenecek varlığı seçin."
 
 #: Contents/Resources/web/templates/home.html:32
 msgid "Auto update"
-msgstr ""
+msgstr "Otomatik güncelleme"
 
 #: Contents/Resources/web/templates/home.html:34
 msgid "Enable/disable auto update."
-msgstr ""
+msgstr "Otomatik güncellemeyi etkinleştirin/devre dışı bırakın."
 
 #: Contents/Resources/web/templates/home.html:37
 msgid "Destination"
-msgstr ""
+msgstr "Hedef"
 
 #: Contents/Resources/web/templates/home.html:45
 msgid "Cancel"
-msgstr ""
+msgstr "İptal"
 
 #: Contents/Resources/web/templates/home.html:49
 msgid "Previous"
-msgstr ""
+msgstr "Önceki"
 
 #: Contents/Resources/web/templates/home.html:49
 msgid "Prev"
-msgstr ""
+msgstr "Prev"
 
 #: Contents/Resources/web/templates/home.html:53
 #: Contents/Resources/web/templates/home.html:264
 msgid "Next"
-msgstr ""
+msgstr "Sonraki"
 
 #: Contents/Resources/web/templates/home.html:65
 #: Contents/Resources/web/templates/translations.html:20
 msgid "Logs"
-msgstr ""
+msgstr "Günlükler"
 
 #: Contents/Resources/web/templates/home.html:68
 #: Contents/Resources/web/templates/home.html:88
 msgid "Copy"
-msgstr ""
+msgstr "Anlaşıldı"
 
 #: Contents/Resources/web/templates/home.html:74
 #: Contents/Resources/web/templates/home.html:75
 #: Contents/Resources/web/templates/logs.html:8
 msgid "Auto refresh"
-msgstr ""
+msgstr "Otomatik yenileme"
 
 #: Contents/Resources/web/templates/home.html:114
 msgid "Categories"
-msgstr ""
+msgstr "Kategoriler"
 
 #: Contents/Resources/web/templates/home.html:116
 msgid "Search Categories"
-msgstr ""
+msgstr "Arama Kategorileri"
 
 #: Contents/Resources/web/templates/home.html:119
 #: Contents/Resources/web/templates/translations.html:7
 msgid "Installed Plugin"
-msgstr ""
+msgstr "Yüklü Eklenti"
 
 #: Contents/Resources/web/templates/home.html:124
 #: Contents/Resources/web/templates/translations.html:8
 msgid "System Plugin"
-msgstr ""
+msgstr "Sistem Eklentisi"
 
 #: Contents/Resources/web/templates/home.html:131
 #: Contents/Resources/web/templates/home.html:132
 msgid "Sort Type"
-msgstr ""
+msgstr "Sıralama Türü"
 
 #: Contents/Resources/web/templates/home.html:133
 msgid "Default"
-msgstr ""
+msgstr "Varsayılan"
 
 #: Contents/Resources/web/templates/home.html:134
 msgid "Name"
-msgstr ""
+msgstr "İsim"
 
 #: Contents/Resources/web/templates/home.html:135
 msgid "Created Date"
-msgstr ""
+msgstr "Oluşturulma Tarihi"
 
 #: Contents/Resources/web/templates/home.html:136
 #: Contents/Resources/web/templates/translations.html:24
 msgid "Stars"
-msgstr ""
+msgstr "Yıldızlar"
 
 #: Contents/Resources/web/templates/home.html:137
 #: Contents/Resources/web/templates/translations.html:14
 msgid "Forks"
-msgstr ""
+msgstr "Çatallar"
 
 #: Contents/Resources/web/templates/home.html:138
 #: Contents/Resources/web/templates/translations.html:22
 msgid "Open Pull Requests"
-msgstr ""
+msgstr "Açık Çekme İstekleri"
 
 #: Contents/Resources/web/templates/home.html:139
 #: Contents/Resources/web/templates/translations.html:21
 msgid "Open Issues"
-msgstr ""
+msgstr "Açık Sorunlar"
 
 #: Contents/Resources/web/templates/home.html:143
 #: Contents/Resources/web/templates/home.html:146
 msgid "Search"
-msgstr ""
+msgstr "Arama"
 
 #: Contents/Resources/web/templates/home.html:158
 #: Contents/Resources/web/templates/navbar.html:66
 msgid "Plugins"
-msgstr ""
+msgstr "Eklentiler"
 
 #: Contents/Resources/web/templates/home.html:350
 msgid "Install:"
-msgstr ""
+msgstr "Yükle:"
 
 #: Contents/Resources/web/templates/home.html:380
 msgid "This plugin is archived and is no longer being maintained. It is highly unlikely this plugin will function properly."
-msgstr ""
+msgstr "Bu eklenti arşivlenmiştir ve artık bakımı yapılmamaktadır. Bu eklentinin düzgün çalışması pek olası değildir."
 
 #: Contents/Resources/web/templates/home.html:443
 msgid "Version:"
-msgstr ""
+msgstr "Versiyon:"
 
 #: Contents/Resources/web/templates/home.html:446
 msgid "Branch:"
-msgstr ""
+msgstr "Şube:"
 
 #: Contents/Resources/web/templates/home.html:466
 msgid "Date:"
-msgstr ""
+msgstr "Tarih:"
 
 #: Contents/Resources/web/templates/home.html:477
 msgid "This release is older than the default branch."
-msgstr ""
+msgstr "Bu sürüm varsayılan daldan daha eskidir."
 
 #: Contents/Resources/web/templates/home.html:483
 msgid "This is not the latest release."
-msgstr ""
+msgstr "Bu en son sürüm değil."
 
 #: Contents/Resources/web/templates/home.html:492
 msgid "This is not the default branch."
-msgstr ""
+msgstr "Bu varsayılan dal değildir."
 
 #: Contents/Resources/web/templates/home.html:497
 msgid "The default branch (<default_branch>) is older than the latest release. This plugin may not support installing from branches."
-msgstr ""
+msgstr "Varsayılan dal (<default_branch>) en son sürümden daha eskidir. Bu eklenti dallardan yüklemeyi desteklemeyebilir."
 
 #: Contents/Resources/web/templates/home.html:541
 msgid "Select the branch or release to install."
-msgstr ""
+msgstr "Kurulacak şubeyi veya sürümü seçin."
 
 #: Contents/Resources/web/templates/home.html:576
 msgid "Logs:"
-msgstr ""
+msgstr "Kayıtlar:"
 
 #: Contents/Resources/web/templates/logs.html:10
 msgid "Plugin Logs:"
-msgstr ""
+msgstr "Eklenti Günlükleri:"
 
 #: Contents/Resources/web/templates/navbar.html:25
 msgid "Donate"
-msgstr ""
+msgstr "Bağış"
 
 #: Contents/Resources/web/templates/navbar.html:30
 msgid "GitHub Sponsors"
-msgstr ""
+msgstr "GitHub Sponsorları"
 
 #: Contents/Resources/web/templates/navbar.html:46
 msgid "Support"
-msgstr ""
+msgstr "Destek"
 
 #: Contents/Resources/web/templates/navbar.html:51
 msgid "Docs"
-msgstr ""
+msgstr "Dokümanlar"
 
 #: Contents/Resources/web/templates/navbar.html:55
 msgid "Support Center"
-msgstr ""
+msgstr "Destek Merkezi"
 
 #: Contents/Resources/web/templates/navbar.html:61
 msgid "Home"
-msgstr ""
+msgstr "Ana Sayfa"
 
 #: Contents/Resources/web/templates/translations.html:4
 msgid "Clear Results"
-msgstr ""
+msgstr "Net Sonuçlar"
 
 #: Contents/Resources/web/templates/translations.html:5
 msgid "Installed Version:"
-msgstr ""
+msgstr "Yüklü Sürüm:"
 
 #: Contents/Resources/web/templates/translations.html:6
 msgid "Archived Plugin"
-msgstr ""
+msgstr "Arşivlenmiş Eklenti"
 
 #: Contents/Resources/web/templates/translations.html:11
 msgid "Archived"
-msgstr ""
+msgstr "Arşivlendi"
 
 #: Contents/Resources/web/templates/translations.html:12
 msgid "Edit Categories"
-msgstr ""
+msgstr "Kategorileri Düzenle"
 
 #: Contents/Resources/web/templates/translations.html:13
 msgid "Force Update"
-msgstr ""
+msgstr "Kuvvet Güncellemesi"
 
 #: Contents/Resources/web/templates/translations.html:15
 msgid "GitHub Discussions"
-msgstr ""
+msgstr "GitHub Tartışmaları"
 
 #: Contents/Resources/web/templates/translations.html:16
 msgid "GitHub Wiki"
-msgstr ""
+msgstr "GitHub Wiki"
 
 #: Contents/Resources/web/templates/translations.html:17
 msgid "Homepage"
-msgstr ""
+msgstr "Anasayfa"
 
 #: Contents/Resources/web/templates/translations.html:19
 msgid "License"
-msgstr ""
+msgstr "Lisans"
 
 #: Contents/Resources/web/templates/translations.html:23
 msgid "Plex Forum"
-msgstr ""
+msgstr "Plex Forum"
 
 #: Contents/Resources/web/templates/translations.html:25
 msgid "Uninstall"
-msgstr ""
+msgstr "Kaldırma"
 
 #: Contents/Resources/web/templates/translations.html:26
 msgid "Website"
-msgstr ""
+msgstr "Web sitesi"
 
 #: Contents/Resources/web/templates/translations.html:29
 msgid "Adult"
-msgstr ""
+msgstr "Yetişkin"
 
 #: Contents/Resources/web/templates/translations.html:30
 msgid "Anime"
-msgstr ""
+msgstr "Anime"
 
 #: Contents/Resources/web/templates/translations.html:31
 msgid "Channels"
-msgstr ""
+msgstr "Kanallar"
 
 #: Contents/Resources/web/templates/translations.html:32
 msgid "Games"
-msgstr ""
+msgstr "Oyunlar"
 
 #: Contents/Resources/web/templates/translations.html:33
 msgid "Metadata Agent"
-msgstr ""
+msgstr "Meta Veri Aracısı"
 
 #: Contents/Resources/web/templates/translations.html:34
 msgid "Movies"
-msgstr ""
+msgstr "Filmler"
 
 #: Contents/Resources/web/templates/translations.html:35
 msgid "Music"
-msgstr ""
+msgstr "Müzik"
 
 #: Contents/Resources/web/templates/translations.html:36
 msgid "News"
-msgstr ""
+msgstr "Haberler"
 
 #: Contents/Resources/web/templates/translations.html:37
 msgid "Photos"
-msgstr ""
+msgstr "Fotoğraflar"
 
 #: Contents/Resources/web/templates/translations.html:38
 msgid "Podcasts"
-msgstr ""
+msgstr "Podcastler"
 
 #: Contents/Resources/web/templates/translations.html:39
 msgid "Radio"
-msgstr ""
+msgstr "Radyo"
 
 #: Contents/Resources/web/templates/translations.html:40
 msgid "Scanner"
-msgstr ""
+msgstr "Tarayıcı"
 
 #: Contents/Resources/web/templates/translations.html:41
 msgid "Services"
-msgstr ""
+msgstr "Hizmetler"
 
 #: Contents/Resources/web/templates/translations.html:42
 msgid "Subtitles"
-msgstr ""
+msgstr "Altyazılar"
 
 #: Contents/Resources/web/templates/translations.html:43
 msgid "TV"
-msgstr ""
+msgstr "TV"
 
 #: Contents/Resources/web/templates/translations.html:44
 msgid "Utility"
-msgstr ""
+msgstr "Yardımcı Program"
 
 #: Contents/Resources/web/templates/translations.html:45
 msgid "Videos"
-msgstr ""
+msgstr "Videolar"
 
