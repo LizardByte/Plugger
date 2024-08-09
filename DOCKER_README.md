@@ -1,5 +1,9 @@
 ### lizardbyte/plugger
 
+> **Attention**: Plex is removing ALL support for plugins. This project is no longer maintained.
+> See [Plex Forum](https://forums.plex.tv/t/important-information-for-users-running-plex-media-server-on-nvidia-shield-devices/883484)
+> for more information.
+
 This is a [docker-mod](https://linuxserver.github.io/docker-mods/) for
 [plex](https://hub.docker.com/r/linuxserver/plex) that adds
 [Plugger](https://github.com/LizardByte/Plugger) to plex as a plugin,
